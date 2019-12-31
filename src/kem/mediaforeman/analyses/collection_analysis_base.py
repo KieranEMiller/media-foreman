@@ -13,7 +13,13 @@ class CollectionAnalysisBase(AnalysisBase):
         pass
     
     @abstractmethod
+    def GetAnalysisType(self):
+        pass
+
+    @abstractmethod
     def RunAnalysisOnCollection(self, mediaColl):
         pass
-    
         
+    def RunAnalysisOnFile(self, mediaFile):
+        raise ValueError("collection analyses do not run against individual files")
+

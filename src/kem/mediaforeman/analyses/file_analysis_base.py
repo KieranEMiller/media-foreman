@@ -12,7 +12,14 @@ class FileAnalysisBase(AnalysisBase):
 
     def __init__(self, params):
         pass
-    
+        
+    @abstractmethod
+    def GetAnalysisType(self):
+        pass
+
     @abstractmethod
     def RunAnalysisOnFile(self, mediaFile):
         pass
+    
+    def RunAnalysisOnCollection(self, mediaColl):
+        raise ValueError("file analyses do not run against collections")
