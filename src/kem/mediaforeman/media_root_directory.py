@@ -5,7 +5,9 @@ Created on Dec 29, 2019
 '''
 import os
 
-class MediaRoot(object):
+from kem.mediaforeman.media_collection import MediaCollection
+
+class MediaRootDirectory(object):
 
     def __init__(self, params):
         self._rootDirs = params
@@ -22,7 +24,10 @@ class MediaRoot(object):
             self.ProcessRoot(dir)
             
     def ProcessRoot(self, root):
-        artists = os.listdir(root)
-        print("processing root dir {}, with {} children".format(root, len(artists)))
-        
-        
+        folderGroups = os.listdir(root)
+        print("processing root dir {}, with {} children".format(root, len(folderGroups)))
+
+        mediaGroups = []
+        for folderGroup in folderGroups:
+            coll = MediaCollection(folderGroup)
+            mediaGroups.append(coll)
