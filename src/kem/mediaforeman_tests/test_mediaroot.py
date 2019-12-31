@@ -8,10 +8,11 @@ from kem.mediaforeman_tests.base_fs_tests import BaseFsTests
 
 from kem.mediaforeman.mediaroot import MediaRoot
 
-class MediaRootTests(BaseFsTests):
+class TestMediaRoot(TestBaseFs):
 
-    def testName(self):
-        pass
+    def test_root_directory_does_not_exist_raises_exception(self):
+        mediaroot = MediaRoot(['/some/path/that/doesnt/exist'])
+        mediaroot.Start()
 
 
 if __name__ == "__main__":

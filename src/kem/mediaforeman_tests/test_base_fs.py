@@ -7,7 +7,7 @@ import unittest
 import shutil
 import tempfile
 
-class BaseFsTests(unittest.TestCase):
+class TestBaseFs(unittest.TestCase):
 
     def setUp(self):
         self.testdir = tempfile.mkdtemp()
