@@ -1,11 +1,11 @@
 import os
 
 from kem.mediaforeman.media_file import MediaFile
+from kem.mediaforeman.media_base import MediaBase
 
-class MediaCollection(object):
+class MediaCollection(MediaBase):
 
     def __init__(self, path):
-        self._basePath = path
         self._mediaFiles = self.LoadContents(path)
         
     def LoadContents(self):

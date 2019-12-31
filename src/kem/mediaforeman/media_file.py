@@ -1,9 +1,10 @@
 import os
+from kem.mediaforeman.media_base import MediaBase
 
-class MediaFile(object):
+class MediaFile(MediaBase):
 
     def __init__(self, path):
-        self._filePath = path
+        pass
         
     def IsMedia(self):
         '''if the extension is one of a set of types
