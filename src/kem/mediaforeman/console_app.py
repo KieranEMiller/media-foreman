@@ -4,7 +4,7 @@ Created on Dec 29, 2019
 @author: kieranemiller
 '''
 import argparse
-from kem.mediaforeman.mediaroot import MediaRoot
+from kem.mediaforeman.media_root_directory import MediaRootDirectory
 
 class ConsoleApp(object):
 
@@ -13,7 +13,7 @@ class ConsoleApp(object):
         self.SetupArgs()
         
     def Run(self):
-        processor = MediaRoot(self._args.root_directory)
+        processor = MediaRootDirectory(self._args.root_directory)
         
         if(self._args.summary): 
             processor.summarize = True
