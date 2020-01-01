@@ -6,12 +6,13 @@ from kem.mediaforeman.media_base import MediaBase
 class MediaCollection(MediaBase):
 
     def __init__(self, path):
+        super(MediaCollection, self).__init__(path)
         self._mediaFiles = self.LoadContents(path)
         
-    def LoadContents(self):
+    def LoadContents(self, path):
 
         files = []
-        for file in os.walk(self._basePath):
+        for file in os.walk(path):
             files.append(MediaFile(file))
 
         return files

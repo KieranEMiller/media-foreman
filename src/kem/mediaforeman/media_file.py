@@ -4,7 +4,7 @@ from kem.mediaforeman.media_base import MediaBase
 class MediaFile(MediaBase):
 
     def __init__(self, path):
-        pass
+        super(MediaFile, self).__init__(path)
         
     def IsMedia(self):
         '''if the extension is one of a set of types
