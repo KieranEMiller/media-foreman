@@ -16,25 +16,32 @@ class MediaRootDirectory(object):
         'defaults'
         self.summarize = True
     
-    def Start(self):
+    def Process(self):
         print("starting eval of {} directories: {}".format(len(self._rootDirs), self._rootDirs))
         if(self.summarize): 
             print("\tsummarize enabled...analysis only\n")
             
+        media = []
         for dir in self._rootDirs:
-            self.ProcessRoot(dir)
+            media.extend(self.ProcessRoot(dir))
+            
+        return media
             
     def ProcessRoot(self, root):
+        if(not os.path.isdir(root)):
+            raise ValueError("unknown directory {}".format(root))
+        
         dirContents = os.listdir(root)
         print("processing root dir {}, with {} children".format(root, len(dirContents)))
 
         media = []
         for fileOrFolder in dirContents:
-            if(os.path.isdir(fileOrFolder)):
-                media.append(MediaCollection(fileOrFolder))
+            path = os.path.join(root, fileOrFolder)
+            if(os.path.isdir(path)):
+                media.append(MediaCollection(path))
                 
-            elif(os.path.isfile(fileOrFolder)):
-                media.append(MediaFile(fileOrFolder))
+            elif(os.path.isfile(path)):
+                media.append(MediaFile(path))
             
-        
+        return media
         
