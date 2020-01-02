@@ -5,6 +5,7 @@ Created on Dec 29, 2019
 '''
 import argparse
 from kem.mediaforeman.media_root_directory import MediaRootDirectory
+from kem.mediaforeman.media_analyzer import MediaAnalyzer
 
 class ConsoleApp(object):
 
@@ -18,7 +19,10 @@ class ConsoleApp(object):
         if(self._args.summary): 
             processor.summarize = True
             
-        processor.Start()
+        media = processor.Process()
+        
+        analyzer = MediaAnalyzer(media)
+        summary = analyzer.Analyze(processor.summarize)
         
     def SetupArgs(self):
         argParser = argparse.ArgumentParser("options")
