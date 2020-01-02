@@ -8,6 +8,7 @@ from abc import abstractmethod
 
 from kem.mediaforeman.media_collection import MediaCollection
 from kem.mediaforeman.media_file import MediaFile
+from kem.mediaforeman.analyses.analysis_result import AnalysisResult
 
 class AnalysisBase(object):
 
@@ -28,16 +29,19 @@ class AnalysisBase(object):
     
     def RunAnalysis(self, runAgainst):
         startTime = datetime.datetime.now()
-        
         print("running analysis '{}' against {}".format(self.GetAnalysisType(), type(runAgainst)))
+        
+        result = AnalysisResult()
+        result.AnalysisType = self.GetAnalysisType()
+        
         if(isinstance(runAgainst, MediaCollection)):
-            return self.RunAnalysisOnCollection(runAgainst)
+            result.IssuesFound = self.RunAnalysisOnCollection(runAgainst)
         
         elif(isinstance(runAgainst, MediaFile)):
-            return self.RunAnalysisOnFile(runAgainst)
+            result.IssuesFound = self.RunAnalysisOnFile(runAgainst)
         
         else:
             raise ValueError("unknown run analysis parameter")
             
-        self.ElapsedTime = datetime.datetime.now() - startTime
-        print("analysis '{}' completed in {}us".format(self.ElapsedTime.microseconds))
+        result.ElapsedInMicroSecs = datetime.datetime.now() - startTime
+        return result
