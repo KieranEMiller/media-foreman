@@ -10,7 +10,7 @@ from kem.mediaforeman.media_root_directory import MediaRootDirectory
 from kem.mediaforeman.media_file import MediaFile
 from kem.mediaforeman.media_collection import MediaCollection
 
-class TestMediaRoot(TestBaseFs):
+class TestMediaRootDirectory(TestBaseFs):
 
     def test_root_directory_does_not_exist_raises_exception(self):
         mediaroot = MediaRootDirectory(['/some/path/that/doesnt/exist'])
@@ -36,6 +36,19 @@ class TestMediaRoot(TestBaseFs):
         results = mediaroot.Process()
         self.assertEqual(len(results), 1)
         self.assertIs(type(results[0]), MediaCollection)
+        
+    def test_two_folders_3_files_in_root_directory_creates_multiple_media_types(self):
+        dir1 = self.CreateSubDirectory("test1")
+        dir2 = self.CreateSubDirectory("test2")
+
+        self.CopySampleMp3ToDir(self._testDir)
+        self.CopySampleMp3ToDir(self._testDir)
+        self.CopySampleMp3ToDir(self._testDir)
+
+        mediaroot = MediaRootDirectory([self._testDir])
+        results = mediaroot.Process()
+        self.assertEqual(len(results), 5)
+        
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
