@@ -9,5 +9,6 @@ class AnalysisType(Enum):
     FileMediaType = 1
     FileValidImage = 2
     FileCompleteAudioMetadata = 3
-    CollectionSameArtist = 4
-        
+    FileMinimumQualityStandards = 4
+    CollectionSameArtist = 5
+    
