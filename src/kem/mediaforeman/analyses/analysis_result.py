@@ -10,4 +10,5 @@ class AnalysisResult(object):
         self.ElapsedInMicroSecs = -1
         self.AnalysisType = None
         self.IssuesFound = []
+        self.Media = None
         
