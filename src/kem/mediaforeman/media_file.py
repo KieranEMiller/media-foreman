@@ -13,4 +13,8 @@ class MediaFile(MediaBase):
         '''
         pass
 
+    def ExtractImage(self):
+        '''do we need temp file system space/loc for this?'''
+        pass
 
+    
