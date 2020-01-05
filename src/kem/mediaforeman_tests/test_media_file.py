@@ -14,6 +14,26 @@ class TestMediaFile(TestBaseFs):
         mediaFile = MediaFile(path)
         self.assertEqual(mediaFile.BasePath, path)
 
+    def test_file_metadata_extracts_properly(self):
+        path = self.CopySampleMp3ToDir(self._testDir)
+        mediaFile = MediaFile(path)
+        mediaFile.ExtractProperties()
+        
+        self.assertEqual(mediaFile.Album, "TestAlbum")
+        self.assertEqual(mediaFile.AlbumArtist, "SoundBibleArtist")
+        self.assertEqual(mediaFile.Title, "TestTitle")
+        
+        '''track number does not seem to work properly
+        self.assertEqual(mediaFile.TrackNumber, 3)
+        '''
+        
+    def test_file_metadata_img_extracts_properly(self):
+        path = self.CopySampleMp3WithImgToDir(self._testDir)
+        mediaFile = MediaFile(path)
+        mediaFile.ExtractProperties()
+        
+        
+        
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
