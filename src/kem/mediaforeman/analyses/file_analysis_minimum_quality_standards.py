@@ -10,7 +10,7 @@ class FileAnalysisMinimumQualityStandards(FileAnalysisBase):
 
     def __init__(self, params):
         self.MinBitRate = 256
-        self.AllowLossy = true
+        self.AllowLossy = True
 
         '''other properties for future enhancement'''
         '''currently unused '''
