@@ -22,13 +22,17 @@ class TestBaseFs(unittest.TestCase):
         newDir = os.path.join(self._testDir, name)
         os.mkdir(newDir)
         return newDir
+
+    def CopySampleMp3WithImgToDir(self, dir):
+        return self.CopySampleMp3ToDir(dir, "./assets/sample_mp3_with_img.mp3")
     
-    def CopySampleMp3ToDir(self, dir):
-        pathToSample = os.path.join(os.path.dirname(os.path.realpath(__file__)), "./assets/sample_mp3.mp3")
+    def CopySampleMp3ToDir(self, dir, file="./assets/sample_mp3.mp3"):
+        pathToSample = os.path.join(os.path.dirname(os.path.realpath(__file__)), file)
         dest = os.path.join(self._testDir, "{}.mp3".format(str(uuid.uuid1())));
         shutil.copy(os.path.abspath(pathToSample), dest)
         '''print("copying sample mp3 from {} to {}".format(os.path.abspath(pathToSample), dest))'''
         return dest
+    
         
 
 if __name__ == "__main__":
