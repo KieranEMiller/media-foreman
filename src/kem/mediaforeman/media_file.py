@@ -21,6 +21,10 @@ class MediaFile(MediaBase):
         self.CoverImgX = -1
         self.CoverImgY = -1
         
+        '''other properties '''
+        self.Duration = -1
+        self.BitRate = -1
+        
         self.ExtractProperties()
         
     def ExtractProperties(self):
@@ -29,7 +33,12 @@ class MediaFile(MediaBase):
         self.Album = metadata.tag.album
         self.AlbumArtist = metadata.tag.album_artist
         self.Title = metadata.tag.title
-        self.TrackNumber = metadata.tag.track_num
+        self.TrackNumber = metadata.tag.track_num[0]
+        
+        self.Duration = metadata.info.time_secs
+
+        bitRateVrb, bitRateVal = metadata.info.bit_rate
+        self.BitRate = bitRateVal
         
         self.ExtractImageProperties(metadata)
         

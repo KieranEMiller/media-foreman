@@ -22,10 +22,7 @@ class TestMediaFile(TestBaseFs):
         self.assertEqual(mediaFile.Album, "TestAlbum")
         self.assertEqual(mediaFile.AlbumArtist, "SoundBibleArtist")
         self.assertEqual(mediaFile.Title, "TestTitle")
-        
-        '''track number does not seem to work properly
         self.assertEqual(mediaFile.TrackNumber, 3)
-        '''
         
     def test_file_metadata_img_extracts_properly(self):
         path = self.CopySampleMp3WithImgToDir(self._testDir)
@@ -40,6 +37,14 @@ class TestMediaFile(TestBaseFs):
         mediaFile = MediaFile(path)
 
         self.assertFalse(mediaFile.CoverImgExists)
+        
+    def test_audio_bitrate_and_duration(self):
+        path = self.CopySampleMp3ToDir(self._testDir)
+        mediaFile = MediaFile(path)
+        
+        self.assertGreater(mediaFile.Duration, 3)
+        self.assertLess(mediaFile.Duration, 4)
+        self.assertEqual(mediaFile.BitRate, 172)
         
 
 if __name__ == "__main__":
