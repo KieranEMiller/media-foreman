@@ -12,12 +12,12 @@ class TestMediaFile(TestBaseFs):
     def test_sets_base_class_full_path_property(self):
         path = self.CopySampleMp3ToDir(self._testDir)
         mediaFile = MediaFile(path)
+
         self.assertEqual(mediaFile.BasePath, path)
 
     def test_file_metadata_extracts_properly(self):
         path = self.CopySampleMp3ToDir(self._testDir)
         mediaFile = MediaFile(path)
-        mediaFile.ExtractProperties()
         
         self.assertEqual(mediaFile.Album, "TestAlbum")
         self.assertEqual(mediaFile.AlbumArtist, "SoundBibleArtist")
@@ -30,9 +30,16 @@ class TestMediaFile(TestBaseFs):
     def test_file_metadata_img_extracts_properly(self):
         path = self.CopySampleMp3WithImgToDir(self._testDir)
         mediaFile = MediaFile(path)
-        mediaFile.ExtractProperties()
         
+        self.assertTrue(mediaFile.CoverImgExists)
+        self.assertGreater(mediaFile.CoverImgX, 0)
+        self.assertGreater(mediaFile.CoverImgY, 0)
         
+    def test_file_metadata_shows_no_cover_img_when_none_present(self):
+        path = self.CopySampleMp3ToDir(self._testDir)
+        mediaFile = MediaFile(path)
+
+        self.assertFalse(mediaFile.CoverImgExists)
         
 
 if __name__ == "__main__":
