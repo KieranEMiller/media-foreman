@@ -4,8 +4,12 @@ Created on Dec 29, 2019
 @author: kieranemiller
 '''
 import argparse
+import logging
+
 from kem.mediaforeman.media_root_directory import MediaRootDirectory
 from kem.mediaforeman.media_analyzer import MediaAnalyzer
+
+_log = logging.getLogger()
 
 class ConsoleApp(object):
 
@@ -14,6 +18,7 @@ class ConsoleApp(object):
         self.SetupArgs()
         
     def Run(self):
+        _log.info("ConsoleApp: processing root directory {}".format(self._args.root_directory))
         processor = MediaRootDirectory(self._args.root_directory)
         
         if(self._args.summary): 
