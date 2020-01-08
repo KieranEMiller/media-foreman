@@ -27,6 +27,9 @@ class MediaFile(MediaBase):
         
         self.ExtractProperties()
         
+    def GetFileName(self):
+        return os.path.basename(self.BasePath).lower()
+    
     def ExtractProperties(self):
         metadata = eyed3.load(self.BasePath)
 
