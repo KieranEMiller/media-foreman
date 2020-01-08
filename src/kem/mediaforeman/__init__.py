@@ -13,8 +13,6 @@ currentDir = os.path.dirname(inspect.getfile(inspect.currentframe()))
 for the app right under src'''
 logPath = os.path.abspath(os.path.join(currentDir, "..", "..", "mediaforeman.log"))
 
-print("logpath: {}".format(logPath))
-
 config = {
     'version': 1,
     'formatters': {
