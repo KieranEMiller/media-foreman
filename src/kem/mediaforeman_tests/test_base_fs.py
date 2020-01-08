@@ -23,8 +23,12 @@ class TestBaseFs(unittest.TestCase):
         os.mkdir(newDir)
         return newDir
 
-    def CopySampleMp3WithImgToDir(self, testDir = None):
-        return self.CopySampleMp3ToDir(testDir, "./assets/sample_mp3_with_img.mp3")
+    def CopySampleMp3WithImgToDir(self, testDir = None, useSampleWithMinImgReqs = False):
+        imgSamplePath = "./assets/sample_mp3_with_img_below_size_minimums.mp3"
+        if(useSampleWithMinImgReqs):
+            imgSamplePath = "./assets/sample_mp3_with_img_meets_size_reqs_275x275.mp3"
+            
+        return self.CopySampleMp3ToDir(testDir, imgSamplePath)
     
     def CopySampleMp3ToDir(self, testDir = None, file = "./assets/sample_mp3.mp3"):
         if(testDir is None):
