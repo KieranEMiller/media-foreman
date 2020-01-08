@@ -31,15 +31,21 @@ class AnalysisBase(object):
         return 
     
     def LogAnalysisResult(self, analysisResult):
-        issues = '\n- '.join([issue.GetText() for issue in analysisResult.IssuesFound])
-        msg = "analysis issue list for {} against file {}\n- {}".format(
-            self.GetAnalysisType(), analysisResult.Media.BasePath, issues
-        )
+        if(analysisResult.HasIssues == False):
+            msg = "{}: no issues found for file {}".format(
+                self.GetAnalysisType(), analysisResult.Media.BasePath
+            )
+        else:
+            issues = '\n- '.join([issue.GetText() for issue in analysisResult.IssuesFound])
+            msg = "{}: analysis issue list against file {}\n- {}".format(
+                self.GetAnalysisType(), analysisResult.Media.BasePath, issues
+            )
+            
         _log.info(msg)
     
     def RunAnalysis(self, media):
         startTime = datetime.datetime.now()
-        print("running analysis '{}' against {}".format(self.GetAnalysisType(), type(media)))
+        _log.info("running analysis '{}' against {}".format(self.GetAnalysisType(), type(media)))
         
         result = AnalysisResult()
         result.AnalysisType = self.GetAnalysisType()
@@ -52,7 +58,7 @@ class AnalysisBase(object):
             result.IssuesFound = self.RunAnalysisOnFile(media)
         
         else:
-            raise ValueError("unknown run analysis parameter")
+            raise ValueError("unknown run analysis media parameter")
             
         result.ElapsedInMicroSecs = (datetime.datetime.now() - startTime).microseconds
         result.HasIssues = (len(result.IssuesFound) > 0)
