@@ -30,13 +30,12 @@ class AnalysisBase(object):
     def GetAnalysisType(self):
         return 
     
-    def LogAnalysisResult(self, issueList):
-        issues = '\n- '.join([issue.GetText() for issue in issueList])
-        msg = "analysis issue list for {}:\n- {}".format(
-            self.GetAnalysisType(), issues
+    def LogAnalysisResult(self, analysisResult):
+        issues = '\n- '.join([issue.GetText() for issue in analysisResult.IssuesFound])
+        msg = "analysis issue list for {} against file {}\n- {}".format(
+            self.GetAnalysisType(), analysisResult.Media.BasePath, issues
         )
         _log.info(msg)
-        print(msg)
     
     def RunAnalysis(self, media):
         startTime = datetime.datetime.now()
@@ -58,6 +57,6 @@ class AnalysisBase(object):
         result.ElapsedInMicroSecs = (datetime.datetime.now() - startTime).microseconds
         result.HasIssues = (len(result.IssuesFound) > 0)
         
-        self.LogAnalysisResult(result.IssuesFound)
+        self.LogAnalysisResult(result)
         
         return result
