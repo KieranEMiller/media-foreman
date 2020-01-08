@@ -5,6 +5,7 @@ Created on Dec 30, 2019
 '''
 from kem.mediaforeman.analyses.file_analysis_base import FileAnalysisBase
 from kem.mediaforeman.analyses.analysis_type import AnalysisType
+from kem.mediaforeman.analyses.analysis_issue_property_invalid import AnalysisIssuePropertyInvalid
 
 class FileAnalysisMediaFileType(FileAnalysisBase):
 
@@ -15,7 +16,14 @@ class FileAnalysisMediaFileType(FileAnalysisBase):
         return AnalysisType.FileCompleteAudioMetadata
 
     def RunAnalysisOnFile(self, mediaFile):
+        result = []
+        
         '''TODO: expand to include additional types.  just audio types for now'''
         validTypes = ["mp3", "flac", "wav", "ogg", "mp4"]
         
-        '''check if the mediaFile extension ends in one of the above'''
+        for validType in validTypes:
+            if(not mediaFile.GetFileName().endswith(validType)):
+                result.append(AnalysisIssuePropertyInvalid("Invalid Media File Type", validTypes, mediaFile.GetFileName()))
+                break
+            
+        return result
