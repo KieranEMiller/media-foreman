@@ -9,6 +9,7 @@ class AnalysisResult(object):
     def __init__(self):
         self.ElapsedInMicroSecs = -1
         self.AnalysisType = None
-        self.IssuesFound = []
         self.Media = None
-        
+
+        self.HasIssues = False
+        self.IssuesFound = []
