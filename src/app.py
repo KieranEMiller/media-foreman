@@ -4,8 +4,6 @@ Created on Dec 29, 2019
 @author: kieranemiller
 '''
 import logging
-import logging.config
-import sys
 
 from kem.mediaforeman.console_app import ConsoleApp
 
