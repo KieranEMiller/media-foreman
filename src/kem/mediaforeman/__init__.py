@@ -13,6 +13,8 @@ currentDir = os.path.dirname(inspect.getfile(inspect.currentframe()))
 for the app right under src'''
 logPath = os.path.abspath(os.path.join(currentDir, "..", "..", "mediaforeman.log"))
 
+LOG_LEVEL = "INFO"
+
 config = {
     'version': 1,
     'formatters': {
@@ -30,14 +32,14 @@ config = {
         },
         'console_stdout': {
             'class': 'logging.StreamHandler',
-            'level': 'WARN',
+            'level': LOG_LEVEL,
             'formatter': 'my_formatter',
             'stream': sys.stdout
         },
         'file': {
             # Sends all log messages to a file
             'class': 'logging.FileHandler',
-            'level': "INFO",
+            'level': LOG_LEVEL,
             'formatter': 'my_formatter',
             'filename': logPath,
             'encoding': 'utf8'
