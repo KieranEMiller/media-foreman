@@ -8,8 +8,8 @@ from kem.mediaforeman.analyses.analysis_issue_threshold_not_met import AnalysisI
 
 class TestFileAnalysisValidImage(TestBaseFs):
 
-    def atest_returns_no_issues_when_all_properties_met(self):
-        samplePath = self.CopySampleMp3WithImgToDir()
+    def test_returns_no_issues_when_all_properties_met(self):
+        samplePath = self.CopySampleMp3WithImgToDir(useSampleWithMinImgReqs=True)
         media = MediaFile(samplePath)
         imgAnalysis = FileAnalysisValidImage(media)
         
