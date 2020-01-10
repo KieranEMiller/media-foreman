@@ -25,7 +25,7 @@ class TestMediaFile(TestBaseFs):
         self.assertEqual(mediaFile.TrackNumber, 3)
         
     def test_file_metadata_img_extracts_properly(self):
-        path = self.CopySampleMp3WithImgToDir(self._testDir)
+        path = self.CopySampleMp3ToDir(testFile = "./assets/sample_mp3_with_img_below_size_minimums.mp3")
         mediaFile = MediaFile(path)
         
         self.assertTrue(mediaFile.CoverImgExists)
@@ -46,7 +46,16 @@ class TestMediaFile(TestBaseFs):
         self.assertLess(mediaFile.Duration, 4)
         self.assertEqual(mediaFile.BitRate, 172)
         
-
+        
+    def test_mp3_with_no_property_tags_does_not_error_out_uses_defaults(self):
+        path = self.CopySampleMp3ToDir(testFile = "./assets/sample_mp3_with_no_metadata.mp3")
+        
+        try:
+            mediaFile = MediaFile(path)
+        
+        except Exception:
+            self.fail("MediaFile ctor failed on tag with no metadata")
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
