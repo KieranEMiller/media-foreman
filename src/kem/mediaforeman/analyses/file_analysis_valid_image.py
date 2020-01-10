@@ -10,7 +10,7 @@ from kem.mediaforeman.analyses.analysis_issue_threshold_not_met import AnalysisI
 
 class FileAnalysisValidImage(FileAnalysisBase):
 
-    def __init__(self, params):
+    def __init__(self):
         self._requiredXandYPixelLength = 256
         
     def GetAnalysisType(self):
