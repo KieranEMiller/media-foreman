@@ -33,17 +33,19 @@ class MediaFile(MediaBase):
     def ExtractProperties(self):
         metadata = eyed3.load(self.BasePath)
 
-        self.Album = metadata.tag.album
-        self.AlbumArtist = metadata.tag.album_artist
-        self.Title = metadata.tag.title
-        self.TrackNumber = metadata.tag.track_num[0]
+        if(metadata.tag != None):
+            self.Album = metadata.tag.album
+            self.AlbumArtist = metadata.tag.album_artist
+            self.Title = metadata.tag.title
+            self.TrackNumber = metadata.tag.track_num[0]
+            
+            self.ExtractImageProperties(metadata)
         
-        self.Duration = metadata.info.time_secs
+        if(metadata.info != None):
+            self.Duration = metadata.info.time_secs
 
-        bitRateVrb, bitRateVal = metadata.info.bit_rate
-        self.BitRate = bitRateVal
-        
-        self.ExtractImageProperties(metadata)
+            bitRateVrb, bitRateVal = metadata.info.bit_rate
+            self.BitRate = bitRateVal
         
     def ExtractImageProperties(self, metadata):
         '''picture type here represents the type of image embedded in the file
