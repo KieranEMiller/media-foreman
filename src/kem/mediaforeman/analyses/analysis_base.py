@@ -36,8 +36,8 @@ class AnalysisBase(object):
                 self.GetAnalysisType(), analysisResult.Media.BasePath
             )
         else:
-            issues = '\n- '.join([issue.GetText() for issue in analysisResult.IssuesFound])
-            msg = "{}: analysis issue list against file {}\n- {}".format(
+            issues = '\n\t- '.join([issue.GetText() for issue in analysisResult.IssuesFound])
+            msg = "{}: analysis issue list against file {}\n\t- {}\n".format(
                 self.GetAnalysisType(), analysisResult.Media.BasePath, issues
             )
             
