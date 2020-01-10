@@ -11,9 +11,10 @@ class MediaCollection(MediaBase):
         
     def LoadContents(self, path):
 
-        files = []
-        for file in os.walk(path):
-            files.append(MediaFile(file))
+        mediaFiles = []
+        for root, dirs, files in os.walk(path):
+            for file in files:
+                mediaFiles.append(MediaFile(file))
 
-        return files
+        return mediaFiles
 
