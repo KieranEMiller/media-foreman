@@ -23,25 +23,17 @@ class TestBaseFs(unittest.TestCase):
         os.mkdir(newDir)
         return newDir
 
-    def CopySampleMp3WithImgToDir(self, testDir = None, useSampleWithMinImgReqs = False):
-        imgSamplePath = "./assets/sample_mp3_with_img_below_size_minimums.mp3"
-        if(useSampleWithMinImgReqs):
-            imgSamplePath = "./assets/sample_mp3_with_img_meets_size_reqs_275x275.mp3"
-            
-        return self.CopySampleMp3ToDir(testDir, imgSamplePath)
-    
-    def CopySampleMp3ToDir(self, testDir = None, file = "./assets/sample_mp3.mp3"):
+    def CopySampleMp3ToDir(self, testDir = None, testFile = "./assets/sample_mp3.mp3"):
         if(testDir is None):
             testDir = self._testDir
             
-        pathToSample = os.path.join(os.path.dirname(os.path.realpath(__file__)), file)
+        pathToSample = os.path.join(os.path.dirname(os.path.realpath(__file__)), testFile)
         dest = os.path.join(testDir, "{}.mp3".format(str(uuid.uuid1())));
         shutil.copy(os.path.abspath(pathToSample), dest)
         
         #print("copying sample mp3 from {} to {}".format(os.path.abspath(pathToSample), dest))
         
         return dest
-    
         
 
 if __name__ == "__main__":
