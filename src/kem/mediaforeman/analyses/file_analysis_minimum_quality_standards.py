@@ -13,7 +13,7 @@ from kem.mediaforeman.analyses.analysis_issue_property_invalid import AnalysisIs
 
 class FileAnalysisMinimumQualityStandards(FileAnalysisBase):
 
-    def __init__(self, params):
+    def __init__(self):
         self.MinBitRate = 256
         self.AllowLossy = True
 
@@ -30,7 +30,7 @@ class FileAnalysisMinimumQualityStandards(FileAnalysisBase):
         if(mediaFile.BitRate < self.MinBitRate):
             issues.append(AnalysisIssueThresholdNotMet("BitRate", self.MinBitRate, mediaFile.BitRate))
             
-        if(mediaFile.AllowLossy == False):
+        if(self.AllowLossy == False):
             '''
             for now just go based on extension even though this is not an accurate way
             to determine compression
