@@ -8,6 +8,7 @@ from kem.mediaforeman_tests.test_base_fs import TestBaseFs
 from kem.mediaforeman.media_file import MediaFile
 from kem.mediaforeman.analyses.file_analysis_minimum_quality_standards import FileAnalysisMinimumQualityStandards
 from kem.mediaforeman.analyses.analysis_type import AnalysisType
+from kem.mediaforeman.analyses.analysis_issue_threshold_not_met import AnalysisIssueThresholdNotMet
 
 SAMPLE_MP3_172bitrate = "./assets/sample_mp3_172bitrate.mp3"
 SAMPLE_MP3_320bitrate = "./assets/sample_mp3_320bitrate.mp3"
@@ -25,6 +26,17 @@ class TestFileAnalysisMinimumQualityStandards(TestBaseFs):
         self.assertEqual(len(result.IssuesFound), 0)
         self.assertEqual(result.AnalysisType, AnalysisType.FileMinimumQualityStandards)
 
+    def test_file_with_invalid_standards_returns_issues(self):
+        sample = self.CopySampleMp3ToDir(testFile = SAMPLE_MP3_172bitrate)
+        mediaFile = MediaFile(sample)
+        
+        analysis = FileAnalysisMinimumQualityStandards()
+        result = analysis.RunAnalysis(mediaFile)
+        
+        self.assertTrue(result.HasIssues)
+        self.assertGreater(len(result.IssuesFound), 0)
+        self.assertIsInstance(result.IssuesFound[0], AnalysisIssueThresholdNotMet)
+        
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
