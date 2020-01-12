@@ -10,7 +10,7 @@ from kem.mediaforeman.analyses.analysis_issue_property_invalid import AnalysisIs
 
 class FileAnalysisCompleteAudioMetadata(FileAnalysisBase):
 
-    def __init__(self, params):
+    def __init__(self):
         pass
         
     def GetAnalysisType(self):
