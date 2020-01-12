@@ -5,7 +5,8 @@ Created on Dec 29, 2019
 '''
 import logging
 
-from kem.mediaforeman.console_app import ConsoleApp
+from kem.mediaforeman.ui.console_app import ConsoleApp
+from kem.mediaforeman.ui.gui import GuiApp
 
 if __name__ == '__main__':
     
@@ -16,5 +17,9 @@ if __name__ == '__main__':
     _log.info(welcomeMsg)
     
     app = ConsoleApp()
-    app.Run()
+    if(app._args.gui):
+        gui = GuiApp()
+        gui.Run()
+    else:
+        app.Run()
     

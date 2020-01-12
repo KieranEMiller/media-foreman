@@ -44,5 +44,11 @@ class ConsoleApp(object):
                                required=False,
                                action="store_true")
         
+        argParser.add_argument("-g",
+                               "--gui",
+                               help="use the GUI version of the app instead of the console version",
+                               required=False,
+                               action="store_true")
+        
         self._args = argParser.parse_args()
         
