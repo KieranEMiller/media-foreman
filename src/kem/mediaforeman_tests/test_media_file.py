@@ -4,6 +4,8 @@ Created on Jan 1, 2020
 @author: kieranemiller
 '''
 import unittest
+import uuid
+
 from kem.mediaforeman_tests.test_base_fs import TestBaseFs
 from kem.mediaforeman.media_file import MediaFile
 
@@ -55,6 +57,24 @@ class TestMediaFile(TestBaseFs):
         
         except Exception:
             self.fail("MediaFile ctor failed on tag with no metadata")
+            
+    def test_save_metadata_works_for_all_regular_tag_data(self):
+        path = self.CopySampleMp3ToDir()
+        mediaFile = MediaFile(path)
+        
+        uniqueId = str(uuid.uuid1())
+        mediaFile.Album = "Album {}".format(uniqueId)
+        mediaFile.AlbumArtist = "AlbumArtist {}".format(uniqueId)
+        mediaFile.Title = "Title {}".format(uniqueId)
+        mediaFile.TrackNumber = 99
+        mediaFile.SaveMetadata()
+        
+        secondLoad = MediaFile(path)
+        self.assertEqual(secondLoad.AlbumArtist, mediaFile.AlbumArtist)
+        self.assertEqual(secondLoad.Album, mediaFile.Album)
+        self.assertEqual(secondLoad.Title, mediaFile.Title)
+        self.assertEqual(secondLoad.TrackNumber, mediaFile.TrackNumber)
+
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

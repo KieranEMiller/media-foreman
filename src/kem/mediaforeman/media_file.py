@@ -2,12 +2,15 @@ import os
 import eyed3
 from PIL import Image
 from io import BytesIO
+import logging
 
 from kem.mediaforeman.media_base import MediaBase
 
+_log = logging.getLogger()
+
 class MediaFile(MediaBase):
 
-    def __init__(self, path):
+    def __init__(self, path = None):
         super(MediaFile, self).__init__(path)
         
         '''alphanumerical metadata'''
@@ -25,7 +28,8 @@ class MediaFile(MediaBase):
         self.Duration = -1
         self.BitRate = -1
         
-        self.ExtractProperties()
+        if(path != None):
+            self.ExtractProperties()
         
     def GetFileName(self):
         return os.path.basename(self.BasePath).lower()
@@ -46,7 +50,7 @@ class MediaFile(MediaBase):
 
             bitRateVrb, bitRateVal = metadata.info.bit_rate
             self.BitRate = bitRateVal
-        
+            
     def ExtractImageProperties(self, metadata):
         '''picture type here represents the type of image embedded in the file
              3: Front Cover, 
@@ -68,3 +72,17 @@ class MediaFile(MediaBase):
                 
                 img.close()
 
+    '''only saves metadata, not images (for now) '''
+    def SaveMetadata(self):
+        file = eyed3.load(self.BasePath)
+        
+        file.tag.artist = self.AlbumArtist
+        file.tag.album_artist = self.AlbumArtist
+        file.tag.album = self.Album
+        file.tag.title = self.Title
+        file.tag.track_num = self.TrackNumber
+        
+        _log.info("saving metadata for {}, artist: {}, album: {}, title: {}, track: {}".format(
+            self.BasePath, self.AlbumArtist, self.Album, self.Title, self.TrackNumber
+        ))
+        file.tag.save()
