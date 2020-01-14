@@ -30,6 +30,6 @@ class FileAnalysisCompleteAudioMetadata(FileAnalysisBase):
                 results.append(AnalysisIssuePropertyInvalid("Metadata Field Empty", "NOT_EMPTY", fieldName))
         
         if(mediaFile.TrackNumber <= 0):
-            results.append(AnalysisIssuePropertyInvalid("Metadata Field Empty", mediaFile.TrackNumber, mediaFile.TrackNumber))
+            results.append(AnalysisIssuePropertyInvalid("Metadata Field Empty", "1 or greater", mediaFile.TrackNumber))
             
         return results
