@@ -18,8 +18,11 @@ class TestBaseFs(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(self._testDir)
 
-    def CreateSubDirectory(self, name):
-        newDir = os.path.join(self._testDir, name)
+    def CreateSubDirectory(self, fileName, dirPath = None):
+        if(dirPath == None):
+            dirPath = self._testDir
+            
+        newDir = os.path.join(dirPath, fileName)
         os.mkdir(newDir)
         return newDir
 
