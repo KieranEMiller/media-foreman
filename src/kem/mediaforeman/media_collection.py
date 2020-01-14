@@ -7,7 +7,7 @@ class MediaCollection(MediaBase):
 
     def __init__(self, path):
         super(MediaCollection, self).__init__(path)
-        self._mediaFiles = self.LoadContents(path)
+        self.MediaFiles = self.LoadContents(path)
         
     def LoadContents(self, path):
 
