@@ -4,9 +4,12 @@ Created on Dec 29, 2019
 @author: kieranemiller
 '''
 import os
+import logging
 
 from kem.mediaforeman.media_collection import MediaCollection
 from kem.mediaforeman.media_file import MediaFile
+
+_log = logging.getLogger()
 
 class MediaRootDirectory(object):
 
@@ -17,9 +20,9 @@ class MediaRootDirectory(object):
         self.summarize = True
     
     def Process(self):
-        print("starting eval of {} directories: {}".format(len(self._rootDirs), self._rootDirs))
+        _log.info("starting eval of {} directories: {}".format(len(self._rootDirs), self._rootDirs))
         if(self.summarize): 
-            print("\tsummarize enabled...analysis only\n")
+            _log.info("\tsummarize enabled...analysis only\n")
             
         media = []
         for dir in self._rootDirs:
@@ -32,7 +35,7 @@ class MediaRootDirectory(object):
             raise ValueError("unknown directory {}".format(root))
         
         dirContents = os.listdir(root)
-        print("processing root dir {}, with {} children".format(root, len(dirContents)))
+        _log.info("processing root dir {}, with {} children".format(root, len(dirContents)))
 
         media = []
         for fileOrFolder in dirContents:
