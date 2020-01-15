@@ -36,6 +36,9 @@ class MediaFile(MediaBase):
     
     def ExtractProperties(self):
         metadata = eyed3.load(self.BasePath)
+        
+        if(metadata == None):
+            return
 
         if(metadata.tag != None):
             self.Album = metadata.tag.album
