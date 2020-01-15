@@ -1,8 +1,3 @@
-'''
-Created on Dec 31, 2019
-
-@author: kieranemiller
-'''
 import datetime
 
 from kem.mediaforeman.media_analyzer_result import MediaAnalyzerResult
@@ -27,10 +22,7 @@ class MediaAnalyzer(object):
         
         '''TODO: decide if its better to iterate over media or by analysis type?'''
         for media in self._media:
-            print("analyzing media: type {}, base path {}".format(type(media), media.BasePath))
-
             for analysis in self._analyses:
-                print("running analysis {}".format(type(analysis)))
                 analysisResults = analysis.RunAnalysis(media = media)
                 result.AnalysisResults.append(analysisResults)
 
