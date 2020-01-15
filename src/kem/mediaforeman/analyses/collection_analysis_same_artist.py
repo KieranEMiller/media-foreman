@@ -14,7 +14,7 @@ class CollectionAnalysisSameArtist(CollectionAnalysisBase):
         return AnalysisType.CollectionSameArtist
         
     def RunAnalysisOnCollection(self, mediaColl):
-        _log.info("running analysis on collection: {} with {} files".format(
+        _log.info("running same artist analysis on collection: {} with {} files".format(
             mediaColl.BasePath, len(mediaColl.MediaFiles)
         ))
         artistName = self.GetMostLikelyArtistName(mediaColl.MediaFiles)
