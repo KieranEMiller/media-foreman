@@ -2,6 +2,7 @@ import logging
 from kem.mediaforeman.analyses.collection_analysis_base import CollectionAnalysisBase
 from kem.mediaforeman.analyses.analysis_type import AnalysisType
 from kem.mediaforeman.analyses.analysis_issue_property_invalid import AnalysisIssuePropertyInvalid
+from kem.mediaforeman.util.most_common_determinator import MostCommonDeterminator
 
 _log = logging.getLogger()
 
@@ -17,7 +18,9 @@ class CollectionAnalysisSameArtist(CollectionAnalysisBase):
         _log.info("running same artist analysis on collection: {} with {} files".format(
             mediaColl.BasePath, len(mediaColl.MediaFiles)
         ))
-        artistName = self.GetMostLikelyArtistName(mediaColl.MediaFiles)
+        
+        determinator = MostCommonDeterminator()
+        artistName = determinator.ComputeMostCommonItemInList([file.AlbumArtist for file in mediaColl.MediaFiles])
         
         results = []
         for media in mediaColl.MediaFiles:
@@ -25,27 +28,4 @@ class CollectionAnalysisSameArtist(CollectionAnalysisBase):
                 results.append(AnalysisIssuePropertyInvalid("ArtistNameInconsistency", artistName, media.AlbumArtist))
 
         return results
-        
-    def GetMostLikelyArtistName(self, mediaFiles):
-        artistCounts = self.ComputeUniqueArtistNames(mediaFiles)
-        topArtistName, artistVal = self.GetHighestCountKeyFromDictionary(artistCounts)
-
-        _log.info("likely artist name: most probable is '{}' with a count of {} from {} unique artists and {} files".format(
-                topArtistName, artistCounts[topArtistName], len(artistCounts), len(mediaFiles)
-            )
-        )
-        return topArtistName
-        
-    def ComputeUniqueArtistNames(self, mediaFiles):
-        countsByArtistName = {}
-        for mediaFile in mediaFiles:
-            if(mediaFile.AlbumArtist in countsByArtistName):
-                countsByArtistName[mediaFile.AlbumArtist] += 1
-            else:
-                countsByArtistName[mediaFile.AlbumArtist] = 1
-        
-        return countsByArtistName
-    
-    def GetHighestCountKeyFromDictionary(self, countsByName):
-        sortedItems = sorted(countsByName.items(), reverse=True, key=lambda x: x[1])
-        return sortedItems[0]
+       
