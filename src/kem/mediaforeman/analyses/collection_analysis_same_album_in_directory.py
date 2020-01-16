@@ -19,9 +19,12 @@ class CollectionAnalysisSameAlbumInDirectory(CollectionAnalysisBase):
             mediaColl.BasePath, len(mediaColl.MediaFiles)
         ))
         
+        parents = self.GetDistinctParentDirs(mediaColl)
         results = []
-        for media in mediaColl.MediaFiles:
-            pass
+        for parent in parents:
+            
+            
+            
 
         return results
         
@@ -29,8 +32,8 @@ class CollectionAnalysisSameAlbumInDirectory(CollectionAnalysisBase):
         parentDirs = {}
         for file in mediaColl.MediaFiles:
             if(file.ParentDirectory in parentDirs):
-                parentDirs[file.ParentDirectory] += 1
+                parentDirs[file.ParentDirectory].append(file)
             else:
-                parentDirs[file.ParentDirectory] = 1
+                parentDirs[file.ParentDirectory] = [file]
             
         return parentDirs
