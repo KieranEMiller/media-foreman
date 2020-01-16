@@ -32,8 +32,6 @@ class Test(TestBaseFs):
         for issue in result.IssuesFound:
             self.assertIsInstance(issue, AnalysisIssuePropertyInvalid)
 
-        
-        
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
