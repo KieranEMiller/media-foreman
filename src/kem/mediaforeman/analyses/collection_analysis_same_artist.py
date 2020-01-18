@@ -15,10 +15,6 @@ class CollectionAnalysisSameArtist(CollectionAnalysisBase):
         return AnalysisType.CollectionSameArtist
         
     def RunAnalysisOnCollection(self, mediaColl):
-        _log.info("running same artist analysis on collection: {} with {} files".format(
-            mediaColl.BasePath, len(mediaColl.MediaFiles)
-        ))
-        
         determinator = MostCommonDeterminator()
         artistName = determinator.ComputeMostCommonItemInList([file.AlbumArtist for file in mediaColl.MediaFiles])
         

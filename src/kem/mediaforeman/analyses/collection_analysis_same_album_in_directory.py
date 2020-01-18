@@ -16,10 +16,6 @@ class CollectionAnalysisSameAlbumInDirectory(CollectionAnalysisBase):
         return AnalysisType.CollectionSameAlbumInDirectory
         
     def RunAnalysisOnCollection(self, mediaColl):
-        _log.info("running same album analysis on collection: {} with {} files".format(
-            mediaColl.BasePath, len(mediaColl.MediaFiles)
-        ))
-        
         parents = self.GetDistinctParentDirs(mediaColl)
         results = []
         for parent in parents:

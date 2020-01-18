@@ -15,10 +15,7 @@ class CollectionAnalysisMixedMediaTypesInDirectory(CollectionAnalysisBase):
         return AnalysisType.CollectionSameArtist
         
     def RunAnalysisOnCollection(self, mediaColl):
-        _log.info("running mixed media analysis on collection: {} with {} files".format(
-            mediaColl.BasePath, len(mediaColl.MediaFiles)
-        ))
-        
+        pass
         '''
         determinator = MostCommonDeterminator()
          = determinator.ComputeMostCommonItemInList([file.GetFileName() for file in mediaColl.MediaFiles])
