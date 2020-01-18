@@ -15,7 +15,7 @@ _log = logging.getLogger()
 
 class AnalysisBase(object):
 
-    def __init__(self, params):
+    def __init__(self):
         self.ElapsedTime = None
         
     @abstractmethod
