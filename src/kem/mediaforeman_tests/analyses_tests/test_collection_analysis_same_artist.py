@@ -92,7 +92,7 @@ class Test(TestBaseFs):
         
         self.assertEqual(result.AnalysisType, AnalysisType.CollectionSameArtist)
         self.assertTrue(result.HasIssues)
-        self.assertEqual(len(result.IssuesFound), 2)
+        self.assertEqual(len(result.IssuesFound), 1)
         
         for issue in result.IssuesFound:
             self.assertIsInstance(issue, AnalysisIssuePropertyInvalid)
