@@ -14,3 +14,4 @@ class AnalysisIssuePropertyType(Enum):
     CoverImageExists = 6
     CoverImageXDimensions = 7
     CoverImageYDimensions = 8
+    BitRate = 9
