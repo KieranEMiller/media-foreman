@@ -20,7 +20,7 @@ config = {
     'formatters': {
         # Modify log message format here or replace with your custom formatter class
         'my_formatter': {
-            'format': '(%(process)d) %(asctime)s %(name)s (line %(lineno)s) | %(levelname)s %(message)s'
+            'format': '(%(process)d) %(asctime)s %(name)s %(module)s (line %(lineno)s) | %(levelname)s %(message)s'
         }
     },
     'handlers': {
