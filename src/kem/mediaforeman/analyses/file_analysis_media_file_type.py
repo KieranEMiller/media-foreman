@@ -28,6 +28,8 @@ class FileAnalysisMediaFileType(FileAnalysisBase):
         
         match = [extension for extension in validTypes if mediaFile.GetFileName().endswith(extension.lower())]
         if(len(match) == 0):
-            result.append(AnalysisIssuePropertyInvalid(AnalysisIssuePropertyType.FileType, validTypes, mediaFile.GetFileName()))
+            result.append(AnalysisIssuePropertyInvalid(
+                mediaFile, AnalysisIssuePropertyType.FileType, validTypes, mediaFile.GetFileName()
+            ))
             
         return result

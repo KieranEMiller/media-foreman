@@ -22,7 +22,9 @@ class CollectionAnalysisSameArtist(CollectionAnalysisBase):
         results = []
         for media in mediaColl.MediaFiles:
             if(media.AlbumArtist != artistName):
-                results.append(AnalysisIssuePropertyInvalid(AnalysisIssuePropertyType.ArtistMismatch, artistName, media.AlbumArtist))
+                results.append(AnalysisIssuePropertyInvalid(
+                    media, AnalysisIssuePropertyType.ArtistMismatch, artistName, media.AlbumArtist
+                ))
 
         return results
        

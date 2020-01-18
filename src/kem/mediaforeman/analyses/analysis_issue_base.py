@@ -3,8 +3,9 @@ from abc import abstractmethod
 
 class AnalysisIssueBase(object):
 
-    def __init__(self, propertyName, expectedVal, actualVal):
-        self.PropertyName = propertyName
+    def __init__(self, mediaFile, issueType, expectedVal, actualVal):
+        self.MediaFile = mediaFile
+        self.IssueType = issueType
         self.ExpectedVal = expectedVal
         self.ActualVal = actualVal
     

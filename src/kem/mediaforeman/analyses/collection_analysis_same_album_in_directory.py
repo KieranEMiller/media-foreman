@@ -30,7 +30,9 @@ class CollectionAnalysisSameAlbumInDirectory(CollectionAnalysisBase):
             
             for mediaFile in parents[parent]:
                 if(mediaFile.Album != likelyAlbumName):
-                    results.append(AnalysisIssuePropertyInvalid(AnalysisIssuePropertyType.AlbumMismatch, likelyAlbumName, mediaFile.Album))
+                    results.append(AnalysisIssuePropertyInvalid(
+                        mediaFile, AnalysisIssuePropertyType.AlbumMismatch, likelyAlbumName, mediaFile.Album
+                    ))
             
         return results
         

@@ -22,17 +22,17 @@ class FileAnalysisValidImage(FileAnalysisBase):
         
         if(mediaFile.CoverImgExists == False):
             results.append(AnalysisIssuePropertyInvalid(
-                AnalysisIssuePropertyType.CoverImageExists, True, mediaFile.CoverImgExists
+                mediaFile, AnalysisIssuePropertyType.CoverImageExists, True, mediaFile.CoverImgExists
             ))
 
         if(mediaFile.CoverImgX < self._requiredXandYPixelLength or mediaFile.CoverImgX <= 0):
             results.append(AnalysisIssueThresholdNotMet(
-                AnalysisIssuePropertyType.CoverImageXDimensions, self._requiredXandYPixelLength, mediaFile.CoverImgX
+                mediaFile, AnalysisIssuePropertyType.CoverImageXDimensions, self._requiredXandYPixelLength, mediaFile.CoverImgX
             ))
             
         if(mediaFile.CoverImgY < self._requiredXandYPixelLength or mediaFile.CoverImgY <= 0):
             results.append(AnalysisIssueThresholdNotMet(
-                AnalysisIssuePropertyType.CoverImageYDimensions, self._requiredXandYPixelLength, mediaFile.CoverImgY
+                mediaFile, AnalysisIssuePropertyType.CoverImageYDimensions, self._requiredXandYPixelLength, mediaFile.CoverImgY
             ))
 
         return results

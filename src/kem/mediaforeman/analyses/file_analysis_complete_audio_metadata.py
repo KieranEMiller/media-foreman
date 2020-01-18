@@ -28,9 +28,13 @@ class FileAnalysisCompleteAudioMetadata(FileAnalysisBase):
         
         for fieldName, fieldVal in stringFieldsToTest:
             if(fieldVal.strip() == ""):
-                results.append(AnalysisIssuePropertyInvalid(AnalysisIssuePropertyType.MetadataFieldEmpty, "NOT_EMPTY", fieldName))
+                results.append(AnalysisIssuePropertyInvalid(
+                    mediaFile, AnalysisIssuePropertyType.MetadataFieldEmpty, "NOT_EMPTY", fieldName
+                ))
         
         if(mediaFile.TrackNumber <= 0):
-            results.append(AnalysisIssuePropertyInvalid(AnalysisIssuePropertyType.MetadataFieldEmpty, "1 or greater", mediaFile.TrackNumber))
+            results.append(AnalysisIssuePropertyInvalid(
+                mediaFile, AnalysisIssuePropertyType.MetadataFieldEmpty, "1 or greater", mediaFile.TrackNumber
+            ))
             
         return results

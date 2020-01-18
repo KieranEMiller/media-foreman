@@ -29,7 +29,7 @@ class FileAnalysisMinimumQualityStandards(FileAnalysisBase):
     def RunAnalysisOnFile(self, mediaFile):
         issues = []
         if(mediaFile.BitRate < self.MinBitRate):
-            issues.append(AnalysisIssueThresholdNotMet("BitRate", self.MinBitRate, mediaFile.BitRate))
+            issues.append(AnalysisIssueThresholdNotMet(mediaFile, AnalysisIssuePropertyType.BitRate, self.MinBitRate, mediaFile.BitRate))
             
         if(self.AllowLossy == False):
             '''
@@ -40,7 +40,9 @@ class FileAnalysisMinimumQualityStandards(FileAnalysisBase):
             lossyTypes = ['.mp3', '.mp4' ]
             for lossyType in lossyTypes:
                 if(mediaFile.GetFileName().endswith(lossyType)):
-                    issues.append(AnalysisIssuePropertyInvalid(AnalysisIssuePropertyType.LossyClassification, True, self.AllowLossy))
+                    issues.append(AnalysisIssuePropertyInvalid(
+                        mediaFile, AnalysisIssuePropertyType.LossyClassification, True, self.AllowLossy
+                    ))
                     break
             
         return issues
