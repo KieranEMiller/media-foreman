@@ -66,22 +66,28 @@ class GuiApp(object):
             lbl1 = Label(tabFrame, text=analysisType.name)
             lbl1.grid(column=0, row=0)
             
-            self.tree = ttk.Treeview(tabFrame, columns=('FileName', 'Path', 'ParentDirectory'))
+            tree = ttk.Treeview(tabFrame, columns=('FileName', 'Path', 'ParentDirectory'))
 
-            vsb = ttk.Scrollbar(self.tree, orient="vertical")
-            vsb.configure(command=self.tree.yview)
-            self.tree.configure(yscrollcommand=vsb.set)
+            vsb = ttk.Scrollbar(tabFrame, orient="vertical")
+            vsb.configure(command=tree.yview)
+            vsb.grid(row=0, rowspan=2, column=2, sticky=N+S)
+            tree.configure(yscrollcommand=vsb.set)
+
             
-            self.tree.heading('#0', text='AnalysisType')
-            self.tree.heading('#1', text='FileName')
-            self.tree.heading('#2', text='Path')
-            self.tree.heading('#3', text='ParentDirectory')
-            self.tree.column('#0', width=100, stretch=tkinter.NO)
-            self.tree.column('#1', width=100, stretch=tkinter.NO)
-            self.tree.column('#2', stretch=tkinter.YES)
-            self.tree.column('#3', stretch=tkinter.YES)
-            self.tree.grid(row=1, columnspan=2, sticky='nsew')
-            self.treeview = self.tree
+            tree.heading('#0', text='AnalysisType')
+            tree.heading('#1', text='FileName')
+            tree.heading('#2', text='Path')
+            tree.heading('#3', text='ParentDirectory')
+            tree.column('#0', width=100, stretch=tkinter.NO)
+            tree.column('#1', width=100, stretch=tkinter.NO)
+            tree.column('#2', stretch=tkinter.YES)
+            tree.column('#3', stretch=tkinter.YES)
+            tree.grid(row=1, columnspan=2, sticky='nsew')
+            
+            for i in range(50):
+                parent = tree.insert('', 'end', text='item num ' + str(i), values=('qwer', 'qwer', 'qwer'))
+                for z in range(5):
+                    tree.insert(parent, 'end', text='item num ' + str(z), values=('qwer', 'qwer', 'qwer'))
             
             tabsByAnalysisType[analysisType] = tabFrame
             
