@@ -13,7 +13,7 @@ class CollectionAnalysisSameAlbumInDirectory(CollectionAnalysisBase):
         pass
     
     def GetAnalysisType(self):
-        return AnalysisType.CollectionSameArtist
+        return AnalysisType.CollectionSameAlbumInDirectory
         
     def RunAnalysisOnCollection(self, mediaColl):
         _log.info("running same album analysis on collection: {} with {} files".format(
