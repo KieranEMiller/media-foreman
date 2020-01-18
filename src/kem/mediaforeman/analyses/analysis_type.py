@@ -11,4 +11,5 @@ class AnalysisType(Enum):
     FileCompleteAudioMetadata = 3
     FileMinimumQualityStandards = 4
     CollectionSameArtist = 5
-    
+    CollectionSameAlbumInDirectory = 6
+    CollectionMixedMediaTypesInDirectory = 7
