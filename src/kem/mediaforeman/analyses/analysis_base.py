@@ -45,7 +45,9 @@ class AnalysisBase(object):
     
     def RunAnalysis(self, media):
         startTime = datetime.datetime.now()
-        _log.info("running analysis '{}' against {}".format(self.GetAnalysisType(), type(media)))
+        _log.info("running analysis '{}' against type {} with path {}".format(
+            self.GetAnalysisType(), type(media), media.BasePath
+        ))
         
         result = AnalysisResult()
         result.AnalysisType = self.GetAnalysisType()
