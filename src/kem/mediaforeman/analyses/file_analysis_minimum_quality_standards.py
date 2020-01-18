@@ -10,6 +10,7 @@ from kem.mediaforeman.analyses.analysis_type import AnalysisType
 from kem.mediaforeman.analyses.analysis_result import AnalysisResult
 from kem.mediaforeman.analyses.analysis_issue_threshold_not_met import AnalysisIssueThresholdNotMet
 from kem.mediaforeman.analyses.analysis_issue_property_invalid import AnalysisIssuePropertyInvalid
+from kem.mediaforeman.analyses.analysis_issue_type import AnalysisIssuePropertyType
 
 class FileAnalysisMinimumQualityStandards(FileAnalysisBase):
 
@@ -39,7 +40,7 @@ class FileAnalysisMinimumQualityStandards(FileAnalysisBase):
             lossyTypes = ['.mp3', '.mp4' ]
             for lossyType in lossyTypes:
                 if(mediaFile.GetFileName().endswith(lossyType)):
-                    issues.append(AnalysisIssuePropertyInvalid("AllowLossy", True, self.AllowLossy))
+                    issues.append(AnalysisIssuePropertyInvalid(AnalysisIssuePropertyType.LossyClassification, True, self.AllowLossy))
                     break
             
         return issues

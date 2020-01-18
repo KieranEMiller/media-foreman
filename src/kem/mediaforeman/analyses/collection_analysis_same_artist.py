@@ -3,6 +3,7 @@ from kem.mediaforeman.analyses.collection_analysis_base import CollectionAnalysi
 from kem.mediaforeman.analyses.analysis_type import AnalysisType
 from kem.mediaforeman.analyses.analysis_issue_property_invalid import AnalysisIssuePropertyInvalid
 from kem.mediaforeman.util.most_common_determinator import MostCommonDeterminator
+from kem.mediaforeman.analyses.analysis_issue_type import AnalysisIssuePropertyType
 
 _log = logging.getLogger()
 
@@ -21,7 +22,7 @@ class CollectionAnalysisSameArtist(CollectionAnalysisBase):
         results = []
         for media in mediaColl.MediaFiles:
             if(media.AlbumArtist != artistName):
-                results.append(AnalysisIssuePropertyInvalid("ArtistNameInconsistency", artistName, media.AlbumArtist))
+                results.append(AnalysisIssuePropertyInvalid(AnalysisIssuePropertyType.ArtistMismatch, artistName, media.AlbumArtist))
 
         return results
        

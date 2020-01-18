@@ -4,6 +4,7 @@ from kem.mediaforeman.analyses.analysis_type import AnalysisType
 from kem.mediaforeman.analyses.analysis_issue_property_invalid import AnalysisIssuePropertyInvalid
 from kem.mediaforeman.media_collection import MediaCollection
 from kem.mediaforeman.util.most_common_determinator import MostCommonDeterminator
+from kem.mediaforeman.analyses.analysis_issue_type import AnalysisIssuePropertyType
 
 _log = logging.getLogger()
 
@@ -29,7 +30,7 @@ class CollectionAnalysisSameAlbumInDirectory(CollectionAnalysisBase):
             
             for mediaFile in parents[parent]:
                 if(mediaFile.Album != likelyAlbumName):
-                    results.append(AnalysisIssuePropertyInvalid("AlbumName", likelyAlbumName, mediaFile.Album))
+                    results.append(AnalysisIssuePropertyInvalid(AnalysisIssuePropertyType.AlbumMismatch, likelyAlbumName, mediaFile.Album))
             
         return results
         

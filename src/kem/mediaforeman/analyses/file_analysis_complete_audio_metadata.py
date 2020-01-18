@@ -7,6 +7,7 @@ from kem.mediaforeman.analyses.file_analysis_base import FileAnalysisBase
 from kem.mediaforeman.analyses.analysis_type import AnalysisType
 from trace import CoverageResults
 from kem.mediaforeman.analyses.analysis_issue_property_invalid import AnalysisIssuePropertyInvalid
+from kem.mediaforeman.analyses.analysis_issue_type import AnalysisIssuePropertyType
 
 class FileAnalysisCompleteAudioMetadata(FileAnalysisBase):
 
@@ -27,9 +28,9 @@ class FileAnalysisCompleteAudioMetadata(FileAnalysisBase):
         
         for fieldName, fieldVal in stringFieldsToTest:
             if(fieldVal.strip() == ""):
-                results.append(AnalysisIssuePropertyInvalid("Metadata Field Empty", "NOT_EMPTY", fieldName))
+                results.append(AnalysisIssuePropertyInvalid(AnalysisIssuePropertyType.MetadataFieldEmpty, "NOT_EMPTY", fieldName))
         
         if(mediaFile.TrackNumber <= 0):
-            results.append(AnalysisIssuePropertyInvalid("Metadata Field Empty", "1 or greater", mediaFile.TrackNumber))
+            results.append(AnalysisIssuePropertyInvalid(AnalysisIssuePropertyType.MetadataFieldEmpty, "1 or greater", mediaFile.TrackNumber))
             
         return results
