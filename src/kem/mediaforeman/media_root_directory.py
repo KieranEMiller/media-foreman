@@ -12,6 +12,8 @@ from kem.mediaforeman.media_file import MediaFile
 _log = logging.getLogger()
 
 class MediaRootDirectory(object):
+    '''use 0 or -1 to be unlimited'''
+    MAX_NUMBER_OF_DIRS_IN_ROOT_TO_PROCESS = 5
 
     def __init__(self, params):
         self._rootDirs = params
@@ -38,10 +40,16 @@ class MediaRootDirectory(object):
         _log.info("processing root dir {}, with {} children".format(root, len(dirContents)))
 
         media = []
+        dirsProcessed = 0
         for fileOrFolder in dirContents:
+            
+            if(self.MAX_NUMBER_OF_DIRS_IN_ROOT_TO_PROCESS > 0 and dirsProcessed >= self.MAX_NUMBER_OF_DIRS_IN_ROOT_TO_PROCESS):
+                break
+            
             path = os.path.join(root, fileOrFolder)
             if(os.path.isdir(path)):
                 media.append(MediaCollection(path))
+                dirsProcessed=dirsProcessed+1
                 
             elif(os.path.isfile(path)):
                 media.append(MediaFile(path))

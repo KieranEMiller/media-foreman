@@ -4,6 +4,7 @@ Created on Dec 29, 2019
 @author: kieranemiller
 '''
 import unittest
+import os
 from kem.mediaforeman_tests.test_base_fs import TestBaseFs
 
 from kem.mediaforeman.media_root_directory import MediaRootDirectory
@@ -45,6 +46,19 @@ class TestMediaRootDirectory(TestBaseFs):
         self.CopySampleMp3ToDir(self._testDir)
         self.CopySampleMp3ToDir(self._testDir)
 
+        mediaroot = MediaRootDirectory([self._testDir])
+        results = mediaroot.Process()
+        self.assertEqual(len(results), 5)
+        
+    def test_root_dir_respects_max_number_of_dirs_to_process(self):
+        
+        for i in range(10):
+            dir = self.CreateSubDirectory("test_dir_{}".format(str(i)))
+            self.CopySampleMp3ToDir(testDir = dir)
+            self.CopySampleMp3ToDir(testDir = dir)
+            
+        self.assertEqual(len(os.listdir(self._testDir)), 10)
+            
         mediaroot = MediaRootDirectory([self._testDir])
         results = mediaroot.Process()
         self.assertEqual(len(results), 5)
