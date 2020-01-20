@@ -5,6 +5,7 @@ Created on Jan 1, 2020
 '''
 import unittest
 import uuid
+import shutil
 
 from kem.mediaforeman_tests.test_base_fs import TestBaseFs
 from kem.mediaforeman.media_file import MediaFile
@@ -74,6 +75,23 @@ class TestMediaFile(TestBaseFs):
         self.assertEqual(secondLoad.Album, mediaFile.Album)
         self.assertEqual(secondLoad.Title, mediaFile.Title)
         self.assertEqual(secondLoad.TrackNumber, mediaFile.TrackNumber)
+        
+    def test_get_file_extension(self):
+        path = self.CopySampleMp3ToDir()
+        mediaFile = MediaFile(path)
+        
+        self.assertEqual(mediaFile.GetFileExtension(), ".mp3")
+        
+    def test_get_file_extension_converts_lowercase(self):
+        path = self.CopySampleMp3ToDir()
+
+        newPath = "{}.ASdf".format(path)
+        shutil.copy(path, newPath)
+        
+        mediaFile = MediaFile(newPath)
+        
+        self.assertEqual(mediaFile.GetFileExtension(), ".asdf")
+        
 
         
 if __name__ == "__main__":

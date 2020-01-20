@@ -34,6 +34,11 @@ class MediaFile(MediaBase):
     def GetFileName(self):
         return os.path.basename(self.BasePath).lower()
     
+    def GetFileExtension(self):
+        '''splitext returns a tuple filename, fileext, so index 1 
+           is the extension'''
+        return os.path.splitext(self.BasePath)[1].lower()
+    
     def ExtractProperties(self):
         metadata = eyed3.load(self.BasePath)
         
