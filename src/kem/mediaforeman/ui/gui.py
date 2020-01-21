@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from kem.mediaforeman.analyses.analysis_type import AnalysisType
 import tkinter
+from kem.mediaforeman.ui.gui_config import ConfigWindow
 
 class GuiApp(object):
 
@@ -51,11 +52,11 @@ class GuiApp(object):
         processBtn = Button(topFrame, text="Process Root")
         processBtn.grid(row=1, column=1, sticky=E)
 
-        configBtn = Button(topFrame, text="Configuration")
+        configBtn = Button(topFrame, text="Configuration", command=self.ShowConfig)
         configBtn.grid(row=1, column=0, sticky=W)
         
     def ShowConfig(self):
-        
+        win = ConfigWindow(self._window)
 
     def SetupResultsTabs(self):
         frame = Frame(self._rootFrame)
