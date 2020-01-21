@@ -21,6 +21,8 @@ class GuiApp(object):
         self._rootFrame = self.SetupRootFrame()
         
         self.SetupConfigSection()
+        separator = ttk.Separator(self._rootFrame, orient=HORIZONTAL)
+        separator.grid(row=2, columnspan=2, pady=5)
         self._resultsByAnalysisType = self.SetupResultsTabs()
         
         self._window.mainloop() 
@@ -29,7 +31,7 @@ class GuiApp(object):
         rootFrame = Frame(self._window, padx=10, pady=10)
         rootFrame.grid(row=0,column=0, columnspan=2, rowspan=3, sticky=N+E+S+W)
 
-        Grid.rowconfigure(rootFrame, 2, weight=1)
+        Grid.rowconfigure(rootFrame, 3, weight=1)
         Grid.columnconfigure(rootFrame, 1, weight=1)
         
         return rootFrame
@@ -49,9 +51,15 @@ class GuiApp(object):
         processBtn = Button(topFrame, text="Process Root")
         processBtn.grid(row=1, column=1, sticky=E)
 
+        configBtn = Button(topFrame, text="Configuration")
+        configBtn.grid(row=1, column=0, sticky=W)
+        
+    def ShowConfig(self):
+        
+
     def SetupResultsTabs(self):
         frame = Frame(self._rootFrame)
-        frame.grid(row=2, column=0, columnspan=2,sticky=N+E+S+W)
+        frame.grid(row=3, column=0, columnspan=2,sticky=N+E+S+W)
         Grid.columnconfigure(frame, 1, weight=1)
 
         tabControl = ttk.Notebook(frame)
