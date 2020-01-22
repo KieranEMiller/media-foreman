@@ -74,38 +74,38 @@ class GuiApp(object):
         return tabsByAnalysisType
     
     def SetupResultsTab(self, tabControl, tabName):
-            tabFrame = ttk.Frame(tabControl)
-            Grid.columnconfigure(tabFrame, 1, weight=1)
-            Grid.rowconfigure(tabFrame, 1, weight=1)
-            tabControl.add(tabFrame, text=tabName)
-            
-            lbl1 = Label(tabFrame, text=tabName)
-            lbl1.grid(column=0, row=0)
-            
-            tree = ttk.Treeview(tabFrame, columns=('FileName', 'Path', 'ParentDirectory'))
-
-            '''setup a vertical scrollbar'''
-            vsb = ttk.Scrollbar(tabFrame, orient="vertical")
-            vsb.configure(command=tree.yview)
-            vsb.grid(row=0, rowspan=2, column=2, sticky=N+S)
-            tree.configure(yscrollcommand=vsb.set)
-
-            tree.heading('#0', text='AnalysisType')
-            tree.heading('#1', text='FileName')
-            tree.heading('#2', text='Path')
-            tree.heading('#3', text='ParentDirectory')
-            tree.column('#0', width=100, stretch=tkinter.NO)
-            tree.column('#1', width=100, stretch=tkinter.NO)
-            tree.column('#2', stretch=tkinter.YES)
-            tree.column('#3', stretch=tkinter.YES)
-            tree.grid(row=1, columnspan=2, sticky='nsew')
-            
-            return tabFrame
+        tabFrame = ttk.Frame(tabControl)
+        Grid.columnconfigure(tabFrame, 1, weight=1)
+        Grid.rowconfigure(tabFrame, 1, weight=1)
+        tabControl.add(tabFrame, text=tabName)
         
-            ''' insertion sample
-            for i in range(50):
-                parent = tree.insert('', 'end', text='item num ' + str(i), values=('qwer', 'qwer', 'qwer'))
-                for z in range(5):
-                    tree.insert(parent, 'end', text='item num ' + str(z), values=('qwer', 'qwer', 'qwer'))
-            
-            '''
+        lbl1 = Label(tabFrame, text=tabName)
+        lbl1.grid(column=0, row=0)
+        
+        tree = ttk.Treeview(tabFrame, columns=('FileName', 'Path', 'ParentDirectory'))
+
+        '''setup a vertical scrollbar'''
+        vsb = ttk.Scrollbar(tabFrame, orient="vertical")
+        vsb.configure(command=tree.yview)
+        vsb.grid(row=0, rowspan=2, column=2, sticky=N+S)
+        tree.configure(yscrollcommand=vsb.set)
+
+        tree.heading('#0', text='AnalysisType')
+        tree.heading('#1', text='FileName')
+        tree.heading('#2', text='Path')
+        tree.heading('#3', text='ParentDirectory')
+        tree.column('#0', width=100, stretch=tkinter.NO)
+        tree.column('#1', width=100, stretch=tkinter.NO)
+        tree.column('#2', stretch=tkinter.YES)
+        tree.column('#3', stretch=tkinter.YES)
+        tree.grid(row=1, columnspan=2, sticky='nsew')
+        
+        return tabFrame
+        
+        ''' insertion sample
+        for i in range(50):
+            parent = tree.insert('', 'end', text='item num ' + str(i), values=('qwer', 'qwer', 'qwer'))
+            for z in range(5):
+                tree.insert(parent, 'end', text='item num ' + str(z), values=('qwer', 'qwer', 'qwer'))
+        
+        '''
