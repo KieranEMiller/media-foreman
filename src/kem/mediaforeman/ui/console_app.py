@@ -13,9 +13,9 @@ _log = logging.getLogger()
 
 class ConsoleApp(object):
 
-    def __init__(self, params=None):
+    def __init__(self):
         self._args = None
-        self.SetupArgs()
+        self._args = self.ParseArgs()
         
     def Run(self):
         _log.info("ConsoleApp: processing root directory {}".format(self._args.root_directory))
@@ -29,7 +29,7 @@ class ConsoleApp(object):
         analyzer = MediaAnalyzer(media)
         summary = analyzer.Analyze(processor.summarize)
         
-    def SetupArgs(self):
+    def ParseArgs(self):
         argParser = argparse.ArgumentParser("options")
 
         argParser.add_argument("-d", 
@@ -50,5 +50,5 @@ class ConsoleApp(object):
                                required=False,
                                action="store_true")
         
-        self._args = argParser.parse_args()
+        return argParser.parse_args()
         
