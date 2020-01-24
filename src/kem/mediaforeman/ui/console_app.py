@@ -8,6 +8,7 @@ import logging
 
 from kem.mediaforeman.media_root_directory import MediaRootDirectory
 from kem.mediaforeman.media_analyzer import MediaAnalyzer
+from kem.mediaforeman.app_config import AppConfig
 
 _log = logging.getLogger()
 
@@ -17,17 +18,17 @@ class ConsoleApp(object):
         self._args = None
         self._args = self.ParseArgs()
         
-    def Run(self):
-        _log.info("ConsoleApp: processing root directory {}".format(self._args.root_directory))
-        processor = MediaRootDirectory(self._args.root_directory)
+        config = AppConfig()
+        self._config = config.GetFromCommandLineArguments(self._args)
         
-        if(self._args.summary): 
-            processor.summarize = True
-            
+    def Run(self):
+        _log.info("processing root directory {}".format(self._config.RootDirectories))
+
+        processor = MediaRootDirectory(self._config.RootDirectories)
         media = processor.Process()
         
-        analyzer = MediaAnalyzer(media)
-        summary = analyzer.Analyze(processor.summarize)
+        analyzer = MediaAnalyzer(media, self._config.AnalysesToRun)
+        summary = analyzer.Analyze(self._config.SummarizeOnly)
         
     def ParseArgs(self):
         argParser = argparse.ArgumentParser("options")
@@ -49,6 +50,12 @@ class ConsoleApp(object):
                                help="use the GUI version of the app instead of the console version",
                                required=False,
                                action="store_true")
+
+        argParser.add_argument("-a", 
+                               "--analyze", 
+                               help="specify the analyses to run", 
+                               action="append",
+                               required=False)
         
         return argParser.parse_args()
         
