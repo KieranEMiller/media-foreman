@@ -1,13 +1,30 @@
 from tkinter import *
 from tkinter import ttk
 from kem.mediaforeman.analyses.analysis_type import AnalysisType
+from kem.mediaforeman.app_config import AppConfig
 
 class ConfigWindow(object):
 
     def __init__(self, parent):
+        self._config = AppConfig()
         self._window = Toplevel(parent)
         self._window.wm_title("Media Foreman Configuration")
         
+        self.InitWindowSizeAndLocationFromParent(parent)
+        
+        '''prevent parent from being interacted with'''
+        self._window.grab_set()
+        
+        self.SetupControls()
+        self._window.focus()
+        
+        self._window.protocol("WM_DELETE_WINDOW", self.OnWindowClosingEvent)
+        
+    def OnWindowClosingEvent(self):
+        tmp = self._analyses
+        self._config.AnalysesToRun = []
+        
+    def InitWindowSizeAndLocationFromParent(self, parent):
         WIN_X_BUFFER = 20
         WIN_Y_BUFFER = 30
         
@@ -18,29 +35,10 @@ class ConfigWindow(object):
                                parent.winfo_y() + WIN_Y_BUFFER)
         )
         
-        '''prevent parent from being interacted with'''
-        self._window.grab_set()
-        self.SetupControls()
-        self._window.focus()
-        
     def SetupControls(self):
         self._rootFrame = self.SetupRootFrame()
-        
-        rootDirLabel = Label(self._rootFrame, text='Run These Analyses')
-        rootDirLabel.grid(row=0, column=0)
-        
-        MAX_CHECKBOXES_PER_ROW = 2
-        row = 0
-        column=0
-        
-        for analysis in AnalysisType:
-            checkbox = Checkbutton(self._rootFrame, text=analysis.name, variable=True)
-            checkbox.grid(row=row, column=column, sticky=W)
-            
-            column=column+1
-            if(column>=MAX_CHECKBOXES_PER_ROW): 
-                row = row + 1
-                column = 0
+
+        self.SetupAnalysisListControls()
         
     def SetupRootFrame(self):
         rootFrame = Frame(self._window, padx=10, pady=10)
@@ -58,3 +56,24 @@ class ConfigWindow(object):
         
         return rootFrame
         
+    def SetupAnalysisListControls(self):
+        
+        self._analyses = {}
+        
+        rootDirLabel = Label(self._rootFrame, text='Run These Analyses')
+        rootDirLabel.grid(row=0, column=0, sticky=W)
+
+        MAX_CHECKBOXES_PER_ROW = 2
+        row = 1
+        column=0
+        
+        for analysis in AnalysisType:
+            self._analyses[analysis] = Variable()
+            
+            checkbox = Checkbutton(self._rootFrame, text=analysis.name, variable=self._analyses[analysis] )
+            checkbox.grid(row=row, column=column, sticky=W)
+            
+            column=column+1
+            if(column>=MAX_CHECKBOXES_PER_ROW): 
+                row = row + 1
+                column = 0
