@@ -1,8 +1,11 @@
 import argparse
+import logging
+
+_log = logging.getLogger()
 
 class AppConfig(object):
 
-    def __init__(self, params):
+    def __init__(self):
         '''run these analyses'''
         self.AnalysesToRun = []
         
@@ -13,6 +16,16 @@ class AppConfig(object):
         self.RootDirectories = []
         
     def GetFromCommandLineArguments(self, args):
-        self.
-
+        self.RootDirectories = args.root_directory
+        self.SummarizeOnly = args.summary
+        
+        self.AnalysesToRun = []
+        if(args.analyze != None):
+            for analysis in args.analyze:
+                self.AnalysesToRun.append(analysis())
+        
+    def PrintConfig(self):
+        _log.info("configuration loaded: \n\t-analyses: {}; \n\t-root dirs: {}; \n\t-summarize: {}".format(
+            self.AnalysesToRun, self.RootDirectories, self.SummarizeOnly
+        ))
         
