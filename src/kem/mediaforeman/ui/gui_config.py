@@ -23,6 +23,7 @@ class ConfigWindow(object):
     def OnWindowClosingEvent(self):
         tmp = self._analyses
         self._config.AnalysesToRun = []
+        self._window.destroy()
         
     def InitWindowSizeAndLocationFromParent(self, parent):
         WIN_X_BUFFER = 20
@@ -68,7 +69,8 @@ class ConfigWindow(object):
         column=0
         
         for analysis in AnalysisType:
-            self._analyses[analysis] = Variable()
+            self._analyses[analysis] = IntVar()
+            self._analyses[analysis].set(1)
             
             checkbox = Checkbutton(self._rootFrame, text=analysis.name, variable=self._analyses[analysis] )
             checkbox.grid(row=row, column=column, sticky=W)
