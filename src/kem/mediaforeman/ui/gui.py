@@ -3,13 +3,17 @@ from tkinter import ttk
 from kem.mediaforeman.analyses.analysis_type import AnalysisType
 import tkinter
 from kem.mediaforeman.ui.gui_config import ConfigWindow
+from kem.mediaforeman.app_config import AppConfig
 
 class GuiApp(object):
 
     def __init__(self):
+        self._config = AppConfig()
+        
         self._window = Tk()
         self._window.title("Media Foreman")
         self._window.geometry("500x350")
+        
         Grid.rowconfigure(self._window, 1, weight=1)
         Grid.columnconfigure(self._window, 1, weight=1)
         
@@ -56,7 +60,14 @@ class GuiApp(object):
         configBtn.grid(row=1, column=0, sticky=W)
         
     def ShowConfig(self):
-        win = ConfigWindow(self._window)
+        win = ConfigWindow(self, self._window)
+        
+    def UpdateConfigFromConfigWindow(self, config):
+        '''currently only the types of analyses performed are updated
+        or available on the configuration GUI, so just update those'''
+        self._config.AnalysesToRun = []
+        self._config.AnalysesToRun.extend(config.AnalysesToRun)
+        
 
     def SetupResultsTabs(self):
         frame = Frame(self._rootFrame)
