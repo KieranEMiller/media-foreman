@@ -25,7 +25,9 @@ class AppConfig(object):
                 self.AnalysesToRun.append(analysis())
         
     def PrintConfig(self):
-        _log.info("configuration loaded: \n\t-analyses: {}; \n\t-root dirs: {}; \n\t-summarize: {}".format(
+        msg = "configuration: \n\t-analyses: {}; \n\t-root dirs: {}; \n\t-summarize: {}".format(
             self.AnalysesToRun, self.RootDirectories, self.SummarizeOnly
-        ))
+        )
+        _log.info(msg)
+        return msg.replace("\n\t", "")
         
