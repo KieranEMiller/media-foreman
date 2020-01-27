@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from kem.mediaforeman.analyses.analysis_type import AnalysisType
 from kem.mediaforeman.app_config import AppConfig
+from kem.mediaforeman.ui.gui_constants import GUIConstants
 
 class ConfigWindow(object):
 
@@ -37,14 +38,11 @@ class ConfigWindow(object):
         self._app.UpdateConfigFromConfigWindow(config)
         
     def InitWindowSizeAndLocationFromParent(self, parent):
-        WIN_X_BUFFER = 20
-        WIN_Y_BUFFER = 30
-        
         self._window.geometry("%dx%d+%d+%d" % 
-                              (parent.winfo_width() - (2*WIN_X_BUFFER), 
-                               parent.winfo_height() - (2*WIN_Y_BUFFER), 
-                               parent.winfo_x() + WIN_X_BUFFER, 
-                               parent.winfo_y() + WIN_Y_BUFFER)
+                              (parent.winfo_width() - (GUIConstants.PADDING_X*3), 
+                               parent.winfo_height() - (GUIConstants.PADDING_Y*3), 
+                               parent.winfo_x() + GUIConstants.PADDING_X*2, 
+                               parent.winfo_y() + GUIConstants.PADDING_Y*2)
         )
         
     def SetupControls(self):

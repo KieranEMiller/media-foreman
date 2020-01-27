@@ -5,11 +5,9 @@ import tkinter
 from kem.mediaforeman.ui.gui_config import ConfigWindow
 from kem.mediaforeman.app_config import AppConfig
 from tkinter.scrolledtext import ScrolledText
+from kem.mediaforeman.ui.gui_constants import GUIConstants
 
 class GuiApp(object):
-
-    PADDING_X = 5
-    PADDING_Y = 5
 
     def __init__(self):
         self._config = AppConfig()
@@ -34,13 +32,13 @@ class GuiApp(object):
         
         self.SetupConfigSection()
         separator = ttk.Separator(self._rootFrame, orient=HORIZONTAL)
-        separator.grid(row=2, columnspan=2, pady=self.PADDING_Y)
+        separator.grid(row=2, columnspan=2, pady=GUIConstants.PADDING_Y)
         self._resultsByAnalysisType = self.SetupResultsTabs()
         
         self._window.mainloop() 
         
     def SetupRootFrame(self):
-        rootFrame = Frame(self._window, padx=self.PADDING_X*2, pady=self.PADDING_Y*2)
+        rootFrame = Frame(self._window, padx=GUIConstants.PADDING_X*2, pady=GUIConstants.PADDING_Y*2)
         rootFrame.grid(row=0,column=0, columnspan=2, rowspan=3, sticky=N+E+S+W)
 
         Grid.rowconfigure(rootFrame, 3, weight=1)
@@ -54,17 +52,17 @@ class GuiApp(object):
         Grid.columnconfigure(topFrame, 1, weight=1)
         
         rootDirLabel = Label(topFrame, text='Root Directory')
-        rootDirLabel.grid(row=0, column=0, columnspan=1, sticky=W, padx=self.PADDING_X)
+        rootDirLabel.grid(row=0, column=0, columnspan=1, sticky=W, padx=GUIConstants.PADDING_X)
  
         rootDirInput = Entry(topFrame)
         rootDirInput.grid(row=0, column=1, columnspan=3, sticky=W+E) 
         Grid.columnconfigure(rootDirInput, 1, weight=1)
 
         processBtn = Button(topFrame, text="Process Root")
-        processBtn.grid(row=1, column=2, sticky=E, padx=self.PADDING_X)
+        processBtn.grid(row=1, column=2, sticky=E, padx=GUIConstants.PADDING_X)
 
         configBtn = Button(topFrame, text="Configuration", command=self.ShowConfig)
-        configBtn.grid(row=1, column=0, sticky=W, padx=self.PADDING_X)
+        configBtn.grid(row=1, column=0, sticky=W, padx=GUIConstants.PADDING_X)
         
         self._configText = ScrolledText(topFrame, height=3)
         self._configText.grid(row=1, column=1, sticky=W+E)
