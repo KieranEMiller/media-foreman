@@ -15,8 +15,8 @@ class MediaRootDirectory(object):
     '''use 0 or -1 to be unlimited'''
     MAX_NUMBER_OF_DIRS_IN_ROOT_TO_PROCESS = 5
 
-    def __init__(self, params):
-        self._rootDirs = params
+    def __init__(self, rootDirs):
+        self._rootDirs = rootDirs
         
         'defaults'
         self.summarize = True
