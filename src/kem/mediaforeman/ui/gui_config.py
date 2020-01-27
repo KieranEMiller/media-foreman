@@ -5,12 +5,15 @@ from kem.mediaforeman.app_config import AppConfig
 
 class ConfigWindow(object):
 
-    def __init__(self, parent):
+    def __init__(self, app, parentWindow):
+        self._app = app
+        self._parent = parentWindow
+        
         self._config = AppConfig()
-        self._window = Toplevel(parent)
+        self._window = Toplevel(parentWindow)
         self._window.wm_title("Media Foreman Configuration")
         
-        self.InitWindowSizeAndLocationFromParent(parent)
+        self.InitWindowSizeAndLocationFromParent(parentWindow)
         
         '''prevent parent from being interacted with'''
         self._window.grab_set()
@@ -21,9 +24,17 @@ class ConfigWindow(object):
         self._window.protocol("WM_DELETE_WINDOW", self.OnWindowClosingEvent)
         
     def OnWindowClosingEvent(self):
-        tmp = self._analyses
-        self._config.AnalysesToRun = []
+        self.UpdateConfigOnParent()
         self._window.destroy()
+        
+    def UpdateConfigOnParent(self):
+        config = AppConfig()
+        
+        for analysis in self._analyses:
+            if(self._analyses[analysis].get() == 1):
+                config.AnalysesToRun.append(analysis)
+        
+        self._app.UpdateConfigFromConfigWindow(config)
         
     def InitWindowSizeAndLocationFromParent(self, parent):
         WIN_X_BUFFER = 20
@@ -70,7 +81,7 @@ class ConfigWindow(object):
         
         for analysis in AnalysisType:
             self._analyses[analysis] = IntVar()
-            self._analyses[analysis].set(1)
+            self._analyses[analysis].set(0)
             
             checkbox = Checkbutton(self._rootFrame, text=analysis.name, variable=self._analyses[analysis] )
             checkbox.grid(row=row, column=column, sticky=W)
