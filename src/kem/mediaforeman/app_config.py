@@ -29,5 +29,7 @@ class AppConfig(object):
             self.AnalysesToRun, self.RootDirectories, self.SummarizeOnly
         )
         _log.info(msg)
+        
+        '''TODO: this feels like a hack: either don't include formatting or do...fix this'''
         return msg.replace("\n\t", "")
         
