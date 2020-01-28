@@ -6,6 +6,8 @@ from kem.mediaforeman.ui.gui_config import ConfigWindow
 from kem.mediaforeman.app_config import AppConfig
 from tkinter.scrolledtext import ScrolledText
 from kem.mediaforeman.ui.gui_constants import GUIConstants
+from kem.mediaforeman.media_root_directory import MediaRootDirectory
+from kem.mediaforeman.media_analyzer import MediaAnalyzer
 
 class GuiApp(object):
 
@@ -58,7 +60,7 @@ class GuiApp(object):
         rootDirInput.grid(row=0, column=1, columnspan=3, sticky=W+E) 
         Grid.columnconfigure(rootDirInput, 1, weight=1)
 
-        processBtn = Button(topFrame, text="Process Root")
+        processBtn = Button(topFrame, text="Process Root", command=self.ProcessRootDirs)
         processBtn.grid(row=1, column=2, sticky=E, padx=GUIConstants.PADDING_X)
 
         configBtn = Button(topFrame, text="Configuration", command=self.ShowConfig)
@@ -82,6 +84,15 @@ class GuiApp(object):
     def UpdateConfigDisplayBox(self):
         self._configText.delete('1.0', END)
         self._configText.insert('1.0', self._config.PrintConfig())
+        
+    def ProcessRootDirs(self):
+        processor = MediaRootDirectory(self._config.RootDirectories)
+        media = processor.Process()
+        
+        analyzer = MediaAnalyzer(media, self._config.AnalysesToRun)
+        summary = analyzer.Analyze(self._config.SummarizeOnly)
+        
+        
 
     def SetupResultsTabs(self):
         frame = Frame(self._rootFrame)
@@ -107,7 +118,11 @@ class GuiApp(object):
         lbl1 = Label(tabFrame, text=tabName)
         lbl1.grid(column=0, row=0)
         
-        tree = ttk.Treeview(tabFrame, columns=('FileName', 'Path', 'ParentDirectory'))
+        tree = ttk.Treeview(tabFrame, columns=(
+            GUIConstants.RESULTS_TREE_COLUMN_HEADER_FILENAME, 
+            GUIConstants.RESULTS_TREE_COLUMN_HEADER_PATH, 
+            GUIConstants.RESULTS_TREE_COLUMN_HEADER_PARENT_DIR
+        ))
 
         '''setup a vertical scrollbar'''
         vsb = ttk.Scrollbar(tabFrame, orient="vertical")
@@ -116,14 +131,14 @@ class GuiApp(object):
         tree.configure(yscrollcommand=vsb.set)
 
         tree.heading('#0', text='AnalysisType')
-        tree.heading('#1', text='FileName')
-        tree.heading('#2', text='Path')
-        tree.heading('#3', text='ParentDirectory')
+        tree.heading('#1', text=GUIConstants.RESULTS_TREE_COLUMN_HEADER_FILENAME)
+        tree.heading('#2', text=GUIConstants.RESULTS_TREE_COLUMN_HEADER_PATH)
+        tree.heading('#3', text=GUIConstants.RESULTS_TREE_COLUMN_HEADER_PARENT_DIR)
         tree.column('#0', width=100, stretch=tkinter.NO)
         tree.column('#1', width=100, stretch=tkinter.NO)
         tree.column('#2', stretch=tkinter.YES)
         tree.column('#3', stretch=tkinter.YES)
-        tree.grid(row=1, columnspan=2, sticky='nsew')
+        tree.grid(row=1, columnspan=2, sticky=N+S+E+W)
         
         return tabFrame
         
