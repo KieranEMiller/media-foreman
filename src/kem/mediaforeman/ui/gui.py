@@ -92,8 +92,6 @@ class GuiApp(object):
         analyzer = MediaAnalyzer(media, self._config.AnalysesToRun)
         summary = analyzer.Analyze(self._config.SummarizeOnly)
         
-        
-
     def SetupResultsTabs(self):
         frame = Frame(self._rootFrame)
         frame.grid(row=3, column=0, columnspan=2,sticky=N+E+S+W)
@@ -142,10 +140,3 @@ class GuiApp(object):
         
         return tabFrame
         
-        ''' insertion sample
-        for i in range(50):
-            parent = tree.insert('', 'end', text='item num ' + str(i), values=('qwer', 'qwer', 'qwer'))
-            for z in range(5):
-                tree.insert(parent, 'end', text='item num ' + str(z), values=('qwer', 'qwer', 'qwer'))
-        
-        '''
