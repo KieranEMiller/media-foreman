@@ -1,10 +1,7 @@
-
 class GUIResultsTreeItemFactory(object):
-
 
     def __init__(self, params):
         pass
-    
     
     def AddAnalysisToResultsTree(self, tree, analysisResult, parent = ''):
         
@@ -31,4 +28,3 @@ class GUIResultsTreeItemFactory(object):
         )
         
         return newNode
-        
