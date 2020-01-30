@@ -29,7 +29,6 @@ class GuiApp(object):
         self._configText = None
         
     def Run(self):
-
         self._rootFrame = self.SetupRootFrame()
         
         self.SetupConfigSection()
@@ -38,6 +37,36 @@ class GuiApp(object):
         self._resultsByAnalysisType = self.SetupResultsTabs()
         
         self._window.mainloop() 
+    
+    def ShowConfig(self):
+        win = ConfigWindow(self, self._window)
+        
+    def UpdateConfigFromConfigWindow(self, config):
+        '''currently only the types of analyses performed are updated
+        or available on the configuration GUI, so just update those'''
+        self._config.AnalysesToRun = []
+        self._config.AnalysesToRun.extend(config.AnalysesToRun)
+        
+        '''refresh the config display'''
+        self.UpdateConfigDisplayBox()
+        
+    def UpdateConfigDisplayBox(self):
+        self._configText.delete('1.0', END)
+        self._configText.insert('1.0', self._config.PrintConfig())
+        
+    def ResetResultsTree(self):
+        for tree in self._resultsByAnalysisType:
+            self._resultsByAnalysisType
+            
+    def ProcessRootDirs(self):
+        processor = MediaRootDirectory(self._config.RootDirectories)
+        media = processor.Process()
+        
+        analyzer = MediaAnalyzer(media, self._config.AnalysesToRun)
+        summary = analyzer.Analyze(self._config.SummarizeOnly)
+        
+        for analysis in summary.AnalysisResultsByAnalysisType:
+            self._
         
     def SetupRootFrame(self):
         rootFrame = Frame(self._window, padx=GUIConstants.PADDING_X*2, pady=GUIConstants.PADDING_Y*2)
@@ -69,29 +98,6 @@ class GuiApp(object):
         self._configText = ScrolledText(topFrame, height=3)
         self._configText.grid(row=1, column=1, sticky=W+E)
         
-    def ShowConfig(self):
-        win = ConfigWindow(self, self._window)
-        
-    def UpdateConfigFromConfigWindow(self, config):
-        '''currently only the types of analyses performed are updated
-        or available on the configuration GUI, so just update those'''
-        self._config.AnalysesToRun = []
-        self._config.AnalysesToRun.extend(config.AnalysesToRun)
-        
-        '''refresh the config display'''
-        self.UpdateConfigDisplayBox()
-        
-    def UpdateConfigDisplayBox(self):
-        self._configText.delete('1.0', END)
-        self._configText.insert('1.0', self._config.PrintConfig())
-        
-    def ProcessRootDirs(self):
-        processor = MediaRootDirectory(self._config.RootDirectories)
-        media = processor.Process()
-        
-        analyzer = MediaAnalyzer(media, self._config.AnalysesToRun)
-        summary = analyzer.Analyze(self._config.SummarizeOnly)
-        
     def SetupResultsTabs(self):
         frame = Frame(self._rootFrame)
         frame.grid(row=3, column=0, columnspan=2,sticky=N+E+S+W)
@@ -101,10 +107,10 @@ class GuiApp(object):
         tabControl.pack(expand=1, fill='both')
         
         tabsByAnalysisType = {}
-        tabsByAnalysisType["AllAnalyses"] = self.SetupResultsTab(tabControl, "AllAnalyses")
-        tabsByAnalysisType["FileAnalyses"] = self.SetupResultsTab(tabControl, "FileAnalyses")
-        tabsByAnalysisType["CollectionAnalyses"] = self.SetupResultsTab(tabControl, "CollectionAnalyses")
-            
+        tabsByAnalysisType[GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES] = self.SetupResultsTab(tabControl, GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES)
+        tabsByAnalysisType[GUIConstants.RESULTS_TAB_HEADER_FILEANALYSES] = self.SetupResultsTab(tabControl, GUIConstants.RESULTS_TAB_HEADER_FILEANALYSES)
+        tabsByAnalysisType[GUIConstants.RESULTS_TAB_HEADER_COLLANALYSES] = self.SetupResultsTab(tabControl, GUIConstants.RESULTS_TAB_HEADER_COLLANALYSES)
+
         return tabsByAnalysisType
     
     def SetupResultsTab(self, tabControl, tabName):
@@ -138,5 +144,5 @@ class GuiApp(object):
         tree.column('#3', stretch=tkinter.YES)
         tree.grid(row=1, columnspan=2, sticky=N+S+E+W)
         
-        return tabFrame
+        return tree
         
