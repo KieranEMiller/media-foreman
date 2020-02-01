@@ -8,6 +8,7 @@ from tkinter.scrolledtext import ScrolledText
 from kem.mediaforeman.ui.gui_constants import GUIConstants
 from kem.mediaforeman.media_root_directory import MediaRootDirectory
 from kem.mediaforeman.media_analyzer import MediaAnalyzer
+from kem.mediaforeman.ui.gui_results_tree_item_factory import GUIResultsTreeItemFactory
 
 class GuiApp(object):
 
@@ -23,18 +24,23 @@ class GuiApp(object):
         
         '''the root container for all window controls'''
         self._rootFrame = None
-        self._resultsByAnalysisType = None
+        self._resultTrees = None
         
         '''the text control that displays the running configuration'''
         self._configText = None
+        
+        '''the input control for the root directory'''
+        self._rootDirInput = None
         
     def Run(self):
         self._rootFrame = self.SetupRootFrame()
         
         self.SetupConfigSection()
+        
         separator = ttk.Separator(self._rootFrame, orient=HORIZONTAL)
         separator.grid(row=2, columnspan=2, pady=GUIConstants.PADDING_Y)
-        self._resultsByAnalysisType = self.SetupResultsTabs()
+        
+        self._resultTrees = self.SetupResultsTabs()
         
         self._window.mainloop() 
     
@@ -54,20 +60,33 @@ class GuiApp(object):
         self._configText.delete('1.0', END)
         self._configText.insert('1.0', self._config.PrintConfig())
         
-    def ResetResultsTree(self):
-        for tree in self._resultsByAnalysisType:
-            self._resultsByAnalysisType
-            
     def ProcessRootDirs(self):
+        self.ResetResultsTree()
+        
+        self._config.RootDirectories = [self._rootDirInput.get()]
         processor = MediaRootDirectory(self._config.RootDirectories)
         media = processor.Process()
         
         analyzer = MediaAnalyzer(media, self._config.AnalysesToRun)
         summary = analyzer.Analyze(self._config.SummarizeOnly)
         
+        itemFactory = GUIResultsTreeItemFactory()
         for analysis in summary.AnalysisResultsByAnalysisType:
-            self._
-        
+            thisTree = self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES]
+            parentItem = itemFactory.AddParentToResultsTree(
+                thisTree, analysis, summary.AnalysisResultsByAnalysisType[analysis]
+            )
+            
+            for analysisResult in summary.AnalysisResultsByAnalysisType[analysis]:
+                item = itemFactory.AddAnalysisToResultsTree(thisTree, analysisResult, parentItem)
+            
+
+    def ResetResultsTree(self):
+        for tab in self._resultTrees:
+            tree = self._resultTrees[tab]
+            for item in tree.get_children():
+                tree.delete(item)
+
     def SetupRootFrame(self):
         rootFrame = Frame(self._window, padx=GUIConstants.PADDING_X*2, pady=GUIConstants.PADDING_Y*2)
         rootFrame.grid(row=0,column=0, columnspan=2, rowspan=3, sticky=N+E+S+W)
@@ -85,9 +104,9 @@ class GuiApp(object):
         rootDirLabel = Label(topFrame, text='Root Directory')
         rootDirLabel.grid(row=0, column=0, columnspan=1, sticky=W, padx=GUIConstants.PADDING_X)
  
-        rootDirInput = Entry(topFrame)
-        rootDirInput.grid(row=0, column=1, columnspan=3, sticky=W+E) 
-        Grid.columnconfigure(rootDirInput, 1, weight=1)
+        self._rootDirInput = Entry(topFrame)
+        self._rootDirInput.grid(row=0, column=1, columnspan=3, sticky=W+E) 
+        Grid.columnconfigure(self._rootDirInput, 1, weight=1)
 
         processBtn = Button(topFrame, text="Process Root", command=self.ProcessRootDirs)
         processBtn.grid(row=1, column=2, sticky=E, padx=GUIConstants.PADDING_X)
@@ -110,7 +129,6 @@ class GuiApp(object):
         tabsByAnalysisType[GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES] = self.SetupResultsTab(tabControl, GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES)
         tabsByAnalysisType[GUIConstants.RESULTS_TAB_HEADER_FILEANALYSES] = self.SetupResultsTab(tabControl, GUIConstants.RESULTS_TAB_HEADER_FILEANALYSES)
         tabsByAnalysisType[GUIConstants.RESULTS_TAB_HEADER_COLLANALYSES] = self.SetupResultsTab(tabControl, GUIConstants.RESULTS_TAB_HEADER_COLLANALYSES)
-
         return tabsByAnalysisType
     
     def SetupResultsTab(self, tabControl, tabName):
@@ -138,7 +156,7 @@ class GuiApp(object):
         tree.heading('#1', text=GUIConstants.RESULTS_TREE_COLUMN_HEADER_FILENAME)
         tree.heading('#2', text=GUIConstants.RESULTS_TREE_COLUMN_HEADER_PATH)
         tree.heading('#3', text=GUIConstants.RESULTS_TREE_COLUMN_HEADER_PARENT_DIR)
-        tree.column('#0', width=100, stretch=tkinter.NO)
+        tree.column('#0', width=300, stretch=tkinter.NO)
         tree.column('#1', width=100, stretch=tkinter.NO)
         tree.column('#2', stretch=tkinter.YES)
         tree.column('#3', stretch=tkinter.YES)
