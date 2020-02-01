@@ -1,4 +1,5 @@
 import os
+from abc import abstractmethod
 
 class MediaBase(object):
 
@@ -7,3 +8,7 @@ class MediaBase(object):
         
         if(path != None and os.path.exists(path)):
             self.ParentDirectory = os.path.abspath(os.path.join(path, os.pardir))
+            
+    @abstractmethod
+    def GetName(self):
+        pass

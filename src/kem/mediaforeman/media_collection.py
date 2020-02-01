@@ -18,3 +18,5 @@ class MediaCollection(MediaBase):
 
         return mediaFiles
 
+    def GetName(self):
+        return os.path.dirname(self.BasePath)

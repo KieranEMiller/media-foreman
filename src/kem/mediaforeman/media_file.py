@@ -31,7 +31,7 @@ class MediaFile(MediaBase):
         if(path != None):
             self.ExtractProperties()
         
-    def GetFileName(self):
+    def GetName(self):
         return os.path.basename(self.BasePath).lower()
     
     def GetFileExtension(self):
