@@ -3,6 +3,7 @@ from tkinter import ttk
 from kem.mediaforeman.analyses.analysis_type import AnalysisType
 from kem.mediaforeman.app_config import AppConfig
 from kem.mediaforeman.ui.gui_constants import GUIConstants
+from kem.mediaforeman.analyses.analysis_type_factory import AnalysisTypeFactory
 
 class ConfigWindow(object):
 
@@ -31,9 +32,11 @@ class ConfigWindow(object):
     def UpdateConfigOnParent(self):
         config = AppConfig()
         
+        typeFactory = AnalysisTypeFactory()
         for analysis in self._analyses:
             if(self._analyses[analysis].get() == 1):
-                config.AnalysesToRun.append(analysis)
+                '''here the array is an instance of each analysis type'''
+                config.AnalysesToRun.append(typeFactory.TypeToAnalysis(analysis)())
         
         self._app.UpdateConfigFromConfigWindow(config)
         
