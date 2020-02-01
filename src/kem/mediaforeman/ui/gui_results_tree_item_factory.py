@@ -1,7 +1,22 @@
 class GUIResultsTreeItemFactory(object):
 
-    def __init__(self, params):
+    def __init__(self):
         pass
+    
+    def AddParentToResultsTree(self, tree, analysisType, results):
+        parentNode = tree.insert(
+            '', 
+            'end', 
+            text="{} ({} items in average of {} us)".format(
+                analysisType, 
+                len(results),
+                sum(result.ElapsedInMicroSecs for result in results) / len(results)
+            ),
+            values=(
+                "", "", ""
+            )
+        )
+        return parentNode
     
     def AddAnalysisToResultsTree(self, tree, analysisResult, parent = ''):
         
@@ -15,13 +30,14 @@ class GUIResultsTreeItemFactory(object):
         GUIConstants.RESULTS_TREE_COLUMN_HEADER_PARENT_DIR
         '''
         newNode = tree.insert(
-            parent, 'end', 
+            parent, 
+            'end', 
             text="{} - {}".format(
-                analysisResult.GetAnalysisType(),
-                analysisResult.Media.GetFileName()
+                analysisResult.AnalysisType,
+                analysisResult.Media.GetName()
             ),
             values=(
-                 analysisResult.Media.GetFileName(),
+                 analysisResult.Media.GetName(),
                  analysisResult.Media.BasePath,
                  analysisResult.Media.ParentDirectory
             )
