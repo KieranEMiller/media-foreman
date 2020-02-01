@@ -39,7 +39,7 @@ class FileAnalysisMinimumQualityStandards(FileAnalysisBase):
             '''
             lossyTypes = ['.mp3', '.mp4' ]
             for lossyType in lossyTypes:
-                if(mediaFile.GetFileName().endswith(lossyType)):
+                if(mediaFile.GetName().endswith(lossyType)):
                     issues.append(AnalysisIssuePropertyInvalid(
                         mediaFile, AnalysisIssuePropertyType.LossyClassification, True, self.AllowLossy
                     ))
