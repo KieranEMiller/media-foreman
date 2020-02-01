@@ -22,4 +22,4 @@ class FileAnalysisBase(AnalysisBase):
         pass
     
     def RunAnalysisOnCollection(self, mediaColl):
-        raise ValueError("file analyses do not run against collections")
+        raise ValueError("file analyses do not run against collections: {}".format(mediaColl.BasePath))

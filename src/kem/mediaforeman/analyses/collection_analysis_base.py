@@ -21,5 +21,5 @@ class CollectionAnalysisBase(AnalysisBase):
         pass
         
     def RunAnalysisOnFile(self, mediaFile):
-        raise ValueError("collection analyses do not run against individual files")
+        raise ValueError("collection analyses do not run against individual files: {}".format(mediaFile.BasePath))
 
