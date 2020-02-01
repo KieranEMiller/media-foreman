@@ -26,10 +26,10 @@ class FileAnalysisMediaFileType(FileAnalysisBase):
         '''TODO: expand to include additional types.  just audio types for now'''
         validTypes = ["mp3", "flac", "wav", "ogg", "mp4"]
         
-        match = [extension for extension in validTypes if mediaFile.GetFileName().endswith(extension.lower())]
+        match = [extension for extension in validTypes if mediaFile.GetName().endswith(extension.lower())]
         if(len(match) == 0):
             result.append(AnalysisIssuePropertyInvalid(
-                mediaFile, AnalysisIssuePropertyType.FileType, validTypes, mediaFile.GetFileName()
+                mediaFile, AnalysisIssuePropertyType.FileType, validTypes, mediaFile.GetName()
             ))
             
         return result
