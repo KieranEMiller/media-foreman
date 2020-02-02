@@ -34,8 +34,6 @@ class TestBaseFs(unittest.TestCase):
         dest = os.path.join(testDir, "{}.mp3".format(str(uuid.uuid1())));
         shutil.copy(os.path.abspath(pathToSample), dest)
         
-        #print("copying sample mp3 from {} to {}".format(os.path.abspath(pathToSample), dest))
-        
         return dest
         
 
