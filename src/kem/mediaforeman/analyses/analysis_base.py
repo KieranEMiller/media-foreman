@@ -53,14 +53,18 @@ class AnalysisBase(object):
         result.AnalysisType = self.GetAnalysisType()
         result.Media = media
 
-        if(isinstance(media, MediaCollection)):
-            result.IssuesFound = self.RunAnalysisOnCollection(media)
-        
-        elif(isinstance(media, MediaFile)):
-            result.IssuesFound = self.RunAnalysisOnFile(media)
-        
-        else:
-            raise ValueError("unknown run analysis media parameter")
+        try:
+            if(isinstance(media, MediaCollection)):
+                result.IssuesFound = self.RunAnalysisOnCollection(media)
+            
+            elif(isinstance(media, MediaFile)):
+                result.IssuesFound = self.RunAnalysisOnFile(media)
+            
+            else:
+                raise ValueError("unknown run analysis media parameter")
+            
+        except:
+            _log.error("failed to run analysis on media at path {}".format(media.BasePath))
             
         result.ElapsedInMicroSecs = (datetime.datetime.now() - startTime).microseconds
         result.HasIssues = (len(result.IssuesFound) > 0)
