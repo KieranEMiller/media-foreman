@@ -72,12 +72,15 @@ class GuiApp(object):
         
         itemFactory = GUIResultsTreeItemFactory()
         for analysis in summary.AnalysisResultsByAnalysisType:
+            
+            analysisResults = summary.AnalysisResultsByAnalysisType[analysis]
+
             thisTree = self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES]
             parentItem = itemFactory.AddParentToResultsTree(
-                thisTree, analysis, summary.AnalysisResultsByAnalysisType[analysis]
+                thisTree, analysis, analysisResults
             )
             
-            for analysisResult in summary.AnalysisResultsByAnalysisType[analysis]:
+            for analysisResult in analysisResults:
                 item = itemFactory.AddAnalysisToResultsTree(thisTree, analysisResult, parentItem)
             
 
