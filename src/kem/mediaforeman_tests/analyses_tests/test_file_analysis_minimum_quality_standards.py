@@ -1,22 +1,15 @@
-'''
-Created on Jan 8, 2020
-
-@author: KieranM
-'''
 import unittest
 from kem.mediaforeman_tests.test_base_fs import TestBaseFs
 from kem.mediaforeman.media_file import MediaFile
 from kem.mediaforeman.analyses.file_analysis_minimum_quality_standards import FileAnalysisMinimumQualityStandards
 from kem.mediaforeman.analyses.analysis_type import AnalysisType
 from kem.mediaforeman.analyses.analysis_issue_threshold_not_met import AnalysisIssueThresholdNotMet
-
-SAMPLE_MP3_172bitrate = "./assets/sample_mp3_172bitrate.mp3"
-SAMPLE_MP3_320bitrate = "./assets/sample_mp3_320bitrate.mp3"
+from kem.mediaforeman_tests.test_asset_constants import TestAssetConstants
 
 class TestFileAnalysisMinimumQualityStandards(TestBaseFs):
 
     def test_file_with_valid_standards_returns_no_issues(self):
-        samplePath = self.CopySampleMp3ToDir(testFile = SAMPLE_MP3_320bitrate)
+        samplePath = self.CopySampleMp3ToDir(testFile = TestAssetConstants.SAMPLE_MP3_320bitrate)
         mediaFile = MediaFile(samplePath)
         
         analysis = FileAnalysisMinimumQualityStandards()
@@ -27,7 +20,7 @@ class TestFileAnalysisMinimumQualityStandards(TestBaseFs):
         self.assertEqual(result.AnalysisType, AnalysisType.FileMinimumQualityStandards)
 
     def test_file_with_invalid_standards_returns_issues(self):
-        sample = self.CopySampleMp3ToDir(testFile = SAMPLE_MP3_172bitrate)
+        sample = self.CopySampleMp3ToDir(testFile = TestAssetConstants.SAMPLE_MP3_172bitrate)
         mediaFile = MediaFile(sample)
         
         analysis = FileAnalysisMinimumQualityStandards()
