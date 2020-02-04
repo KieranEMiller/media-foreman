@@ -1,7 +1,8 @@
 import unittest
 from kem.mediaforeman_tests.test_base_fs import TestBaseFs
-from kem.mediaforeman.analyses.file_analysis_media_file_type import FileAnalysisMediaFileType
 from kem.mediaforeman.media_collection import MediaCollection
+from kem.mediaforeman_tests.test_asset_constants import TestAssetConstants
+from kem.mediaforeman.analyses.file_analysis_complete_audio_metadata import FileAnalysisCompleteAudioMetadata
 
 class TestFileAnalysisBase(TestBaseFs):
 
@@ -9,12 +10,12 @@ class TestFileAnalysisBase(TestBaseFs):
         artistDir = self.CreateSubDirectory(dirName='test_artist')
         albumDir = self.CreateSubDirectory(dirName="test_album", dirPath=artistDir)
         
-        self.CopySampleMp3ToDir(testDir = albumDir)
-        self.CopySampleMp3ToDir(testDir = albumDir)
-        self.CopySampleMp3ToDir(testDir = albumDir)
+        self.CopySampleMp3ToDir(testDir = albumDir, testFile = TestAssetConstants.SAMPLE_MP3_NO_METADATA)
+        self.CopySampleMp3ToDir(testDir = albumDir, testFile = TestAssetConstants.SAMPLE_MP3_NO_METADATA)
+        self.CopySampleMp3ToDir(testDir = albumDir, testFile = TestAssetConstants.SAMPLE_MP3_NO_METADATA)
         
         mediaColl = MediaCollection(artistDir)
-        analysis = FileAnalysisMediaFileType()
+        analysis = FileAnalysisCompleteAudioMetadata()
         results = analysis.RunAnalysis(mediaColl)
         
         self.assertTrue(results.HasIssues)
