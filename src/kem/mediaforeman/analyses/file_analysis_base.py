@@ -23,7 +23,6 @@ class FileAnalysisBase(AnalysisBase):
     
     def RunAnalysisOnCollection(self, mediaColl):
         
-        #raise ValueError("file analyses do not run against collections: {}".format(mediaColl.BasePath))
         results = []
         for mediaFile in mediaColl.MediaFiles:
             results.extend(self.RunAnalysisOnFile(mediaFile))
