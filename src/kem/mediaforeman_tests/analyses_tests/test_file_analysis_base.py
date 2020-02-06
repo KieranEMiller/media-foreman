@@ -19,7 +19,7 @@ class TestFileAnalysisBase(TestBaseFs):
         results = analysis.RunAnalysis(mediaColl)
         
         self.assertTrue(results.HasIssues)
-        self.assertEqual(len(results.IssuesFound), 3)
+        self.assertEqual(len(results.IssuesFound), 12)
         
 
 if __name__ == "__main__":
