@@ -5,6 +5,7 @@ from kem.mediaforeman.media_collection import MediaCollection
 from kem.mediaforeman_tests.test_asset_constants import TestAssetConstants
 from kem.mediaforeman.analyses.file_analysis_media_file_type import FileAnalysisMediaFileType
 from kem.mediaforeman.analyses.file_analysis_valid_image import FileAnalysisValidImage
+from kem.mediaforeman.analyses.analysis_type import AnalysisType
 
 class TestFileAnalysisBase(TestBaseFs):
 
