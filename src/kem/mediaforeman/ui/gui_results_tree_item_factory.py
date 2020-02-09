@@ -4,17 +4,15 @@ class GUIResultsTreeItemFactory(object):
         pass
     
     def AddParentToResultsTree(self, tree, analysisType, results):
-        parentNode = tree.insert(
-            '', 
-            'end', 
+        parentNode = self.AddTreeNode(
+            tree = tree,
+            parent=None,
             text="{} ({} items in average of {} us)".format(
                 analysisType, 
                 len(results),
                 sum(result.ElapsedInMicroSecs for result in results) / len(results)
             ),
-            values=(
-                "", "", ""
-            )
+            values=("", "", "")
         )
         return parentNode
     
@@ -26,9 +24,9 @@ class GUIResultsTreeItemFactory(object):
         GUIConstants.RESULTS_TREE_COLUMN_HEADER_PATH, 
         GUIConstants.RESULTS_TREE_COLUMN_HEADER_PARENT_DIR
         '''
-        newNode = tree.insert(
-            parent, 
-            'end', 
+        newNode = self.AddTreeNode(
+            tree=tree,
+            parent=parent, 
             text="{} - {}".format(
                 analysisResult.AnalysisType,
                 analysisResult.Media.GetName()
@@ -40,4 +38,29 @@ class GUIResultsTreeItemFactory(object):
             )
         )
         
+        for issue in analysisResult.IssuesFound:
+            self.AddTreeNode(
+                tree, 
+                newNode, 
+                text="{} - {}".format(
+                    issue.IssueType,
+                    issue.MediaFile.GetName()
+                ),
+                values=(
+                    issue.MediaFile.GetName(),
+                    issue.MediaFile.BasePath, 
+                    issue.MediaFile.ParentDirectory
+                )
+            )
+        
         return newNode
+    
+    def AddTreeNode(self, tree, parent, text, values):
+        newNode = tree.insert(
+            parent if parent is not None else '', 
+            'end', 
+            text=text,
+            values=values
+        )
+        return newNode
+    
