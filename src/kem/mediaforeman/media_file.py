@@ -49,7 +49,10 @@ class MediaFile(MediaBase):
             self.Album = metadata.tag.album
             self.AlbumArtist = metadata.tag.album_artist
             self.Title = metadata.tag.title
-            self.TrackNumber = metadata.tag.track_num[0]
+            
+            tracknum = metadata.tag.track_num[0]
+            #if(tracknum.isdigit()):
+            self.TrackNumber = tracknum
             
             self.ExtractImageProperties(metadata)
         
