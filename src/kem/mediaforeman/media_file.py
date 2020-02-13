@@ -51,8 +51,8 @@ class MediaFile(MediaBase):
             self.Title = metadata.tag.title
             
             tracknum = metadata.tag.track_num[0]
-            #if(tracknum.isdigit()):
-            self.TrackNumber = tracknum
+            if(str(tracknum).isdigit()):
+                self.TrackNumber = tracknum
             
             self.ExtractImageProperties(metadata)
         
