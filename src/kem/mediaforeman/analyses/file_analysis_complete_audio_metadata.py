@@ -34,7 +34,7 @@ class FileAnalysisCompleteAudioMetadata(FileAnalysisBase):
         
         if(mediaFile.TrackNumber <= 0):
             results.append(AnalysisIssuePropertyInvalid(
-                mediaFile, AnalysisIssuePropertyType.MetadataFieldEmpty, "1 or greater", mediaFile.TrackNumber
+                mediaFile, AnalysisIssuePropertyType.TrackNumberInvalid, "1 or greater", mediaFile.TrackNumber
             ))
             
         return results
