@@ -16,3 +16,4 @@ class AnalysisIssuePropertyType(Enum):
     CoverImageYDimensions = 8
     BitRate = 9
     MixedFileType = 10
+    TrackNumberInvalid = 11
