@@ -64,7 +64,9 @@ class AnalysisBase(object):
                 raise ValueError("unknown run analysis media parameter")
             
         except Exception as err:
-            _log.error("failed to run analysis on media at path {}: {}".format(media.BasePath, err))
+            errMsg = "failed to run analysis on media at path {}: {}".format(media.BasePath, err)
+            _log.error(errMsg)
+            raise err
             
         result.ElapsedInMicroSecs = (datetime.datetime.now() - startTime).microseconds
         result.HasIssues = (len(result.IssuesFound) > 0)
