@@ -61,8 +61,12 @@ class TestMediaRootDirectory(TestBaseFs):
             
         mediaroot = MediaRootDirectory([self._testDir])
         results = mediaroot.Process()
-        self.assertEqual(len(results), 5)
         
+        '''only assert this condition if the number of directories to process is
+        greater than 0; setting this property to 0 or -1 results in no limit and
+        this test is meaningless in those cases'''
+        if(MediaRootDirectory.MAX_NUMBER_OF_DIRS_IN_ROOT_TO_PROCESS > 0):
+            self.assertEqual(len(results), MediaRootDirectory.MAX_NUMBER_OF_DIRS_IN_ROOT_TO_PROCESS)
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
