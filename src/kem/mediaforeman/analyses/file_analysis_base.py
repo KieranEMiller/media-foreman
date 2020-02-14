@@ -12,7 +12,11 @@ class FileAnalysisBase(AnalysisBase):
 
     def __init__(self, params):
         pass
-        
+    
+    @abstractmethod
+    def RequiresMediaFileType(self):
+        return False
+    
     @abstractmethod
     def GetAnalysisType(self):
         pass
