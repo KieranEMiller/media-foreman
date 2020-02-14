@@ -42,9 +42,8 @@ class GUIResultsTreeItemFactory(object):
             self.AddTreeNode(
                 tree, 
                 newNode, 
-                text="{} - {}".format(
-                    issue.IssueType,
-                    issue.MediaFile.GetName()
+                text="{}".format(
+                    issue.GetText()
                 ),
                 values=(
                     issue.MediaFile.GetName(),
