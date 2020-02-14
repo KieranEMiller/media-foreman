@@ -48,7 +48,7 @@ class AnalysisBase(object):
         _log.info("running analysis '{}' against type {} with path {}".format(
             self.GetAnalysisType(), type(media), media.BasePath
         ))
-        
+
         result = AnalysisResult()
         result.AnalysisType = self.GetAnalysisType()
         result.Media = media
