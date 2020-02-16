@@ -5,7 +5,8 @@ from kem.mediaforeman.media_collection import MediaCollection
 from kem.mediaforeman_tests.test_asset_constants import TestAssetConstants
 from kem.mediaforeman.analyses.file_analysis_media_file_type import FileAnalysisMediaFileType
 from kem.mediaforeman.analyses.file_analysis_valid_image import FileAnalysisValidImage
-from kem.mediaforeman.analyses.analysis_type import AnalysisType
+from kem.mediaforeman.media_file import MediaFile
+from kem.mediaforeman.analyses.file_analysis_complete_audio_metadata import FileAnalysisCompleteAudioMetadata
 
 class TestFileAnalysisBase(TestBaseFs):
 
@@ -45,6 +46,36 @@ class TestFileAnalysisBase(TestBaseFs):
         self.assertEqual(len(results.IssuesFound), 6)
         self.assertEqual(len([file for file in results.IssuesFound if file.MediaFile.BasePath == sample1]), 3)
         self.assertEqual(len([file for file in results.IssuesFound if file.MediaFile.BasePath == sample2]), 3)
+        
+    def test_should_run_returns_true_for_analysis_that_doesnt_require_it_regardless_of_file_type(self):
+        mp3Sample = self.CopySampleMp3ToDir()
+        media = MediaFile(mp3Sample)
+        
+        analysis = FileAnalysisMediaFileType()
+        self.assertTrue(analysis.ShouldRun(media))
+        
+        nonMp3 = self.CopySampleMp3ToDir()
+        nonMp3Dest = "{}.asdf".format(nonMp3)
+        shutil.copy(nonMp3, nonMp3Dest)
+
+        media2 = MediaFile(nonMp3Dest)
+        analysis2 = FileAnalysisMediaFileType()
+        self.assertTrue(analysis2.ShouldRun(media2))
+        
+    def test_should_run_returns_false_for_analysis_on_non_media_type(self):
+        mp3Sample = self.CopySampleMp3ToDir()
+        media = MediaFile(mp3Sample)
+        
+        analysis = FileAnalysisCompleteAudioMetadata()
+        self.assertTrue(analysis.ShouldRun(media))
+        
+        nonMp3 = self.CopySampleMp3ToDir()
+        nonMp3Dest = "{}.asdf".format(nonMp3)
+        shutil.copy(nonMp3, nonMp3Dest)
+        
+        media2 = MediaFile(nonMp3Dest)
+        analysis2 = FileAnalysisCompleteAudioMetadata()
+        self.assertFalse(analysis2.ShouldRun(media2))
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
