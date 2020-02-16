@@ -16,7 +16,7 @@ class FileAnalysisBase(AnalysisBase):
     
     @abstractmethod
     def RequiresMediaFileType(self):
-        return False
+        return True
     
     @abstractmethod
     def GetAnalysisType(self):
