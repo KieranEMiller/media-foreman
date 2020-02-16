@@ -28,7 +28,7 @@ class AnalysisBase(object):
     
     @abstractmethod
     def GetAnalysisType(self):
-        return 
+        pass
     
     def LogAnalysisResult(self, analysisResult):
         if(analysisResult.HasIssues == False):
@@ -58,7 +58,10 @@ class AnalysisBase(object):
                 result.IssuesFound = self.RunAnalysisOnCollection(media)
             
             elif(isinstance(media, MediaFile)):
-                result.IssuesFound = self.RunAnalysisOnFile(media)
+                if(self.ShouldRun(media)):
+                    result.IssuesFound = self.RunAnalysisOnFile(media)
+                else:
+                    _log.warn("skipping file analysis on media {}, it is not eligible".format(media.BasePath))
             
             else:
                 raise ValueError("unknown run analysis media parameter")
