@@ -18,9 +18,6 @@ class FileAnalysisMediaFileType(FileAnalysisBase):
     def __init__(self):
         pass
     
-    '''   
-    @abstractmethod
-    '''
     def RequiresMediaFileType(self):
         return False
         
