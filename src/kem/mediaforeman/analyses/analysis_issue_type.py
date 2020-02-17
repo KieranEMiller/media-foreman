@@ -17,3 +17,4 @@ class AnalysisIssuePropertyType(Enum):
     BitRate = 9
     MixedFileType = 10
     TrackNumberInvalid = 11
+    AlbumDirectoryNamingConvention = 12
