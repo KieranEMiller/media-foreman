@@ -13,3 +13,4 @@ class AnalysisType(Enum):
     CollectionSameArtist = 5
     CollectionSameAlbumInDirectory = 6
     CollectionMixedMediaTypesInDirectory = 7
+    CollectionAlbumDirectoryNamingConvention = 8
