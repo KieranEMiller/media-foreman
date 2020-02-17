@@ -22,3 +22,13 @@ class CollectionAnalysisBase(AnalysisBase):
         
     def RunAnalysisOnFile(self, mediaFile):
         raise ValueError("collection analyses do not run against individual files: {}".format(mediaFile.BasePath))
+    
+    def GetDistinctParentDirs(self, mediaColl):
+        parentDirs = {}
+        for file in mediaColl.MediaFiles:
+            if(file.ParentDirectory in parentDirs):
+                parentDirs[file.ParentDirectory].append(file)
+            else:
+                parentDirs[file.ParentDirectory] = [file]
+            
+        return parentDirs
