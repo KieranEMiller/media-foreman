@@ -27,4 +27,3 @@ class CollectionAnalysisMixedMediaTypesInDirectory(CollectionAnalysisBase):
                 ))
 
         return results
-       
