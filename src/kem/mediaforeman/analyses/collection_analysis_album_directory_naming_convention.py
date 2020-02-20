@@ -37,12 +37,13 @@ class CollectionAnalysisAlbumDirectoryNamingConvention(CollectionAnalysisBase):
             
             expectedName = self.GetExpectedName(likelyAlbumName, likelyAlbumArtist)
             
-            actualName = os.path.basename(os.path.dirname(parent))
+            actualName = os.path.basename(parent)
             if(actualName != expectedName):
                 results.append(AnalysisIssuePropertyInvalid(
-                    mediaFile, AnalysisIssuePropertyType.AlbumDirectoryNamingConvention, 
-                    likelyAlbumName, 
-                    mediaFile.Album
+                    mediaColl, 
+                    AnalysisIssuePropertyType.AlbumDirectoryNamingConvention, 
+                    expectedName, 
+                    actualName
                 ))
             
         return results
