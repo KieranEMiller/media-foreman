@@ -39,7 +39,6 @@ class TestCollectionAnalysisMixedMediaTypesInDirectory(TestBaseFs):
         self.assertEqual(result.IssuesFound[0].IssueType, AnalysisIssuePropertyType.MixedFileType)
         
 
-
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
