@@ -98,8 +98,6 @@ class Test(TestBaseFs):
             self.assertIsInstance(issue, AnalysisIssuePropertyInvalid)
             self.assertEqual(issue.ActualVal, "artist1")
             
-            
-            
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
