@@ -34,6 +34,11 @@ class MediaFile(MediaBase):
     def GetName(self):
         return os.path.basename(self.BasePath).lower()
     
+    def GetNameWithoutExtension(self):
+        '''have to usebasename because the first part of the splitext method
+        returns the full path to the file, not just the name'''
+        return os.path.basename(os.path.splitext(self.BasePath)[0].lower())
+    
     def GetFileExtension(self):
         '''splitext returns a tuple filename, fileext, so index 1 
            is the extension'''
