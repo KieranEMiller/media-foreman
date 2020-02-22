@@ -45,6 +45,9 @@ class GuiApp(object):
         self._window.mainloop() 
     
     def ShowConfig(self):
+        '''TODO: note that every time the config window is shown it comes in
+        as blank; need a way to update the window with the current running config
+        each time it is shown'''
         win = ConfigWindow(self, self._window)
         
     def UpdateConfigFromConfigWindow(self, config):
