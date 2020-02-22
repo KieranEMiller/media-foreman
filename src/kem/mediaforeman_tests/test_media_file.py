@@ -49,7 +49,6 @@ class TestMediaFile(TestBaseFs):
         self.assertLess(mediaFile.Duration, 4)
         self.assertEqual(mediaFile.BitRate, 172)
         
-        
     def test_mp3_with_no_property_tags_does_not_error_out_uses_defaults(self):
         path = self.CopySampleMp3ToDir(testFile = "./assets/sample_mp3_with_no_metadata.mp3")
         
@@ -92,7 +91,18 @@ class TestMediaFile(TestBaseFs):
         
         self.assertEqual(mediaFile.GetFileExtension(), ".asdf")
         
+    def test_file_name_returns_full_name(self):
+        path = self.CopySampleMp3ToDir(destFileName = "file_name.test")
+        
+        mediaFile = MediaFile(path)
+        self.assertEqual(mediaFile.GetName(), "file_name.test")
 
+    def test_file_name_without_extension(self):
+        path = self.CopySampleMp3ToDir(destFileName = "file_name.test")
+
+        mediaFile = MediaFile(path)
+        
+        self.assertEqual(mediaFile.GetNameWithoutExtension(), "file_name")
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
