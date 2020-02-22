@@ -10,6 +10,8 @@ class AnalysisType(Enum):
     FileValidImage = 2
     FileCompleteAudioMetadata = 3
     FileMinimumQualityStandards = 4
+    FileTrackNamingConvention = 9
+    
     CollectionSameArtist = 5
     CollectionSameAlbumInDirectory = 6
     CollectionMixedMediaTypesInDirectory = 7

@@ -18,3 +18,4 @@ class AnalysisIssuePropertyType(Enum):
     MixedFileType = 10
     TrackNumberInvalid = 11
     AlbumDirectoryNamingConvention = 12
+    TrackNamingConvention = 13

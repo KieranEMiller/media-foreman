@@ -7,6 +7,7 @@ from kem.mediaforeman.analyses.collection_analysis_mixed_media_types_in_director
 from kem.mediaforeman.analyses.collection_analysis_same_album_in_directory import CollectionAnalysisSameAlbumInDirectory
 from kem.mediaforeman.analyses.collection_analysis_same_artist import CollectionAnalysisSameArtist
 from kem.mediaforeman.analyses.collection_analysis_album_directory_naming_convention import CollectionAnalysisAlbumDirectoryNamingConvention
+from kem.mediaforeman.analyses.file_analysis_track_naming_convention import FileAnalysisTrackNamingConvention
 
 class AnalysisTypeFactory(object):
 
@@ -19,6 +20,7 @@ class AnalysisTypeFactory(object):
             AnalysisType.FileCompleteAudioMetadata:     FileAnalysisCompleteAudioMetadata,
             AnalysisType.FileMinimumQualityStandards:   FileAnalysisMinimumQualityStandards,
             AnalysisType.FileValidImage:                FileAnalysisValidImage,
+            AnalysisType.FileTrackNamingConvention:     FileAnalysisTrackNamingConvention,
             
             AnalysisType.CollectionMixedMediaTypesInDirectory:      CollectionAnalysisMixedMediaTypesInDirectory,
             AnalysisType.CollectionSameAlbumInDirectory:            CollectionAnalysisSameAlbumInDirectory,
