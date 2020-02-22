@@ -6,6 +6,7 @@ from kem.mediaforeman.analyses.file_analysis_valid_image import FileAnalysisVali
 from kem.mediaforeman.analyses.collection_analysis_mixed_media_types_in_directory import CollectionAnalysisMixedMediaTypesInDirectory
 from kem.mediaforeman.analyses.collection_analysis_same_album_in_directory import CollectionAnalysisSameAlbumInDirectory
 from kem.mediaforeman.analyses.collection_analysis_same_artist import CollectionAnalysisSameArtist
+from kem.mediaforeman.analyses.collection_analysis_album_directory_naming_convention import CollectionAnalysisAlbumDirectoryNamingConvention
 
 class AnalysisTypeFactory(object):
 
@@ -19,8 +20,9 @@ class AnalysisTypeFactory(object):
             AnalysisType.FileMinimumQualityStandards:   FileAnalysisMinimumQualityStandards,
             AnalysisType.FileValidImage:                FileAnalysisValidImage,
             
-            AnalysisType.CollectionMixedMediaTypesInDirectory:  CollectionAnalysisMixedMediaTypesInDirectory,
-            AnalysisType.CollectionSameAlbumInDirectory:        CollectionAnalysisSameAlbumInDirectory,
-            AnalysisType.CollectionSameArtist:                  CollectionAnalysisSameArtist
+            AnalysisType.CollectionMixedMediaTypesInDirectory:      CollectionAnalysisMixedMediaTypesInDirectory,
+            AnalysisType.CollectionSameAlbumInDirectory:            CollectionAnalysisSameAlbumInDirectory,
+            AnalysisType.CollectionSameArtist:                      CollectionAnalysisSameArtist,
+            AnalysisType.CollectionAlbumDirectoryNamingConvention:  CollectionAnalysisAlbumDirectoryNamingConvention
         }
         return switcher[analysisType]
