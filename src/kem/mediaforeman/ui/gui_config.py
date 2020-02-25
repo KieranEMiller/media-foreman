@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+
 from kem.mediaforeman.analyses.analysis_type import AnalysisType
 from kem.mediaforeman.app_config import AppConfig
 from kem.mediaforeman.ui.gui_constants import GUIConstants
@@ -76,6 +77,10 @@ class ConfigWindow(object):
         rootDirLabel = Label(self._rootFrame, text='Run These Analyses')
         rootDirLabel.grid(row=0, column=0, sticky=W)
 
+        '''the max number needs work - currently if the user resizes the parent
+        or main window, the config window is increased similarly but the
+        checkbox grid does not resize causing all the controls to be grouped 
+        in the top left of the window'''
         MAX_CHECKBOXES_PER_ROW = 2
         row = 1
         column=0
