@@ -1,8 +1,3 @@
-'''
-Created on Dec 30, 2019
-
-@author: kieranemiller
-'''
 from abc import abstractmethod
 
 from kem.mediaforeman.analyses.analysis_base import AnalysisBase
@@ -26,6 +21,15 @@ class FileAnalysisBase(AnalysisBase):
     def RunAnalysisOnFile(self, mediaFile):
         pass
     
+    '''not abstract here since this method is not overridden
+    but subclasses'''
+    def RunAnalysisOnCollection(self, mediaColl):
+        results = []
+        for mediaFile in mediaColl.MediaFiles:
+            results.extend(self.RunAnalysisOnFile(mediaFile))
+        
+        return results
+
     def ShouldRun(self, mediaFile):
         if(self.RequiresMediaFileType() == True):
             detector = MediaFileTypeDetector()
@@ -33,10 +37,3 @@ class FileAnalysisBase(AnalysisBase):
                 return False
             
         return True
-    
-    def RunAnalysisOnCollection(self, mediaColl):
-        results = []
-        for mediaFile in mediaColl.MediaFiles:
-            results.extend(self.RunAnalysisOnFile(mediaFile))
-        
-        return results
