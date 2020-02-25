@@ -81,16 +81,6 @@ class TestMediaFile(TestBaseFs):
         
         self.assertEqual(mediaFile.GetFileExtension(), ".mp3")
         
-    def test_get_file_extension_converts_lowercase(self):
-        path = self.CopySampleMp3ToDir()
-
-        newPath = "{}.ASdf".format(path)
-        shutil.copy(path, newPath)
-        
-        mediaFile = MediaFile(newPath)
-        
-        self.assertEqual(mediaFile.GetFileExtension(), ".asdf")
-        
     def test_file_name_returns_full_name(self):
         path = self.CopySampleMp3ToDir(destFileName = "file_name.test")
         
@@ -102,7 +92,7 @@ class TestMediaFile(TestBaseFs):
 
         mediaFile = MediaFile(path)
         
-        self.assertEqual(mediaFile.GetNameWithoutExtension(), "file_name")
+        self.assertEqual(mediaFile.GetNameNoExtension(), "file_name")
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
