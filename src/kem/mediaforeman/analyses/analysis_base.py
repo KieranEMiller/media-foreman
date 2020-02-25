@@ -52,6 +52,9 @@ class AnalysisBase(object):
         result = AnalysisResult()
         result.AnalysisType = self.GetAnalysisType()
         result.Media = media
+        
+        '''include a reference to what ran the analysis'''
+        result.AnalysisObj = self
 
         try:
             if(isinstance(media, MediaCollection)):
