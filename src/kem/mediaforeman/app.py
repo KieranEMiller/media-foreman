@@ -1,8 +1,3 @@
-'''
-Created on Dec 29, 2019
-
-@author: kieranemiller
-'''
 import logging
 
 from kem.mediaforeman.ui.console_app import ConsoleApp
