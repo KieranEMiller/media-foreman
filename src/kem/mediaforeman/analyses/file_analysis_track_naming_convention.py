@@ -14,12 +14,12 @@ class FileAnalysisTrackNamingConvention(FileAnalysisBase):
     def RunAnalysisOnFile(self, mediaFile):
         results = []
         
-        expectedName = "{0:02d} - {} - {}".format(
+        expectedName = "{0:02d} - {1} - {2}".format(
             mediaFile.TrackNumber,
             mediaFile.Album, 
             mediaFile.AlbumArtist
         )
-        actualName = mediaFile.GetName()
+        actualName = mediaFile.GetNameNoExtension()
         
         if(expectedName != actualName):
             results.append(AnalysisIssuePropertyInvalid(
@@ -28,4 +28,6 @@ class FileAnalysisTrackNamingConvention(FileAnalysisBase):
                 expectedName, 
                 actualName
             ))
+            
+        return results
         
