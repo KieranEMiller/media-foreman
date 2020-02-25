@@ -1,8 +1,3 @@
-'''
-Created on Dec 31, 2019
-
-@author: kieranemiller
-'''
 from enum import Enum
 
 class AnalysisType(Enum):
