@@ -32,17 +32,17 @@ class MediaFile(MediaBase):
             self.ExtractProperties()
         
     def GetName(self):
-        return os.path.basename(self.BasePath).lower()
+        return os.path.basename(self.BasePath)
     
-    def GetNameWithoutExtension(self):
+    def GetNameNoExtension(self):
         '''have to usebasename because the first part of the splitext method
         returns the full path to the file, not just the name'''
-        return os.path.basename(os.path.splitext(self.BasePath)[0].lower())
+        return os.path.basename(os.path.splitext(self.BasePath)[0])
     
     def GetFileExtension(self):
         '''splitext returns a tuple filename, fileext, so index 1 
            is the extension'''
-        return os.path.splitext(self.BasePath)[1].lower()
+        return os.path.splitext(self.BasePath)[1]
     
     def ExtractProperties(self):
         metadata = eyed3.load(self.BasePath)
