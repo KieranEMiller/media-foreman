@@ -10,6 +10,9 @@ from kem.mediaforeman_tests.test_base_fs import TestBaseFs
 from kem.mediaforeman.media_root_directory import MediaRootDirectory
 from kem.mediaforeman.media_file import MediaFile
 from kem.mediaforeman.media_collection import MediaCollection
+from kem.mediaforeman_tests.test_asset_constants import TestAssetConstants
+from kem.mediaforeman.media_analyzer import MediaAnalyzer
+from kem.mediaforeman.analyses.collection_analysis_album_directory_naming_convention import CollectionAnalysisAlbumDirectoryNamingConvention
 
 class TestMediaRootDirectory(TestBaseFs):
 
@@ -67,6 +70,15 @@ class TestMediaRootDirectory(TestBaseFs):
         this test is meaningless in those cases'''
         if(MediaRootDirectory.MAX_NUMBER_OF_DIRS_IN_ROOT_TO_PROCESS > 0):
             self.assertEqual(len(results), MediaRootDirectory.MAX_NUMBER_OF_DIRS_IN_ROOT_TO_PROCESS)
+            
+    def test_non_media_file_in_root_process_correctly(self):
+        path = self.CopySampleMp3ToDir(testFile = TestAssetConstants.SAMPLE_IMG, destFileName="qwer.png")
+        
+        mediaroot = MediaRootDirectory([self._testDir])
+        results= mediaroot.Process()
+        
+        analyzer = MediaAnalyzer(results, [CollectionAnalysisAlbumDirectoryNamingConvention()])
+        analyzer.Analyze(True)
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
