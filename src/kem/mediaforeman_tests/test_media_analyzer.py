@@ -10,6 +10,10 @@ from kem.mediaforeman.media_file import MediaFile
 from kem.mediaforeman.analyses.file_analysis_media_file_type import FileAnalysisMediaFileType
 from kem.mediaforeman.analyses.file_analysis_complete_audio_metadata import FileAnalysisCompleteAudioMetadata
 from kem.mediaforeman.analyses.analysis_type import AnalysisType
+from kem.mediaforeman.media_collection import MediaCollection
+from kem.mediaforeman.analyses.collection_analysis_album_directory_naming_convention import CollectionAnalysisAlbumDirectoryNamingConvention
+from kem.mediaforeman.analyses.collection_analysis_mixed_media_types_in_directory import CollectionAnalysisMixedMediaTypesInDirectory
+from kem.mediaforeman_tests.test_asset_constants import TestAssetConstants
 
 class TestMediaAnalyzer(TestBaseFs):
 
@@ -55,6 +59,31 @@ class TestMediaAnalyzer(TestBaseFs):
         self.assertIsInstance(results.AnalysesRun[1], FileAnalysisCompleteAudioMetadata)
         self.assertEqual(len(results.AnalysisResultsByAnalysisType[AnalysisType.FileMediaType]), 2)
         self.assertEqual(len(results.AnalysisResultsByAnalysisType[AnalysisType.FileCompleteAudioMetadata]), 2)
+        
+    def test_runs_on_single_collection_valid_media_types(self):
+        dir = self.CreateSubDirectory("test_collection")
+        sampleFile1 = self.CopySampleMp3ToDir(testDir = dir)
+        sampleFile2 = self.CopySampleMp3ToDir(testDir = dir)
+
+        mediaColl = MediaCollection(dir)
+        analyzer = MediaAnalyzer([mediaColl], [CollectionAnalysisMixedMediaTypesInDirectory()])
+        results = analyzer.Analyze()
+
+        '''no exceptions'''
+        self.assertTrue(True)
+        
+    def test_runs_on_single_collection_with_some_invalid_media_types(self):
+        dir = self.CreateSubDirectory("test_collection")
+        sampleFile1 = self.CopySampleMp3ToDir(testDir = dir)
+        sampleFile2 = self.CopySampleMp3ToDir(testDir = dir)
+        sampleFile3 = self.CopySampleMp3ToDir(testDir = dir, testFile=TestAssetConstants.SAMPLE_IMG)
+
+        mediaColl = MediaCollection(dir)
+        analyzer = MediaAnalyzer([mediaColl], [CollectionAnalysisMixedMediaTypesInDirectory()])
+        results = analyzer.Analyze()
+
+        '''no exceptions'''
+        self.assertTrue(True)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
