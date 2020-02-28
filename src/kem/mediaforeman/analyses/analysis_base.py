@@ -30,6 +30,10 @@ class AnalysisBase(object):
     def GetAnalysisType(self):
         pass
     
+    @abstractmethod
+    def ShouldRun(self, media):
+        return True
+    
     def LogAnalysisResult(self, analysisResult):
         if(analysisResult.HasIssues == False):
             msg = "{}: no issues found for file {}".format(
