@@ -79,6 +79,9 @@ class TestMediaRootDirectory(TestBaseFs):
         
         analyzer = MediaAnalyzer(results, [CollectionAnalysisAlbumDirectoryNamingConvention()])
         analyzer.Analyze(True)
+
+        '''no exceptions'''
+        self.assertTrue(True)
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
