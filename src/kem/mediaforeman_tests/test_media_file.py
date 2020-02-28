@@ -1,8 +1,3 @@
-'''
-Created on Jan 1, 2020
-
-@author: kieranemiller
-'''
 import unittest
 import uuid
 import shutil
