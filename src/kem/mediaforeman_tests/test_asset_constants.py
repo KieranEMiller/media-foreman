@@ -8,6 +8,8 @@ class TestAssetConstants(object):
 
     SAMPLE_MP3_BELOW_SIZE_REQS = "./assets/sample_mp3_with_img_below_size_minimums.mp3"
     SAMPLE_MP3_MEETS_SIZE_REQS = "./assets/sample_mp3_with_img_meets_size_reqs_275x275.mp3"
+    
+    SAMPLE_IMG = "./assets/sample_album_artwork.png"
 
     def __init__(self, params):
         pass
