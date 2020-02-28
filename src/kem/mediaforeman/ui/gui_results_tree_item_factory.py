@@ -7,12 +7,16 @@ class GUIResultsTreeItemFactory(object):
         parentNode = self.AddTreeNode(
             tree = tree,
             parent=None,
-            text="{} ({} items in average of {} us)".format(
+            text="{}".format(
                 analysisType, 
-                len(results),
-                sum(result.ElapsedInMicroSecs for result in results) / len(results)
             ),
-            values=("", "", "")
+            values=(
+                "{} items".format(len(results)),
+                "avg processing time {} us".format(
+                    sum(result.ElapsedInMicroSecs for result in results) / len(results)
+                ),
+                ""
+            )
         )
         return parentNode
     
@@ -27,8 +31,7 @@ class GUIResultsTreeItemFactory(object):
         newNode = self.AddTreeNode(
             tree=tree,
             parent=parent, 
-            text="{} - {}".format(
-                analysisResult.AnalysisType,
+            text="{}".format(
                 analysisResult.Media.GetName()
             ),
             values=(
