@@ -1,6 +1,9 @@
 from abc import abstractmethod
+import logging
 
 from kem.mediaforeman.analyses.analysis_base import AnalysisBase
+
+_log = logging.getLogger()
 
 class CollectionAnalysisBase(AnalysisBase):
 
@@ -15,8 +18,14 @@ class CollectionAnalysisBase(AnalysisBase):
     def RunAnalysisOnCollection(self, mediaColl):
         pass
         
+    @abstractmethod
+    def ShouldRun(self, media):
+        return False
+        
     def RunAnalysisOnFile(self, mediaFile):
-        raise ValueError("collection analyses do not run against individual files: {}".format(mediaFile.BasePath))
+        msg = "collection analyses do not run against individual files: {}".format(mediaFile.BasePath)
+        _log.warn(msg)
+        raise ValueError(msg)
     
     def GetDistinctParentDirs(self, mediaColl):
         parentDirs = {}
