@@ -1,8 +1,3 @@
-'''
-Created on Jan 1, 2020
-
-@author: kieranemiller
-'''
 import unittest
 from kem.mediaforeman_tests.test_base_fs import TestBaseFs
 from kem.mediaforeman.media_collection import MediaCollection
