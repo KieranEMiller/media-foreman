@@ -16,5 +16,11 @@ class GUIConstants(object):
     RESULTS_TREE_COLUMN_HEADER_PATH = "Path"
     RESULTS_TREE_COLUMN_HEADER_PARENT_DIR = "Parent Dir"
 
+    '''used to highlight rows that contain errors'''
+    RESULTS_TREE_TAG_HAS_ISSUES = "HasIssues"
+    RESULTS_TREE_TAG_HAS_NOISSUES = "HasNoIssues"
+    RESULTS_TREE_TAG_HAS_ISSUES_COLOR = "red"
+    RESULTS_TREE_TAG_HAS_NOISSUES_COLOR = "green"
+    
     def __init__(self, params):
         pass
