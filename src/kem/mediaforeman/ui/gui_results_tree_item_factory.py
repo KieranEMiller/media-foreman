@@ -1,9 +1,14 @@
+from kem.mediaforeman.ui.gui_constants import GUIConstants
 class GUIResultsTreeItemFactory(object):
 
     def __init__(self):
         pass
     
     def AddParentToResultsTree(self, tree, analysisType, results):
+        
+        tree.tag_configure(GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES, background=GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES_COLOR)
+        tree.tag_configure(GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES, background=GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES_COLOR)
+
         parentNode = self.AddTreeNode(
             tree = tree,
             parent=None,
@@ -16,7 +21,8 @@ class GUIResultsTreeItemFactory(object):
                     sum(result.ElapsedInMicroSecs for result in results) / len(results)
                 ),
                 ""
-            )
+            ),
+            tags = (GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES)
         )
         return parentNode
     
