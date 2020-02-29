@@ -76,7 +76,7 @@ class AnalysisBase(object):
         except Exception as err:
             errMsg = "failed to run analysis on media at path {}: {}".format(media.BasePath, err)
             _log.error(errMsg)
-            raise err
+            #raise err
             
         result.ElapsedInMicroSecs = (datetime.datetime.now() - startTime).microseconds
         result.HasIssues = (len(result.IssuesFound) > 0)
