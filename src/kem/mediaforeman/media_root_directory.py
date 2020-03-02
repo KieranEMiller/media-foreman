@@ -13,7 +13,7 @@ _log = logging.getLogger()
 
 class MediaRootDirectory(object):
     '''use 0 or -1 to be unlimited'''
-    MAX_NUMBER_OF_DIRS_IN_ROOT_TO_PROCESS = 0
+    MAX_NUMBER_OF_DIRS_IN_ROOT_TO_PROCESS = 25
 
     def __init__(self, rootDirs):
         self._rootDirs = rootDirs
