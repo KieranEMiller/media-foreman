@@ -6,9 +6,8 @@ class GUIResultsTreeItemFactory(object):
     
     def AddParentToResultsTree(self, tree, analysisType, results):
         
-        tree.tag_configure(GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES, background=GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES_COLOR)
-        tree.tag_configure(GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES, background=GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES_COLOR)
 
+        totalNumIssues = sum(1 for result in results if result.HasIssues == True)
         parentNode = self.AddTreeNode(
             tree = tree,
             parent=None,
@@ -20,9 +19,9 @@ class GUIResultsTreeItemFactory(object):
                 "avg processing time {} us".format(
                     sum(result.ElapsedInMicroSecs for result in results) / len(results)
                 ),
-                ""
+                "total # issues {}".format(totalNumIssues)
             ),
-            tags = (GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES)
+            tags = (GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES,)#(GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES) if totalNumIssues > 0 else GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES
         )
         return parentNode
     
@@ -44,7 +43,8 @@ class GUIResultsTreeItemFactory(object):
                  analysisResult.Media.GetName(),
                  analysisResult.Media.BasePath,
                  analysisResult.Media.ParentDirectory
-            )
+            ),
+            tags = (GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES,)#(GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES) if analysisResult.HasIssues else GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES
         )
         
         for issue in analysisResult.IssuesFound:
@@ -58,17 +58,23 @@ class GUIResultsTreeItemFactory(object):
                     issue.MediaFile.GetName(),
                     issue.MediaFile.BasePath, 
                     issue.MediaFile.ParentDirectory
-                )
+                ),
+                tags = (GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES,)#(GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES) if analysisResult.HasIssues else GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES
             )
         
         return newNode
     
-    def AddTreeNode(self, tree, parent, text, values):
+    def AddTreeNode(self, tree, parent, text, values, tags):
         newNode = tree.insert(
             parent if parent is not None else '', 
             'end', 
             text=text,
-            values=values
+            values=values,
+            tags=('test',)#tags
+        )
+        tree.tag_configure(
+            'test', 
+            background='orange'
         )
         return newNode
     
