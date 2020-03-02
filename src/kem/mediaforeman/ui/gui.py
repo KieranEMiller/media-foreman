@@ -9,6 +9,7 @@ from kem.mediaforeman.ui.gui_constants import GUIConstants
 from kem.mediaforeman.media_root_directory import MediaRootDirectory
 from kem.mediaforeman.media_analyzer import MediaAnalyzer
 from kem.mediaforeman.ui.gui_results_tree_item_factory import GUIResultsTreeItemFactory
+from tkinter.ttk import Style
 
 class GuiApp(object):
 
@@ -31,6 +32,16 @@ class GuiApp(object):
         
         '''the input control for the root directory'''
         self._rootDirInput = None
+        
+        '''
+        background color fix: this resolves an issue where the tags
+        for tree view items are not handled properly in the version of tkinter
+        tree view style fix taken from: 
+        https://bugs.python.org/issue36468
+        '''
+        style = ttk.Style()
+        style.map('Treeview', foreground=self.fixed_map('foreground'), background=self.fixed_map('background'))
+        
         
     def Run(self):
         self._rootFrame = self.SetupRootFrame()
@@ -86,6 +97,10 @@ class GuiApp(object):
             for analysisResult in analysisResults:
                 item = itemFactory.AddAnalysisToResultsTree(thisTree, analysisResult, parentItem)
             
+            thisTree.tag_configure(
+                'test', 
+                background='orange'
+            )
 
     def ResetResultsTree(self):
         for tab in self._resultTrees:
@@ -169,4 +184,22 @@ class GuiApp(object):
         tree.grid(row=1, columnspan=2, sticky=N+S+E+W)
         
         return tree
-        
+
+    '''
+    background color fix: this resolves an issue where the tags
+    for tree view items are not handled properly in the version of tkinter
+    tree view style fix taken from: 
+    https://bugs.python.org/issue36468
+    '''
+    def fixed_map(self, option):
+        # Fix for setting text colour for Tkinter 8.6.9
+        # From: https://core.tcl.tk/tk/info/509cafafae
+        #
+        # Returns the style map for 'option' with any styles starting with
+        # ('!disabled', '!selected', ...) filtered out.
+
+        # style.map() returns an empty list for missing options, so this
+        # should be future-safe.
+        style = ttk.Style()
+        return [elm for elm in style.map('Treeview', query_opt=option) if
+          elm[:2] != ('!disabled', '!selected')]
