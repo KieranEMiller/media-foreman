@@ -42,7 +42,6 @@ class GuiApp(object):
         style = ttk.Style()
         style.map('Treeview', foreground=self.fixed_map('foreground'), background=self.fixed_map('background'))
         
-        
     def Run(self):
         self._rootFrame = self.SetupRootFrame()
         
@@ -98,8 +97,13 @@ class GuiApp(object):
                 item = itemFactory.AddAnalysisToResultsTree(thisTree, analysisResult, parentItem)
             
             thisTree.tag_configure(
-                'test', 
-                background='orange'
+                GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES, 
+                background=GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES_COLOR
+            )
+
+            thisTree.tag_configure(
+                GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES, 
+                background=GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES_COLOR
             )
 
     def ResetResultsTree(self):
