@@ -19,8 +19,8 @@ class GUIConstants(object):
     '''used to highlight rows that contain errors'''
     RESULTS_TREE_TAG_HAS_ISSUES = "HasIssues"
     RESULTS_TREE_TAG_HAS_NOISSUES = "HasNoIssues"
-    RESULTS_TREE_TAG_HAS_ISSUES_COLOR = "red"
-    RESULTS_TREE_TAG_HAS_NOISSUES_COLOR = "green"
+    RESULTS_TREE_TAG_HAS_ISSUES_COLOR = "coral1"
+    RESULTS_TREE_TAG_HAS_NOISSUES_COLOR = "pale green"
     
     def __init__(self, params):
         pass
