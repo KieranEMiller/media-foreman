@@ -83,28 +83,25 @@ class GuiApp(object):
         analyzer = MediaAnalyzer(media, self._config.AnalysesToRun)
         summary = analyzer.Analyze(self._config.SummarizeOnly)
         
+        self.ShowResults(summary)
+            
+    def ShowResults(self, summary):
         itemFactory = GUIResultsTreeItemFactory()
         for analysis in summary.AnalysisResultsByAnalysisType:
             
             analysisResults = summary.AnalysisResultsByAnalysisType[analysis]
 
+            resultTrees = [self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES]]
             thisTree = self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES]
-            parentItem = itemFactory.AddParentToResultsTree(
-                thisTree, analysis, analysisResults
-            )
             
-            for analysisResult in analysisResults:
-                item = itemFactory.AddAnalysisToResultsTree(thisTree, analysisResult, parentItem)
-            
-            thisTree.tag_configure(
-                GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES, 
-                background=GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES_COLOR
-            )
-
-            thisTree.tag_configure(
-                GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES, 
-                background=GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES_COLOR
-            )
+            for thisTree in resultTrees:
+                parentItem = itemFactory.AddParentToResultsTree(
+                    thisTree, analysis, analysisResults
+                )
+                
+                for analysisResult in analysisResults:
+                    item = itemFactory.AddAnalysisToResultsTree(thisTree, analysisResult, parentItem)
+                
 
     def ResetResultsTree(self):
         for tab in self._resultTrees:
@@ -154,6 +151,8 @@ class GuiApp(object):
         tabsByAnalysisType[GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES] = self.SetupResultsTab(tabControl, GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES)
         tabsByAnalysisType[GUIConstants.RESULTS_TAB_HEADER_FILEANALYSES] = self.SetupResultsTab(tabControl, GUIConstants.RESULTS_TAB_HEADER_FILEANALYSES)
         tabsByAnalysisType[GUIConstants.RESULTS_TAB_HEADER_COLLANALYSES] = self.SetupResultsTab(tabControl, GUIConstants.RESULTS_TAB_HEADER_COLLANALYSES)
+        tabsByAnalysisType[GUIConstants.RESULTS_TAB_HEADER_HAS_ISSUES] = self.SetupResultsTab(tabControl, GUIConstants.RESULTS_TAB_HEADER_HAS_ISSUES)
+        tabsByAnalysisType[GUIConstants.RESULTS_TAB_HEADER_NO_ISSUES] = self.SetupResultsTab(tabControl, GUIConstants.RESULTS_TAB_HEADER_NO_ISSUES)
         return tabsByAnalysisType
     
     def SetupResultsTab(self, tabControl, tabName):
@@ -186,6 +185,16 @@ class GuiApp(object):
         tree.column('#2', stretch=tkinter.YES)
         tree.column('#3', stretch=tkinter.YES)
         tree.grid(row=1, columnspan=2, sticky=N+S+E+W)
+
+        tree.tag_configure(
+            GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES, 
+            background=GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES_COLOR
+        )
+
+        tree.tag_configure(
+            GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES, 
+            background=GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES_COLOR
+        )
         
         return tree
 
