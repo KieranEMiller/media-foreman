@@ -11,6 +11,8 @@ class GUIConstants(object):
     RESULTS_TAB_HEADER_ALLANALYSES = "All Analyses"
     RESULTS_TAB_HEADER_FILEANALYSES = "File Analyses"
     RESULTS_TAB_HEADER_COLLANALYSES = "Collection Analyses"
+    RESULTS_TAB_HEADER_HAS_ISSUES = "Media w/Issues"
+    RESULTS_TAB_HEADER_NO_ISSUES = "Media w/No Issues"
 
     RESULTS_TREE_COLUMN_HEADER_FILENAME = "File Name"
     RESULTS_TREE_COLUMN_HEADER_PATH = "Path"
