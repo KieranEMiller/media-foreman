@@ -10,6 +10,8 @@ from kem.mediaforeman.media_root_directory import MediaRootDirectory
 from kem.mediaforeman.media_analyzer import MediaAnalyzer
 from kem.mediaforeman.ui.gui_results_tree_item_factory import GUIResultsTreeItemFactory
 from tkinter.ttk import Style
+from kem.mediaforeman.media_collection import MediaCollection
+from kem.mediaforeman.analyses.analysis_type_factory import AnalysisTypeFactory
 
 class GuiApp(object):
 
@@ -87,6 +89,8 @@ class GuiApp(object):
             
     def ShowResults(self, summary):
         itemFactory = GUIResultsTreeItemFactory()
+        analysisFactory = AnalysisTypeFactory()
+        
         for analysis in summary.AnalysisResultsByAnalysisType:
             
             analysisResults = summary.AnalysisResultsByAnalysisType[analysis]
@@ -94,6 +98,13 @@ class GuiApp(object):
             resultTrees = [self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES]]
             thisTree = self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES]
             
+            analysisClass = analysisFactory.TypeToAnalysis(analysis)()
+            if(analysisClass.IsCollectionAnalysis()):
+                resultTrees.append(self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_COLLANALYSES])
+
+            elif(analysisClass.IsFileAnalysis()):
+                resultTrees.append(self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_FILEANALYSES])
+                
             for thisTree in resultTrees:
                 parentItem = itemFactory.AddParentToResultsTree(
                     thisTree, analysis, analysisResults
