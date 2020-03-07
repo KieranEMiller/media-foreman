@@ -30,6 +30,14 @@ class AnalysisBase(object):
     def GetAnalysisType(self):
         pass
     
+    @abstractmethod 
+    def IsCollectionAnalysis(self):
+        pass
+    
+    @abstractmethod
+    def IsFileAnalysis(self):
+        pass
+    
     @abstractmethod
     def ShouldRun(self, media):
         return True

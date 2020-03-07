@@ -21,6 +21,12 @@ class CollectionAnalysisBase(AnalysisBase):
     @abstractmethod
     def ShouldRun(self, media):
         return False
+    
+    def IsCollectionAnalysis(self):
+        return True
+    
+    def IsFileAnalysis(self):
+        return False
         
     def RunAnalysisOnFile(self, mediaFile):
         msg = "collection analyses do not run against individual files: {}".format(mediaFile.BasePath)

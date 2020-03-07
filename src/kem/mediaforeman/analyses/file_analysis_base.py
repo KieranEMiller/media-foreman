@@ -12,7 +12,7 @@ class FileAnalysisBase(AnalysisBase):
     @abstractmethod
     def RequiresMediaFileType(self):
         return True
-    
+
     @abstractmethod
     def GetAnalysisType(self):
         pass
@@ -21,6 +21,12 @@ class FileAnalysisBase(AnalysisBase):
     def RunAnalysisOnFile(self, mediaFile):
         pass
     
+    def IsCollectionAnalysis(self):
+        return False
+    
+    def IsFileAnalysis(self):
+        return True
+
     '''not abstract here since this method is not overridden
     by subclasses; this base method handles execution for all subclasses'''
     def RunAnalysisOnCollection(self, mediaColl):
