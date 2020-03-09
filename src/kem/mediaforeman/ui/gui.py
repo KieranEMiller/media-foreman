@@ -105,6 +105,11 @@ class GuiApp(object):
             elif(analysisClass.IsFileAnalysis()):
                 resultTrees.append(self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_FILEANALYSES])
                 
+            if(sum([1 for result in analysisResults if result.HasIssues == True]) > 0):
+                resultTrees.append(self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_HAS_ISSUES])
+            else:
+                resultTrees.append(self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_NO_ISSUES])
+                
             for thisTree in resultTrees:
                 parentItem = itemFactory.AddParentToResultsTree(
                     thisTree, analysis, analysisResults
