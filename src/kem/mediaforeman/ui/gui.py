@@ -98,17 +98,13 @@ class GuiApp(object):
             resultTrees = [self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES]]
             thisTree = self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES]
             
+            '''add analysis results to the all/file/collection result tabs'''
             analysisClass = analysisFactory.TypeToAnalysis(analysis)()
             if(analysisClass.IsCollectionAnalysis()):
                 resultTrees.append(self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_COLLANALYSES])
 
             elif(analysisClass.IsFileAnalysis()):
                 resultTrees.append(self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_FILEANALYSES])
-                
-            if(sum([1 for result in analysisResults if result.HasIssues == True]) > 0):
-                resultTrees.append(self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_HAS_ISSUES])
-            else:
-                resultTrees.append(self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_NO_ISSUES])
                 
             for thisTree in resultTrees:
                 parentItem = itemFactory.AddParentToResultsTree(
@@ -117,7 +113,32 @@ class GuiApp(object):
                 
                 for analysisResult in analysisResults:
                     item = itemFactory.AddAnalysisToResultsTree(thisTree, analysisResult, parentItem)
-                
+                    
+            '''add analysis results to the has issues/has no issues result tabs'''
+            parentWithIssues = itemFactory.AddParentToResultsTree(
+                self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_HAS_ISSUES],
+                analysis,
+                [result for result in analysisResults if result.HasIssues==True]
+            )
+            parentNoIssues = itemFactory.AddParentToResultsTree(
+                self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_NO_ISSUES],
+                analysis,
+                [result for result in analysisResults if result.HasIssues==False]
+            )
+            
+            for result in analysisResults:
+                tree = self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_NO_ISSUES]
+                parent = parentNoIssues
+
+                if(result.HasIssues == True):
+                    tree = self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_HAS_ISSUES]
+                    parent = parentWithIssues
+
+                item = itemFactory.AddAnalysisToResultsTree(
+                    tree,
+                    analysisResult, 
+                    parent
+                )
 
     def ResetResultsTree(self):
         for tab in self._resultTrees:
