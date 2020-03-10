@@ -29,9 +29,6 @@ class GuiApp(object):
         self._rootFrame = None
         self._resultTrees = None
         
-        '''the text control that displays the running configuration'''
-        self._configText = None
-        
         '''the input control for the root directory'''
         self._rootDirInput = None
         
@@ -67,13 +64,6 @@ class GuiApp(object):
         or available on the configuration GUI, so just update those'''
         self._config.AnalysesToRun = []
         self._config.AnalysesToRun.extend(config.AnalysesToRun)
-        
-        '''refresh the config display'''
-        self.UpdateConfigDisplayBox()
-        
-    def UpdateConfigDisplayBox(self):
-        self._configText.delete('1.0', END)
-        self._configText.insert('1.0', self._config.PrintConfig())
         
     def ProcessRootDirs(self):
         self.ResetResultsTree()
@@ -171,10 +161,8 @@ class GuiApp(object):
         processBtn.grid(row=1, column=2, sticky=E, padx=GUIConstants.PADDING_X)
 
         configBtn = Button(topFrame, text="Configuration", command=self.ShowConfig)
-        configBtn.grid(row=1, column=0, sticky=W, padx=GUIConstants.PADDING_X)
+        configBtn.grid(row=1, column=1, sticky=W, padx=GUIConstants.PADDING_X)
         
-        self._configText = ScrolledText(topFrame, height=3)
-        self._configText.grid(row=1, column=1, sticky=W+E)
         
     def SetupResultsTabs(self):
         frame = Frame(self._rootFrame)
