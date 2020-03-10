@@ -136,7 +136,7 @@ class GuiApp(object):
 
                 item = itemFactory.AddAnalysisToResultsTree(
                     tree,
-                    analysisResult, 
+                    result, 
                     parent
                 )
 
