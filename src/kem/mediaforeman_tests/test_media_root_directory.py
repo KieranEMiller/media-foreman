@@ -55,12 +55,12 @@ class TestMediaRootDirectory(TestBaseFs):
         
     def test_root_dir_respects_max_number_of_dirs_to_process(self):
         
-        for i in range(10):
+        for i in range(MediaRootDirectory.MAX_NUMBER_OF_DIRS_IN_ROOT_TO_PROCESS + 10):
             dir = self.CreateSubDirectory("test_dir_{}".format(str(i)))
             self.CopySampleMp3ToDir(testDir = dir)
             self.CopySampleMp3ToDir(testDir = dir)
             
-        self.assertEqual(len(os.listdir(self._testDir)), 10)
+        self.assertEqual(len(os.listdir(self._testDir)), MediaRootDirectory.MAX_NUMBER_OF_DIRS_IN_ROOT_TO_PROCESS + 10)
             
         mediaroot = MediaRootDirectory([self._testDir])
         results = mediaroot.Process()
