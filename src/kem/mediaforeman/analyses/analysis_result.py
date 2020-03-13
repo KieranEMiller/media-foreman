@@ -9,5 +9,6 @@ class AnalysisResult(object):
         
         self.Media = None
 
+        self.WasProcessed = True
         self.HasIssues = False
         self.IssuesFound = []
