@@ -220,6 +220,11 @@ class GuiApp(object):
             GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES, 
             background=GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES_COLOR
         )
+
+        tree.tag_configure(
+            GUIConstants.RESULTS_TREE_TAG_WAS_PROCESSED, 
+            background=GUIConstants.RESULTS_TREE_TAG_WAS_PROCESSED_COLOR
+        )
         
         return tree
 
