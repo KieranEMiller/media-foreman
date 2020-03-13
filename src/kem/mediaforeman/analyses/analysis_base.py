@@ -76,6 +76,7 @@ class AnalysisBase(object):
                 if(self.ShouldRun(media)):
                     result.IssuesFound = self.RunAnalysisOnFile(media)
                 else:
+                    result.WasProcessed = False
                     _log.warn("skipping file analysis on media {}, it is not eligible".format(media.BasePath))
             
             else:
