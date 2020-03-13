@@ -43,7 +43,7 @@ class GUIResultsTreeItemFactory(object):
                  analysisResult.Media.BasePath,
                  analysisResult.Media.ParentDirectory
             ),
-            tags = (GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES) if analysisResult.HasIssues else GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES
+            tags = (self.GetTagListByAnalysisResult(analysisResult))
         )
         
         for issue in analysisResult.IssuesFound:
@@ -58,7 +58,7 @@ class GUIResultsTreeItemFactory(object):
                     issue.MediaFile.BasePath, 
                     issue.MediaFile.ParentDirectory
                 ),
-                tags = (GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES) if analysisResult.HasIssues else GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES
+                tags = (self.GetTagListByAnalysisResult(analysisResult))
             )
         
         return newNode
@@ -73,3 +73,13 @@ class GUIResultsTreeItemFactory(object):
         )
         return newNode
     
+    def GetTagListByAnalysisResult(self, analysisResult):
+        if(analysisResult.WasProcessed == False):
+            return GUIConstants.RESULTS_TREE_TAG_WAS_PROCESSED
+        
+        elif (analysisResult.HasIssues):
+            return GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES
+        
+        elif (analysisResult.HasIssues == False):
+            return GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES
+            
