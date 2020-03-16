@@ -52,8 +52,11 @@ class MediaFile(MediaBase):
 
         if(metadata.tag != None):
             self.Album = metadata.tag.album
-            self.AlbumArtist = metadata.tag.album_artist
             self.Title = metadata.tag.title
+            
+            self.AlbumArtist = metadata.tag.album_artist
+            if(self.AlbumArtist is None or self.AlbumArtist == ""):
+                self.AlbumArtist = metadata.tag.artist
             
             tracknum = metadata.tag.track_num[0]
             if(str(tracknum).isdigit()):

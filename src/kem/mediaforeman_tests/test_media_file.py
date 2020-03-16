@@ -4,6 +4,7 @@ import shutil
 
 from kem.mediaforeman_tests.test_base_fs import TestBaseFs
 from kem.mediaforeman.media_file import MediaFile
+from kem.mediaforeman_tests.test_asset_constants import TestAssetConstants
 
 class TestMediaFile(TestBaseFs):
 
@@ -88,6 +89,13 @@ class TestMediaFile(TestBaseFs):
         mediaFile = MediaFile(path)
         
         self.assertEqual(mediaFile.GetNameNoExtension(), "file_name")
+        
+    def test_file_with_no_album_artist_uses_artist_as_backup(self):
+        path = self.CopySampleMp3ToDir(testFile=TestAssetConstants.SAMPLE_MP3_NO_ALBUM_ARTIST_BUT_HAS_ARTIST)
+        mediaFile = MediaFile(path)
+        
+        self.assertEqual(mediaFile.AlbumArtist, "Artist1")
+        
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
