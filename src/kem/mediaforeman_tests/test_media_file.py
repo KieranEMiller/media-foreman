@@ -5,6 +5,7 @@ import shutil
 from kem.mediaforeman_tests.test_base_fs import TestBaseFs
 from kem.mediaforeman.media_file import MediaFile
 from kem.mediaforeman_tests.test_asset_constants import TestAssetConstants
+import eyed3
 
 class TestMediaFile(TestBaseFs):
 
@@ -96,6 +97,17 @@ class TestMediaFile(TestBaseFs):
         
         self.assertEqual(mediaFile.AlbumArtist, "Artist1")
         
+    def test_save_metadata_saves_artist_to_album_artist_and_artist_fields(self):
+        path = self.CopySampleMp3ToDir()
+        mediaFile = MediaFile(path)
+        
+        uniqueId = str(uuid.uuid1())
+        mediaFile.AlbumArtist = "AlbumArtist {}".format(uniqueId)
+        mediaFile.SaveMetadata()
+        
+        metadata = eyed3.load(path)
+        self.assertEqual(mediaFile.AlbumArtist, metadata.tag.album_artist)
+        self.assertEqual(mediaFile.AlbumArtist, metadata.tag.artist)
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
