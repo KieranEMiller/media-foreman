@@ -36,6 +36,7 @@ class TestMediaCollection(TestBaseFs):
         mediaColl = MediaCollection(root)
 
         self.assertEqual(len(mediaColl.MediaFiles), 5)
+        
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
