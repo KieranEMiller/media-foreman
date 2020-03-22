@@ -90,7 +90,6 @@ class TestCollectionAnalysisAlbumDirectoryNamingConvention(TestBaseFs):
         self.assertEqual(result.IssuesFound[0].ExpectedVal, "{} - {}".format(ARTIST_NAME, "qwer"))
         self.assertEqual(result.IssuesFound[0].ActualVal, "{} - {}".format(ARTIST_NAME, ALBUM_NAME))
         
-        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
