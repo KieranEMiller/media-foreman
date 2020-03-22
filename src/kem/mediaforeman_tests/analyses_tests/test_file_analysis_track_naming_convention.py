@@ -51,8 +51,7 @@ class TestFileAnalysisTrackingNamingConvention(TestBaseFs):
         self.assertTrue(len(result.IssuesFound), 1)
         self.assertEqual(result.IssuesFound[0].IssueType, AnalysisIssuePropertyType.TrackNamingConvention)
         self.assertEqual(result.IssuesFound[0].ExpectedVal, "03 - testAlbum - testArtist")       
-
-
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
