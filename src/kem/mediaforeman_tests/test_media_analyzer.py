@@ -9,6 +9,7 @@ from kem.mediaforeman.media_collection import MediaCollection
 from kem.mediaforeman.analyses.collection_analysis_album_directory_naming_convention import CollectionAnalysisAlbumDirectoryNamingConvention
 from kem.mediaforeman.analyses.collection_analysis_mixed_media_types_in_directory import CollectionAnalysisMixedMediaTypesInDirectory
 from kem.mediaforeman_tests.test_asset_constants import TestAssetConstants
+from kem.mediaforeman.analyses.file_analysis_track_naming_convention import FileAnalysisTrackNamingConvention
 
 class TestMediaAnalyzer(TestBaseFs):
 
@@ -79,6 +80,29 @@ class TestMediaAnalyzer(TestBaseFs):
 
         '''no exceptions'''
         self.assertTrue(True)
+        
+    def test_non_media_file_type_does_not_run_file_analysis_that_requires_media_type(self):
+        sampleFile1 = self.CopySampleMp3ToDir(testFile = TestAssetConstants.SAMPLE_MP3_NO_METADATA, destFileName = 'test.asdf')
+
+        mediaFile = MediaFile(sampleFile1)
+        analyzer = MediaAnalyzer([mediaFile], [FileAnalysisTrackNamingConvention()])
+        results = analyzer.Analyze()
+
+        trackAnalysis = results.AnalysisResultsByAnalysisType[AnalysisType.FileTrackNamingConvention]
+        
+        self.assertFalse(trackAnalysis[0].HasIssues)
+        
+    def test_collection_with_non_media_file_type_does_not_run_file_analysis_that_requires_media_type(self):
+        dir = self.CreateSubDirectory("test_collection")
+        sampleFile1 = self.CopySampleMp3ToDir(testDir = dir, testFile = TestAssetConstants.SAMPLE_MP3_NO_METADATA, destFileName = 'test.asdf')
+
+        mediaColl = MediaCollection(dir)
+        analyzer = MediaAnalyzer([mediaColl], [FileAnalysisTrackNamingConvention()])
+        results = analyzer.Analyze()
+
+        trackAnalysis = results.AnalysisResultsByAnalysisType[AnalysisType.FileTrackNamingConvention]
+        
+        self.assertFalse(trackAnalysis[0].HasIssues)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
