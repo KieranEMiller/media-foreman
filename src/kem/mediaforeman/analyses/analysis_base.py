@@ -10,6 +10,7 @@ from abc import abstractmethod
 from kem.mediaforeman.media_collection import MediaCollection
 from kem.mediaforeman.media_file import MediaFile
 from kem.mediaforeman.analyses.analysis_result import AnalysisResult
+from kem.mediaforeman.util.media_file_type_detector import MediaFileTypeDetector
 
 _log = logging.getLogger()
 
@@ -40,8 +41,14 @@ class AnalysisBase(object):
     
     @abstractmethod
     def ShouldRun(self, media):
-        return True
-    
+        if(isinstance(media, MediaFile)):
+            if(self.RequiresMediaFileType() == True):
+                detector = MediaFileTypeDetector()
+                if(detector.IsMediaFileType(media.BasePath) == False):
+                    return False
+            
+        return True    
+
     def LogAnalysisResult(self, analysisResult):
         if(analysisResult.HasIssues == False):
             msg = "{}: no issues found for file {}".format(
@@ -69,19 +76,16 @@ class AnalysisBase(object):
         result.AnalysisObj = self
 
         try:
-            if(isinstance(media, MediaCollection)):
+            if(self.ShouldRun(media) == False):
+                result.WasProcessed = False
+                _log.warn("skipping file analysis on media {}, it is not eligible".format(media.basepath))
+                
+            elif(isinstance(media, MediaCollection)):
                 result.IssuesFound = self.RunAnalysisOnCollection(media)
             
             elif(isinstance(media, MediaFile)):
-                if(self.ShouldRun(media)):
-                    result.IssuesFound = self.RunAnalysisOnFile(media)
-                else:
-                    result.WasProcessed = False
-                    _log.warn("skipping file analysis on media {}, it is not eligible".format(media.BasePath))
-            
-            else:
-                raise ValueError("unknown run analysis media parameter")
-            
+                result.IssuesFound = self.RunAnalysisOnFile(media)
+                
         except Exception as err:
             errMsg = "failed to run analysis on media at path {}: {}".format(media.BasePath, err)
             _log.error(errMsg)

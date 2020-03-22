@@ -32,10 +32,12 @@ class FileAnalysisBase(AnalysisBase):
     def RunAnalysisOnCollection(self, mediaColl):
         results = []
         for mediaFile in mediaColl.MediaFiles:
-            results.extend(self.RunAnalysisOnFile(mediaFile))
+            if(self.ShouldRun(mediaFile) == True):
+                results.extend(self.RunAnalysisOnFile(mediaFile))
         
         return results
 
+    '''
     def ShouldRun(self, media):
         if(self.RequiresMediaFileType() == True):
             detector = MediaFileTypeDetector()
@@ -43,3 +45,4 @@ class FileAnalysisBase(AnalysisBase):
                 return False
             
         return True
+    '''
