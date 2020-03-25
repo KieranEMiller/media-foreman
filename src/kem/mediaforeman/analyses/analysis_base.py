@@ -11,6 +11,7 @@ from kem.mediaforeman.media_collection import MediaCollection
 from kem.mediaforeman.media_file import MediaFile
 from kem.mediaforeman.analyses.analysis_result import AnalysisResult
 from kem.mediaforeman.util.media_file_type_detector import MediaFileTypeDetector
+from kem.mediaforeman.analyses.analysis_issue_error_encountered import AnalysisIssueErrorEncountered
 
 _log = logging.getLogger()
 
@@ -89,7 +90,9 @@ class AnalysisBase(object):
         except Exception as err:
             errMsg = "failed to run analysis on media at path {}: {}".format(media.BasePath, err)
             _log.error(errMsg)
-            #raise err
+            result.IssuesFound = [AnalysisIssueErrorEncountered(
+                media, errMsg
+            )]
             
         result.ElapsedInMicroSecs = (datetime.datetime.now() - startTime).microseconds
         result.HasIssues = (len(result.IssuesFound) > 0)
