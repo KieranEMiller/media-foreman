@@ -7,6 +7,10 @@ class GUIResultsTreeItemFactory(object):
     def AddParentToResultsTree(self, tree, analysisType, results):
         
         totalNumIssues = sum(1 for result in results if result.HasIssues == True)
+        avgProcessingTime = 0
+        if(len(results) > 0):
+            avgProcessingTime = sum(result.ElapsedInMicroSecs for result in results) / len(results)
+
         parentNode = self.AddTreeNode(
             tree = tree,
             parent=None,
@@ -16,7 +20,7 @@ class GUIResultsTreeItemFactory(object):
             values=(
                 "{} items".format(len(results)),
                 "avg processing time {} us".format(
-                    sum(result.ElapsedInMicroSecs for result in results) / len(results)
+                    avgProcessingTime
                 ),
                 "total # issues {}".format(totalNumIssues)
             ),
