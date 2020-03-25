@@ -28,21 +28,12 @@ class FileAnalysisBase(AnalysisBase):
         return True
 
     '''not abstract here since this method is not overridden
-    by subclasses; this base method handles execution for all subclasses'''
+    by subclasses; 
+    this method is invoked when you run a file analysis against a collection
+    '''
     def RunAnalysisOnCollection(self, mediaColl):
         results = []
         for mediaFile in mediaColl.MediaFiles:
-            if(self.ShouldRun(mediaFile) == True):
-                results.extend(self.RunAnalysisOnFile(mediaFile))
+            results.extend(self.RunAnalysisOnFile(mediaFile))
         
         return results
-
-    '''
-    def ShouldRun(self, media):
-        if(self.RequiresMediaFileType() == True):
-            detector = MediaFileTypeDetector()
-            if(detector.IsMediaFileType(media.BasePath) == False):
-                return False
-            
-        return True
-    '''
