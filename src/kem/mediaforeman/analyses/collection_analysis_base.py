@@ -17,12 +17,6 @@ class CollectionAnalysisBase(AnalysisBase):
     @abstractmethod
     def RunAnalysisOnCollection(self, mediaColl):
         pass
-        
-    '''
-    @abstractmethod
-    def ShouldRun(self, media):
-        return False
-    '''
     
     def IsCollectionAnalysis(self):
         return True
