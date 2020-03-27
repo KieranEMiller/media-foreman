@@ -1,8 +1,3 @@
-'''
-Created on Dec 30, 2019
-
-@author: kieranemiller
-'''
 import datetime
 import logging
 from abc import abstractmethod
