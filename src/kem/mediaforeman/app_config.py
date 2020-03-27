@@ -1,4 +1,3 @@
-import argparse
 import logging
 
 _log = logging.getLogger()
