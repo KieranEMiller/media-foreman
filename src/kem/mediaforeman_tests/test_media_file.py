@@ -1,6 +1,5 @@
 import unittest
 import uuid
-import shutil
 
 from kem.mediaforeman_tests.test_base_fs import TestBaseFs
 from kem.mediaforeman.media_file import MediaFile
