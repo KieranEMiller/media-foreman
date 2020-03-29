@@ -98,6 +98,7 @@ class GuiApp(object):
             for thisTree in resultTrees:
                 self.AddResultsToTree(thisTree, analysis, analysisResults)
                 
+            '''add analysis results to the with issues/with no issues tabs'''
             resultsWithIssues = [result for result in analysisResults if result.HasIssues == True]
             if(len(resultsWithIssues)):
                 tree = self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_HAS_ISSUES]
