@@ -32,8 +32,4 @@ class FileAnalysisBase(AnalysisBase):
     this method is invoked when you run a file analysis against a collection
     '''
     def RunAnalysisOnCollection(self, mediaColl):
-        results = []
-        for mediaFile in mediaColl.MediaFiles:
-            results.extend(self.RunAnalysisOnFile(mediaFile))
-        
-        return results
+        pass
