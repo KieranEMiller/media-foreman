@@ -64,6 +64,7 @@ class AnalysisBase(object):
             self.GetAnalysisType(), type(media), media.BasePath
         ))
 
+        results = []
         result = AnalysisResult()
         result.AnalysisType = self.GetAnalysisType()
         result.Media = media
@@ -77,7 +78,11 @@ class AnalysisBase(object):
                 _log.warn("skipping file analysis on media {}, it is not eligible".format(media.basepath))
                 
             elif(isinstance(media, MediaCollection)):
-                result.IssuesFound = self.RunAnalysisOnCollection(media)
+                if(self.IsFileAnalysis() == True):
+                    for mediaFile in media.MediaFiles:
+                        results.append(self.RunAnalysis(mediaFile)) 
+                else:
+                    result.IssuesFound = self.RunAnalysisOnCollection(media)
             
             elif(isinstance(media, MediaFile)):
                 result.IssuesFound = self.RunAnalysisOnFile(media)
@@ -94,4 +99,6 @@ class AnalysisBase(object):
         
         self.LogAnalysisResult(result)
         
-        return result
+        results.append(result)
+        
+        return results
