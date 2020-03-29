@@ -27,7 +27,7 @@ class MediaAnalyzer(object):
                 analysisResult = analysis.RunAnalysis(media = media)
                 
                 if(analysis.GetAnalysisType() in result.AnalysisResultsByAnalysisType):
-                    result.AnalysisResultsByAnalysisType[analysis.GetAnalysisType()].append(analysisResult)
+                    result.AnalysisResultsByAnalysisType[analysis.GetAnalysisType()].extend(analysisResult)
                 else:
                     result.AnalysisResultsByAnalysisType[analysis.GetAnalysisType()] = [analysisResult]
 
