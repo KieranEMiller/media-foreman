@@ -1,5 +1,4 @@
 import unittest
-import shutil
 
 from kem.mediaforeman_tests.test_base_fs import TestBaseFs
 from kem.mediaforeman.media_collection import MediaCollection
