@@ -1,8 +1,3 @@
-'''
-Created on Jan 15, 2020
-
-@author: KieranM
-'''
 import unittest
 from kem.mediaforeman.util.most_common_determinator import MostCommonDeterminator
 from kem.mediaforeman.media_file import MediaFile
