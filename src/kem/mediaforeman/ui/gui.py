@@ -83,9 +83,7 @@ class GuiApp(object):
         for analysis in summary.AnalysisResultsByAnalysisType:
             
             analysisResults = summary.AnalysisResultsByAnalysisType[analysis]
-
             resultTrees = [self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES]]
-            thisTree = self._resultTrees[GUIConstants.RESULTS_TAB_HEADER_ALLANALYSES]
             
             '''add analysis results to the all/file/collection result tabs'''
             analysisClass = analysisFactory.TypeToAnalysis(analysis)()
