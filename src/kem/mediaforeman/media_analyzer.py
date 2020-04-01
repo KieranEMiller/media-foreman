@@ -29,7 +29,7 @@ class MediaAnalyzer(object):
                 if(analysis.GetAnalysisType() in result.AnalysisResultsByAnalysisType):
                     result.AnalysisResultsByAnalysisType[analysis.GetAnalysisType()].extend(analysisResult)
                 else:
-                    result.AnalysisResultsByAnalysisType[analysis.GetAnalysisType()] = [analysisResult]
+                    result.AnalysisResultsByAnalysisType[analysis.GetAnalysisType()] = analysisResult
 
         result.ElapsedInMicroSecs = (datetime.datetime.now() - startTime).microseconds
         return result
