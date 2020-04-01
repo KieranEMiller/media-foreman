@@ -80,7 +80,11 @@ class AnalysisBase(object):
             elif(isinstance(media, MediaCollection)):
                 if(self.IsFileAnalysis() == True):
                     for mediaFile in media.MediaFiles:
-                        results.append(self.RunAnalysis(mediaFile)) 
+                        '''just reference the first item's index when appending the results here
+                        this prevents the results array from being an array of an array
+                        we already know there is just going to be one result from a single file so 
+                        just treat it as such'''
+                        results.append(self.RunAnalysis(mediaFile)[0]) 
                 else:
                     result.IssuesFound = self.RunAnalysisOnCollection(media)
             
@@ -90,9 +94,7 @@ class AnalysisBase(object):
         except Exception as err:
             errMsg = "failed to run analysis on media at path {}: {}".format(media.BasePath, err)
             _log.error(errMsg)
-            result.IssuesFound = [AnalysisIssueErrorEncountered(
-                media, errMsg
-            )]
+            result.IssuesFound = [AnalysisIssueErrorEncountered(media, errMsg)]
             
         result.ElapsedInMicroSecs = (datetime.datetime.now() - startTime).microseconds
         result.HasIssues = (len(result.IssuesFound) > 0)
