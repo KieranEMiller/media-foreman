@@ -64,7 +64,6 @@ class AnalysisBase(object):
             self.GetAnalysisType(), type(media), media.BasePath
         ))
 
-        results = []
         result = AnalysisResult()
         result.AnalysisType = self.GetAnalysisType()
         result.Media = media
@@ -84,7 +83,7 @@ class AnalysisBase(object):
                         this prevents the results array from being an array of an array
                         we already know there is just going to be one result from a single file so 
                         just treat it as such'''
-                        results.append(self.RunAnalysis(mediaFile)[0]) 
+                        result.IssuesFound(self.RunAnalysisOnFile(mediaFile)) 
                 else:
                     result.IssuesFound = self.RunAnalysisOnCollection(media)
             
@@ -101,6 +100,4 @@ class AnalysisBase(object):
         
         self.LogAnalysisResult(result)
         
-        results.append(result)
-        
-        return results
+        return result
