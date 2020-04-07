@@ -27,9 +27,5 @@ class FileAnalysisBase(AnalysisBase):
     def IsFileAnalysis(self):
         return True
 
-    '''not abstract here since this method is not overridden
-    by subclasses; 
-    this method is invoked when you run a file analysis against a collection
-    '''
     def RunAnalysisOnCollection(self, mediaColl):
         pass
