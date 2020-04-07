@@ -10,6 +10,7 @@ from kem.mediaforeman.analyses.collection_analysis_album_directory_naming_conven
 from kem.mediaforeman.analyses.collection_analysis_mixed_media_types_in_directory import CollectionAnalysisMixedMediaTypesInDirectory
 from kem.mediaforeman_tests.test_asset_constants import TestAssetConstants
 from kem.mediaforeman.analyses.file_analysis_track_naming_convention import FileAnalysisTrackNamingConvention
+from kem.mediaforeman.analyses.analysis_issue_media_skipped import AnalysisIssueMediaSkipped
 
 class TestMediaAnalyzer(TestBaseFs):
 
@@ -102,7 +103,8 @@ class TestMediaAnalyzer(TestBaseFs):
 
         trackAnalysis = results.AnalysisResultsByAnalysisType[AnalysisType.FileTrackNamingConvention]
         
-        self.assertFalse(trackAnalysis[0].HasIssues)
+        self.assertTrue(trackAnalysis[0].HasIssues)
+        self.assertIsInstance(trackAnalysis[0].IssuesFound[0], AnalysisIssueMediaSkipped)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
