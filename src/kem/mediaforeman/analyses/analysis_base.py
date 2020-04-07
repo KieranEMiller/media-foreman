@@ -7,6 +7,7 @@ from kem.mediaforeman.media_file import MediaFile
 from kem.mediaforeman.analyses.analysis_result import AnalysisResult
 from kem.mediaforeman.util.media_file_type_detector import MediaFileTypeDetector
 from kem.mediaforeman.analyses.analysis_issue_error_encountered import AnalysisIssueErrorEncountered
+from kem.mediaforeman.analyses.analysis_issue_media_skipped import AnalysisIssueMediaSkipped
 
 _log = logging.getLogger()
 
@@ -74,16 +75,17 @@ class AnalysisBase(object):
         try:
             if(self.ShouldRun(media) == False):
                 result.WasProcessed = False
-                _log.warn("skipping file analysis on media {}, it is not eligible".format(media.basepath))
+                _log.warn("skipping file analysis on media {}, it is not eligible".format(media.BasePath))
                 
             elif(isinstance(media, MediaCollection)):
                 if(self.IsFileAnalysis() == True):
                     for mediaFile in media.MediaFiles:
-                        '''just reference the first item's index when appending the results here
-                        this prevents the results array from being an array of an array
-                        we already know there is just going to be one result from a single file so 
-                        just treat it as such'''
-                        result.IssuesFound(self.RunAnalysisOnFile(mediaFile)) 
+                        if(self.ShouldRun(mediaFile) == False):
+                            result.IssuesFound.append(AnalysisIssueMediaSkipped(
+                                mediaFile, "not eligible for analysis type {}".format(self.GetAnalysisType())
+                            ))
+                        else:
+                            result.IssuesFound.extend(self.RunAnalysisOnFile(mediaFile)) 
                 else:
                     result.IssuesFound = self.RunAnalysisOnCollection(media)
             
