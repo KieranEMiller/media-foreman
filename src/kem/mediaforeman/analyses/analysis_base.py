@@ -41,7 +41,7 @@ class AnalysisBase(object):
         if(isinstance(media, MediaFile)):
             if(self.RequiresMediaFileType() == True):
                 detector = MediaFileTypeDetector()
-                if(detector.IsMediaFileType(media.BasePath) == False):
+                if(detector.IsValid(media.BasePath) == False):
                     return False
             
         return True    
