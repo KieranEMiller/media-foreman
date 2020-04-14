@@ -23,8 +23,8 @@ class GUIConstants(object):
     RESULTS_TREE_TAG_HAS_NOISSUES = "HasNoIssues"
     RESULTS_TREE_TAG_HAS_ISSUES_COLOR = "coral1"
     RESULTS_TREE_TAG_HAS_NOISSUES_COLOR = "pale green"
-    RESULTS_TREE_TAG_WAS_PROCESSED = "WasProcessed"
-    RESULTS_TREE_TAG_WAS_PROCESSED_COLOR = "gray"
+    RESULTS_TREE_TAG_WAS_NOT_PROCESSED = "WasProcessed"
+    RESULTS_TREE_TAG_WAS_NOT_PROCESSED_COLOR = "gray"
     
     def __init__(self, params):
         pass

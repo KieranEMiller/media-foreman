@@ -209,8 +209,8 @@ class GuiApp(object):
         )
 
         tree.tag_configure(
-            GUIConstants.RESULTS_TREE_TAG_WAS_PROCESSED, 
-            background=GUIConstants.RESULTS_TREE_TAG_WAS_PROCESSED_COLOR
+            GUIConstants.RESULTS_TREE_TAG_WAS_NOT_PROCESSED, 
+            background=GUIConstants.RESULTS_TREE_TAG_WAS_NOT_PROCESSED_COLOR
         )
         
         return tree
