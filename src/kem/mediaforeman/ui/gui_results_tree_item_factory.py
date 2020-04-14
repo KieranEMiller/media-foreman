@@ -52,6 +52,11 @@ class GUIResultsTreeItemFactory(object):
         )
         
         for issue in analysisResult.IssuesFound:
+            
+            tags = self.GetTagListByAnalysisResult(analysisResult)
+            if(isinstance(issue, AnalysisIssueMediaSkipped)):
+                tags = GUIConstants.RESULTS_TREE_TAG_WAS_NOT_PROCESSED
+
             self.AddTreeNode(
                 tree, 
                 newNode, 
@@ -63,7 +68,7 @@ class GUIResultsTreeItemFactory(object):
                     issue.MediaFile.BasePath, 
                     issue.MediaFile.ParentDirectory
                 ),
-                tags = (self.GetTagListByAnalysisResult(analysisResult))
+                tags = tags
             )
         
         return newNode
@@ -79,11 +84,9 @@ class GUIResultsTreeItemFactory(object):
         return newNode
     
     def GetTagListByAnalysisResult(self, analysisResult):
-        if(len([result for result in analysisResult.IssuesFound if isinstance(result, AnalysisIssueMediaSkipped)])):
-            return GUIConstants.RESULTS_TREE_TAG_WAS_PROCESSED
        
-        elif(analysisResult.WasProcessed == False):
-            return GUIConstants.RESULTS_TREE_TAG_WAS_PROCESSED
+        if(analysisResult.WasProcessed == False):
+            return GUIConstants.RESULTS_TREE_TAG_WAS_NOT_PROCESSED
         
         elif (analysisResult.HasIssues):
             return GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES
