@@ -108,6 +108,12 @@ class TestMediaFile(TestBaseFs):
         self.assertEqual(mediaFile.AlbumArtist, metadata.tag.album_artist)
         self.assertEqual(mediaFile.AlbumArtist, metadata.tag.artist)
         
+    def flac_file_does_not_get_media_tags_loaded_properly(self):
+        path = self.CopySampleMp3ToDir(testFile=TestAssetConstants.SAMPLE_FLAC)
+        mediaFile = MediaFile(path)
+        
+        self.assertTrue(mediaFile.Album == "")
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
