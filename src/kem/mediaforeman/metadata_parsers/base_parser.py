@@ -1,4 +1,8 @@
 from abc import abstractmethod
+import os
+import eyed3
+from PIL import Image
+from io import BytesIO
 
 class BaseParser(object):
 
@@ -12,3 +16,9 @@ class BaseParser(object):
     @abstractmethod
     def ExtractImageProperties(self):
         pass
+    
+    def GetImageSizeFromByteArray(self, rawBytes):
+        img = Image.open(BytesIO(rawBytes))
+        width, height = img.size
+        img.close()
+        return width, height
