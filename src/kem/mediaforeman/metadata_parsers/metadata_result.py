@@ -1,5 +1,5 @@
 
-class MetadaResult(object):
+class MetadataResult(object):
 
     def __init__(self):
         self.Album = ""
