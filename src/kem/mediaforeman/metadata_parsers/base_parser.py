@@ -17,6 +17,10 @@ class BaseParser(object):
     def ExtractImageProperties(self):
         pass
     
+    @abstractmethod
+    def SaveMetadata(self, mediaFle):
+        pass
+    
     def GetImageSizeFromByteArray(self, rawBytes):
         img = Image.open(BytesIO(rawBytes))
         width, height = img.size
