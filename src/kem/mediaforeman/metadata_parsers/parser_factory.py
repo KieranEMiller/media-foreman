@@ -4,19 +4,20 @@ from kem.mediaforeman.metadata_parsers.flacparser import FlacParser
 
 class ParserFactory(object):
 
-    def __init__(self, params):
+    def __init__(self):
         pass
     
     def GetParserFromFilePath(self, path):
         ext = self.GetFileExtension(path).lower()
         
-        if(ext == "mp3"):
+        if(ext == ".mp3"):
             return Mp3Parser(path)
         
-        elif(ext == "flac"):
+        elif(ext == ".flac"):
             return FlacParser(path)
         
-        raise Exception("unknown file extension for parsing: {}".format(ext))
+        #raise Exception("unknown file extension for parsing: {}".format(ext))
+        return None
         
     def GetFileExtension(self, path):
         '''splitext returns a tuple filename, fileext, so index 1 
