@@ -5,6 +5,7 @@ from io import BytesIO
 import logging
 
 from kem.mediaforeman.media_base import MediaBase
+from kem.mediaforeman.metadata_parsers.parser_factory import ParserFactory
 
 _log = logging.getLogger()
 
@@ -28,8 +29,12 @@ class MediaFile(MediaBase):
         self.Duration = -1
         self.BitRate = -1
         
+        self._parser = None
         if(path != None):
-            self.ExtractProperties()
+            self._parser = ParserFactory().GetParserFromFilePath(path)
+            if(self._parser != None):
+                result = self._parser.ExtractProperties()
+                self.SetPropertiesFromParserResult(result)
         
     def GetName(self):
         return os.path.basename(self.BasePath)
@@ -44,64 +49,22 @@ class MediaFile(MediaBase):
            is the extension'''
         return os.path.splitext(self.BasePath)[1]
     
-    def ExtractProperties(self):
-        metadata = eyed3.load(self.BasePath)
-        
-        if(metadata == None):
-            return
-
-        if(metadata.tag != None):
-            self.Album = metadata.tag.album
-            self.Title = metadata.tag.title
-            
-            self.AlbumArtist = metadata.tag.album_artist
-            if(self.AlbumArtist is None or self.AlbumArtist == ""):
-                self.AlbumArtist = metadata.tag.artist
-            
-            tracknum = metadata.tag.track_num[0]
-            if(str(tracknum).isdigit()):
-                self.TrackNumber = tracknum
-            
-            self.ExtractImageProperties(metadata)
-        
-        if(metadata.info != None):
-            self.Duration = metadata.info.time_secs
-
-            bitRateVrb, bitRateVal = metadata.info.bit_rate
-            self.BitRate = bitRateVal
-            
-    def ExtractImageProperties(self, metadata):
-        '''picture type here represents the type of image embedded in the file
-             3: Front Cover, 
-             4: Back Cover
-             0: other
-        '''
-        if(len(metadata.tag.images) > 0):
-            '''currently only support and care about images on the front cover'''
-            frontCoverImg = list(filter(lambda i: i.picture_type == 3, metadata.tag.images))
-        
-            if(len(frontCoverImg) > 0):
-                rawBytes =  bytearray(frontCoverImg[0].image_data)
-                img = Image.open(BytesIO(rawBytes))
-                self.CoverImgExists = True
-                
-                width, height = img.size
-                self.CoverImgX = width
-                self.CoverImgY = height
-                
-                img.close()
+    def SetPropertiesFromParserResult(self, parserResult):
+        self.Album = parserResult.Album
+        self.AlbumArtist = parserResult.AlbumArtist
+        self.Title = parserResult.Title
+        self.TrackNumber = parserResult.TrackNumber
+        self.CoverImgExists = parserResult.CoverImgExists
+        self.CoverImgX = parserResult.CoverImgX
+        self.CoverImgY = parserResult.CoverImgY
+        self.Duration = parserResult.Duration
+        self.BitRate = parserResult.BitRate
 
     '''only saves metadata, not images (for now) '''
     def SaveMetadata(self):
-        file = eyed3.load(self.BasePath)
-        
-        file.tag.artist = self.AlbumArtist
-        file.tag.album_artist = self.AlbumArtist
-        file.tag.album = self.Album
-        file.tag.title = self.Title
-        file.tag.track_num = self.TrackNumber
-        
+
         _log.info("saving metadata for {}, artist: {}, album: {}, title: {}, track: {}".format(
             self.BasePath, self.AlbumArtist, self.Album, self.Title, self.TrackNumber
         ))
-        file.tag.save()
+        
+        self._parser.SaveMetadata(self)
