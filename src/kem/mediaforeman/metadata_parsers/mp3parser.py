@@ -6,7 +6,7 @@ from kem.mediaforeman.metadata_parsers.metadata_result import MetadataResult
 class Mp3Parser(BaseParser):
 
     def __init__(self, path):
-        super(self, path).__init__(path)
+        super(Mp3Parser, self).__init__(path)
         
         '''do not load the file in the ctor, rather wait for the call to 
         Extract Properties'''
@@ -25,14 +25,14 @@ class Mp3Parser(BaseParser):
             result.Title = self._eyed3Metadata.tag.title
             
             result.AlbumArtist = self._eyed3Metadata.tag.album_artist
-            if(result.AlbumArtist is None or self.AlbumArtist == ""):
+            if(result.AlbumArtist is None or result.AlbumArtist == ""):
                 result.AlbumArtist = self._eyed3Metadata.tag.artist
             
             tracknum = self._eyed3Metadata.tag.track_num[0]
             if(str(tracknum).isdigit()):
                 result.TrackNumber = tracknum
             
-            imgResult = result.ExtractImageProperties()
+            imgResult = self.ExtractImageProperties()
             result.CoverImgExists = imgResult.CoverImgExists
             result.CoverImgX = imgResult.CoverImgX
             result.CoverImgY = imgResult.CoverImgY
@@ -67,3 +67,13 @@ class Mp3Parser(BaseParser):
         
         return imgResult
                 
+    def SaveMetadata(self, mediaFle):
+        if(self._eyed3Metadata == None):
+            self._eyed3Metadata = eyed3.load(self.BasePath)
+        
+        self._eyed3Metadata.tag.artist = mediaFle.AlbumArtist
+        self._eyed3Metadata.tag.album_artist = mediaFle.AlbumArtist
+        self._eyed3Metadata.tag.album = mediaFle.Album
+        self._eyed3Metadata.tag.title = mediaFle.Title
+        self._eyed3Metadata.tag.track_num = mediaFle.TrackNumber
+        self._eyed3Metadata.tag.save()
