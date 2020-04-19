@@ -1,6 +1,9 @@
 import os
 from kem.mediaforeman.metadata_parsers.mp3parser import Mp3Parser
 from kem.mediaforeman.metadata_parsers.flacparser import FlacParser
+import logging
+
+_log = logging.getLogger()
 
 class ParserFactory(object):
 
@@ -16,7 +19,7 @@ class ParserFactory(object):
         elif(ext == ".flac"):
             return FlacParser(path)
         
-        #raise Exception("unknown file extension for parsing: {}".format(ext))
+        _log.warn("unable to load media type parser: unknown file extension '{}'".format(ext))
         return None
         
     def GetFileExtension(self, path):
