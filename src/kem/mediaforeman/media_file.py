@@ -34,7 +34,8 @@ class MediaFile(MediaBase):
             self._parser = ParserFactory().GetParserFromFilePath(path)
             if(self._parser != None):
                 result = self._parser.ExtractProperties()
-                self.SetPropertiesFromParserResult(result)
+                if(result != None):
+                    self.SetPropertiesFromParserResult(result)
         
     def GetName(self):
         return os.path.basename(self.BasePath)
