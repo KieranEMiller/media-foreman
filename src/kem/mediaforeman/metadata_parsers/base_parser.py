@@ -1,6 +1,4 @@
 from abc import abstractmethod
-import os
-import eyed3
 from PIL import Image
 from io import BytesIO
 
