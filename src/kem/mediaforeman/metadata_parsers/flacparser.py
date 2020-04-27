@@ -20,15 +20,8 @@ class FlacParser(BaseParser):
             result.Title = self._mutagenMeta["title"][0]
             result.AlbumArtist = self._mutagenMeta["artist"][0]
             
-            '''
-            result.AlbumArtist = self._eyed3Metadata.tag.album_artist
-            if(result.AlbumArtist is None or result.AlbumArtist == ""):
-                result.AlbumArtist = self._eyed3Metadata.tag.artist
-            
-            tracknum = self._eyed3Metadata.tag.track_num[0]
-            if(str(tracknum).isdigit()):
-                result.TrackNumber = tracknum
-            '''
+            if(str(self._mutagenMeta["tracknumber"][0]).isdigit()):
+                result.TrackNumber = self._mutagenMeta["tracknumber"][0]
                 
             result.BitRate = self._mutagenMeta.info.bitrate
             
@@ -36,6 +29,8 @@ class FlacParser(BaseParser):
             result.CoverImgExists = imgResult.CoverImgExists
             result.CoverImgX = imgResult.CoverImgX
             result.CoverImgY = imgResult.CoverImgY
+        
+        return result
     
     def ExtractImageProperties(self):
         result = MetadataResult()
