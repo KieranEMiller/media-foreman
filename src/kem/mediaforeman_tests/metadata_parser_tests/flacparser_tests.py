@@ -10,6 +10,10 @@ class FlacParserTests(TestBaseFs):
         parser = FlacParser(flacMedia)
         result = parser.ExtractProperties()
 
+        self.assertEqual(result.AlbumArtist, "SampleArtist")
+        self.assertEqual(result.Album, "SampleAlbum")
+        self.AssertEqual(result.Title, "SampleTitle")
+        self.assertEqual(result.TrackNumber, 3)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
