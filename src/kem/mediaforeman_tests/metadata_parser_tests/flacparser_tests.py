@@ -12,7 +12,7 @@ class FlacParserTests(TestBaseFs):
 
         self.assertEqual(result.AlbumArtist, "SampleArtist")
         self.assertEqual(result.Album, "SampleAlbum")
-        self.AssertEqual(result.Title, "SampleTitle")
+        self.assertEqual(result.Title, "SampleTitle")
         self.assertEqual(result.TrackNumber, 3)
 
 if __name__ == "__main__":
