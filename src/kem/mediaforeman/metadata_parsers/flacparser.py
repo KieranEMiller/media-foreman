@@ -21,7 +21,7 @@ class FlacParser(BaseParser):
             result.AlbumArtist = self._mutagenMeta["artist"][0]
             
             if(str(self._mutagenMeta["tracknumber"][0]).isdigit()):
-                result.TrackNumber = self._mutagenMeta["tracknumber"][0]
+                result.TrackNumber = int(self._mutagenMeta["tracknumber"][0])
                 
             result.BitRate = self._mutagenMeta.info.bitrate
             
