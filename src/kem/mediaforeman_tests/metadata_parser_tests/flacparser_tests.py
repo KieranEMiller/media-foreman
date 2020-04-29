@@ -14,6 +14,10 @@ class FlacParserTests(TestBaseFs):
         self.assertEqual(result.Album, "SampleAlbum")
         self.assertEqual(result.Title, "SampleTitle")
         self.assertEqual(result.TrackNumber, 3)
+        
+        self.assertTrue(result.CoverImgExists)
+        self.assertGreater(result.CoverImgX, 0)
+        self.assertGreater(result.CoverImgY, 0)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
