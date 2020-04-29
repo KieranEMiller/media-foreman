@@ -7,7 +7,9 @@ class GUIResultsTreeItemFactory(object):
     
     def AddParentToResultsTree(self, tree, analysisType, results):
         
-        totalNumIssues = sum(1 for result in results if result.HasIssues == True)
+        totalNumMediaIssues = sum(1 for result in results if result.HasIssues == True)
+        totalNumIssuesForAllMedia = sum(len(result.IssuesFound) for result in results if result.HasIssues == True)
+        
         avgProcessingTime = 0
         if(len(results) > 0):
             avgProcessingTime = sum(result.ElapsedInMicroSecs for result in results) / len(results)
@@ -23,9 +25,9 @@ class GUIResultsTreeItemFactory(object):
                 "avg processing time {} us".format(
                     avgProcessingTime
                 ),
-                "total # issues {}".format(totalNumIssues)
+                "{} media with issues ({} total issues found) (".format(totalNumMediaIssues, totalNumIssuesForAllMedia)
             ),
-            tags = (GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES) if totalNumIssues > 0 else GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES
+            tags = (GUIConstants.RESULTS_TREE_TAG_HAS_ISSUES) if totalNumMediaIssues > 0 else GUIConstants.RESULTS_TREE_TAG_HAS_NOISSUES
         )
         return parentNode
     
