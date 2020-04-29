@@ -39,7 +39,8 @@ class FlacParser(BaseParser):
         frontImg = [pic for pic in self._mutagenMeta.pictures if pic.type == PictureType.COVER_FRONT]
         if(frontImg != None and len(frontImg) > 0):
             result.CoverImgExists = True
-            result.CoverImgX = frontImg[0].width
-            result.CoverImgY = frontImg[0].height
+            width, height = self.GetImageSizeFromByteArray(frontImg[0].data)
+            result.CoverImgX = width
+            result.CoverImgY = height
         
         return result
