@@ -16,8 +16,8 @@ class FileAnalysisTrackNamingConvention(FileAnalysisBase):
         
         expectedName = "{0:02d} - {1} - {2}".format(
             mediaFile.TrackNumber,
-            mediaFile.Album, 
-            mediaFile.AlbumArtist
+            mediaFile.Title,
+            mediaFile.Album 
         )
         actualName = mediaFile.GetNameNoExtension()
         
