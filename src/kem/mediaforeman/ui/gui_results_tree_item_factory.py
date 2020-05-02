@@ -22,7 +22,7 @@ class GUIResultsTreeItemFactory(object):
             ),
             values=(
                 "{} items".format(len(results)),
-                "avg processing time {} us".format(
+                "avg processing time {0:.2f} us".format(
                     avgProcessingTime
                 ),
                 "{} media with issues ({} total issues found) (".format(totalNumMediaIssues, totalNumIssuesForAllMedia)
