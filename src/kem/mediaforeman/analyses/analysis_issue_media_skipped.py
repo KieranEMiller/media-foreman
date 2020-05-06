@@ -7,6 +7,6 @@ class AnalysisIssueMediaSkipped(AnalysisIssueBase):
         self.ErrorMsg = reason
         
     def GetText(self):
-        return "Media at '{}' skipped: {}".format(
+        return "Skipped Media at '{}': {}".format(
             self.MediaFile.BasePath, self.ErrorMsg
         )
