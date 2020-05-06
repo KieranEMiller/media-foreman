@@ -10,9 +10,9 @@ class BaseExtensionDetector(object):
     def GetValidTypes(self):
         pass
     
-    def IsValid(self, path):
+    def IsExtensionOnPathAMatch(self, path):
         #extension = os.path.splitext(path)[1].lower()
         validTypes = self.GetValidTypes()
-        match = [extension for extension in validTypes if path.endswith(extension.lower())]
+        match = [extension for extension in validTypes if path.lower().endswith(extension.lower())]
         
         return len(match) != 0

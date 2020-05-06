@@ -23,7 +23,7 @@ class FileAnalysisMediaFileType(FileAnalysisBase):
         result = []
         
         detector = MediaFileTypeDetector()
-        if(detector.IsValid(mediaFile.BasePath) == False):
+        if(detector.IsExtensionOnPathAMatch(mediaFile.BasePath) == False):
             result.append(AnalysisIssuePropertyInvalid(
                 mediaFile, AnalysisIssuePropertyType.FileType, detector.GetValidTypes(), mediaFile.GetName()
             ))
