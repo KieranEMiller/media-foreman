@@ -85,7 +85,7 @@ class GUIResultsTreeItemFactory(object):
     def GetTagListByAnalysisResult(self, analysisResult):
        
         numIssuesSkipped = sum(1 for issue in analysisResult.IssuesFound if isinstance(issue, AnalysisIssueMediaSkipped))
-        if(numIssuesSkipped == len(analysisResult.IssuesFound)):
+        if(numIssuesSkipped == len(analysisResult.IssuesFound) and len(analysisResult.IssuesFound) > 0):
             return GUIConstants.RESULTS_TREE_TAG_WAS_NOT_PROCESSED
 
         elif(analysisResult.WasProcessed == False):
