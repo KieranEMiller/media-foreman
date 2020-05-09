@@ -18,7 +18,6 @@ class TestRelatedMediaFileTypeDetector(TestBaseFs):
         
         self.assertTrue(relatedMediaDetector.IsExtensionOnPathAMatch(path))
         
-        
     def test_file_with_matching_extension_returns_true_regardless_of_case(self):
         path = self.CopySampleMp3ToDir(destFileName='test.CuE')
         
