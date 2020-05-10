@@ -7,4 +7,4 @@ class MediaRelatedFileTypeDetector(BaseExtensionDetector):
         pass
         
     def GetValidTypes(self):
-        return [".cue", ".m3u", ".log"]
+        return [".cue", ".m3u", ".log", ".jpg", ".jpeg"]
