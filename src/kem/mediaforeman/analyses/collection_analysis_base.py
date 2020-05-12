@@ -18,6 +18,10 @@ class CollectionAnalysisBase(AnalysisBase):
     def RunAnalysisOnCollection(self, mediaColl):
         pass
     
+    @abstractmethod
+    def FixIssues(self):
+        pass
+    
     def IsCollectionAnalysis(self):
         return True
     

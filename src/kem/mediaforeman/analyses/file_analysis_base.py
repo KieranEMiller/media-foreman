@@ -21,6 +21,10 @@ class FileAnalysisBase(AnalysisBase):
     def RunAnalysisOnFile(self, mediaFile):
         pass
     
+    @abstractmethod
+    def FixIssues(self):
+        pass
+    
     def IsCollectionAnalysis(self):
         return False
     
@@ -29,3 +33,5 @@ class FileAnalysisBase(AnalysisBase):
 
     def RunAnalysisOnCollection(self, mediaColl):
         pass
+
+    
