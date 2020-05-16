@@ -8,6 +8,9 @@ class FileAnalysisCompleteAudioMetadata(FileAnalysisBase):
 
     def __init__(self):
         pass
+    
+    def CanFix(self):
+        return False
         
     def FixIssues(self):
         raise ValueError("unable to programatically fix missing audio metadata")

@@ -31,3 +31,10 @@ class FileAnalysisValidImage(FileAnalysisBase):
             ))
 
         return results
+    
+    def CanFix(self):
+        return False
+    
+    def FixIssues(self):
+        raise ValueError("unable to programatically fix image issues")
+    
