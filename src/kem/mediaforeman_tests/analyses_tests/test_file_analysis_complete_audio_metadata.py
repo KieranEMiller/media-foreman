@@ -57,7 +57,7 @@ class Test(TestBaseFs):
         self.assertTrue(result.HasIssues)
         self.assertEqual(len(result.IssuesFound), 4)
         
-        self.assertRaises(ValueError, analysis.FixIssues())
+        self.assertRaises(ValueError, analysis.FixIssues)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
