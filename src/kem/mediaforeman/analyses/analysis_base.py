@@ -41,6 +41,10 @@ class AnalysisBase(object):
         pass
     
     @abstractmethod
+    def CanFix(self):
+        return True
+    
+    @abstractmethod
     def ShouldRun(self, media):
         if(isinstance(media, MediaFile)):
             if(self.RequiresMediaFileType() == True):
