@@ -45,6 +45,6 @@ class FileAnalysisMinimumQualityStandards(FileAnalysisBase):
     def CanFix(self):
         return False
     
-    def FixIssues(self):
+    def FixIssues(self, media):
         raise ValueError("unable to programatically fix image issues")
     
