@@ -14,11 +14,7 @@ class FileAnalysisTrackNamingConvention(FileAnalysisBase):
     def RunAnalysisOnFile(self, mediaFile):
         results = []
         
-        expectedName = "{0:02d} - {1} - {2}".format(
-            mediaFile.TrackNumber,
-            mediaFile.Title,
-            mediaFile.Album 
-        )
+        expectedName = self.GetExpectedName(mediaFile)
         actualName = mediaFile.GetNameNoExtension()
         
         if(expectedName != actualName):
@@ -30,4 +26,17 @@ class FileAnalysisTrackNamingConvention(FileAnalysisBase):
             ))
             
         return results
+    
+    def GetExpectedName(self, mediaFile):
+        return "{0:02d} - {1} - {2}".format(
+            mediaFile.TrackNumber,
+            mediaFile.Title,
+            mediaFile.Album 
+        )
+
+    def FixIssues(self, media):
+        expected = self.GetExpectedName(media)
+        
+        pass
+        
         
