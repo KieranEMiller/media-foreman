@@ -53,6 +53,32 @@ class TestFileAnalysisTrackingNamingConvention(TestBaseFs):
         self.assertTrue(len(result.IssuesFound), 1)
         self.assertEqual(result.IssuesFound[0].IssueType, AnalysisIssuePropertyType.TrackNamingConvention)
         self.assertEqual(result.IssuesFound[0].ExpectedVal, "03 - testTitle - testAlbum")       
+
+    def test_fix_issue_correctly_changes_filename(self):
+        file = self.CopySampleMp3ToDir(destFileName="3 - TESTTitle - testAlbum.mp3")
+
+        mediaFile = MediaFile(file)
+        mediaFile.Album="testAlbum"
+        mediaFile.Title="testTitle"
+        mediaFile.TrackNumber=3
+        mediaFile.AlbumArtist="testArtist"
+        mediaFile.SaveMetadata()
+        
+        analysis = FileAnalysisTrackNamingConvention()
+        result = analysis.RunAnalysis(mediaFile)
+        
+        self.assertTrue(result.HasIssues)
+        self.assertTrue(len(result.IssuesFound), 1)
+        self.assertEqual(result.IssuesFound[0].IssueType, AnalysisIssuePropertyType.TrackNamingConvention)
+        self.assertEqual(result.IssuesFound[0].ExpectedVal, "03 - testTitle - testAlbum")       
+        
+        analysis.FixIssues(mediaFile)
+        
+        mediaFile = MediaFile(mediaFile.BasePath)
+        result = analysis.RunAnalysis(mediaFile)
+        
+        self.assertFalse(result.HasIssues)
+
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
