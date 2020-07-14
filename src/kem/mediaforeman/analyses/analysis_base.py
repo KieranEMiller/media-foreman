@@ -37,7 +37,7 @@ class AnalysisBase(object):
         pass
     
     @abstractmethod
-    def FixIssues(self):
+    def FixIssues(self, media):
         pass
     
     @abstractmethod
