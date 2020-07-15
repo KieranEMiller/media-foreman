@@ -2,8 +2,6 @@ import datetime
 
 from kem.mediaforeman.media_analyzer_result import MediaAnalyzerResult
 from kem.mediaforeman.analyses.file_analysis_media_file_type import FileAnalysisMediaFileType
-from kem.mediaforeman.analyses.collection_analysis_same_artist import CollectionAnalysisSameArtist
-from kem.mediaforeman.analyses.analysis_result import AnalysisResult
 
 class MediaAnalyzer(object):
 
@@ -21,7 +19,7 @@ class MediaAnalyzer(object):
         result = MediaAnalyzerResult()
         result.AnalysesRun.extend(self._analyses)
         
-        '''TODO: decide if its better to iterate over media or by analysis type?'''
+        '''TODO: decide if its better to iterate over media then by analysis type or the reverse?'''
         for media in self._media:
             for analysis in self._analyses:
                 analysisResult = analysis.RunAnalysis(media = media)
