@@ -3,6 +3,7 @@ from kem.mediaforeman.analyses.analysis_type import AnalysisType
 from kem.mediaforeman.analyses.analysis_issue_property_invalid import AnalysisIssuePropertyInvalid
 from kem.mediaforeman.analyses.analysis_issue_type import AnalysisIssuePropertyType
 import os
+from kem.mediaforeman.analyses.analysis_fix_single_property import AnalysisFixSingleProperty
 
 class FileAnalysisTrackNamingConvention(FileAnalysisBase):
 
@@ -36,6 +37,9 @@ class FileAnalysisTrackNamingConvention(FileAnalysisBase):
         )
 
     def FixIssues(self, media):
+        fix = AnalysisFixSingleProperty(media, self.GetAnalysisType())
+        fix.ChangeFrom = media.BasePath
+
         correctedName = self.GetExpectedName(media)
         correctedPath = os.path.join(media.GetPath(), correctedName + media.GetFileExtension())
         
@@ -43,4 +47,8 @@ class FileAnalysisTrackNamingConvention(FileAnalysisBase):
 
         '''update the files path'''
         media.BasePath = correctedPath
+        
+        fix.ChangeTo = correctedPath
+
+        return [fix]
         
