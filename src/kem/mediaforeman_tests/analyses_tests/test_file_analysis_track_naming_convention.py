@@ -72,7 +72,10 @@ class TestFileAnalysisTrackingNamingConvention(TestBaseFs):
         self.assertEqual(result.IssuesFound[0].IssueType, AnalysisIssuePropertyType.TrackNamingConvention)
         self.assertEqual(result.IssuesFound[0].ExpectedVal, "03 - testTitle - testAlbum")       
         
-        analysis.FixIssues(mediaFile)
+        fixes = analysis.FixIssues(mediaFile)
+        self.assertEqual(len(fixes), 1)
+        self.assertEqual(fixes[0].ChangeFrom, file)
+        self.assertEqual(fixes[0].ChangeTo, mediaFile.BasePath)
         
         mediaFile = MediaFile(mediaFile.BasePath)
         result = analysis.RunAnalysis(mediaFile)
