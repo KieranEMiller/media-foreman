@@ -4,6 +4,9 @@ from kem.mediaforeman.analyses.analysis_issue_property_invalid import AnalysisIs
 from kem.mediaforeman.analyses.analysis_issue_type import AnalysisIssuePropertyType
 import os
 from kem.mediaforeman.analyses.analysis_fix_single_property import AnalysisFixSingleProperty
+from test.test_sys_settrace import arigo_example0
+from mutagen import trueaudio
+from kem.mediaforeman.analyses.analysis_fix_error import AnalysisFixError
 
 class FileAnalysisTrackNamingConvention(FileAnalysisBase):
 
@@ -29,6 +32,12 @@ class FileAnalysisTrackNamingConvention(FileAnalysisBase):
             
         return results
     
+    def AreAllExpectedNamePropertiesValid(self, mediaFile):
+        if(mediaFile.TrackNumber >= 0 and mediaFile.Title != "" and mediaFile.Album != ""):
+            return True
+        
+        return False
+    
     def GetExpectedName(self, mediaFile):
         return "{0:02d} - {1} - {2}".format(
             mediaFile.TrackNumber,
@@ -37,8 +46,11 @@ class FileAnalysisTrackNamingConvention(FileAnalysisBase):
         )
 
     def FixIssues(self, media):
+        
+        if(self.AreAllExpectedNamePropertiesValid(media) == False):
+            return [AnalysisFixError(media, self.GetAnalysisType())]
+        
         fix = AnalysisFixSingleProperty(media, self.GetAnalysisType())
-        fix.ChangeFrom = media.BasePath
 
         correctedName = self.GetExpectedName(media)
         correctedPath = os.path.join(media.GetPath(), correctedName + media.GetFileExtension())
@@ -46,8 +58,8 @@ class FileAnalysisTrackNamingConvention(FileAnalysisBase):
         os.rename(media.BasePath, correctedPath)
 
         '''update the files path'''
+        fix.ChangeFrom = media.BasePath
         media.BasePath = correctedPath
-        
         fix.ChangeTo = correctedPath
 
         return [fix]
