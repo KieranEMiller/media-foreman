@@ -12,3 +12,6 @@ class MediaBase(object):
     @abstractmethod
     def GetName(self):
         pass
+    
+    def GetPath(self):
+        return os.path.dirname(self.BasePath)
