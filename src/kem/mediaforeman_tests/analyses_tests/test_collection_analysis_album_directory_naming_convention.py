@@ -7,6 +7,7 @@ from kem.mediaforeman.media_file import MediaFile
 from kem.mediaforeman.analyses.collection_analysis_album_directory_naming_convention import CollectionAnalysisAlbumDirectoryNamingConvention
 from kem.mediaforeman.analyses.analysis_issue_property_invalid import AnalysisIssuePropertyInvalid
 from kem.mediaforeman.analyses.analysis_issue_type import AnalysisIssuePropertyType
+import os
 
 class TestCollectionAnalysisAlbumDirectoryNamingConvention(TestBaseFs):
 
@@ -88,6 +89,39 @@ class TestCollectionAnalysisAlbumDirectoryNamingConvention(TestBaseFs):
         self.assertEqual(result.IssuesFound[0].IssueType, AnalysisIssuePropertyType.AlbumDirectoryNamingConvention)
         self.assertEqual(result.IssuesFound[0].ExpectedVal, "{} - {}".format(ARTIST_NAME, "qwer"))
         self.assertEqual(result.IssuesFound[0].ActualVal, "{} - {}".format(ARTIST_NAME, ALBUM_NAME))
+        
+    def test_fix_issues_corrects_directory_name(self):
+        
+        ARTIST_NAME = "ArtistTest"
+        ALBUM_NAME="Album01Test"
+        
+        albumPath = self.CreateSubDirectory(dirName = "{} - {}".format(ARTIST_NAME, ALBUM_NAME))
+
+        for i in range(0, 4):
+            filePath = self.CopySampleMp3ToDir(testDir=albumPath)
+            mediaFile = MediaFile(filePath)
+            mediaFile.Album = "qwer"
+            mediaFile.AlbumArtist = ARTIST_NAME
+            mediaFile.SaveMetadata()
+
+        coll = MediaCollection(albumPath)
+        analysis = CollectionAnalysisAlbumDirectoryNamingConvention()
+        result = analysis.RunAnalysis(coll)
+        
+        self.assertTrue(result.HasIssues)
+        self.assertEqual(result.AnalysisType, AnalysisType.CollectionAlbumDirectoryNamingConvention)
+        self.assertEqual(len(result.IssuesFound), 1)
+        self.assertEqual(result.IssuesFound[0].IssueType, AnalysisIssuePropertyType.AlbumDirectoryNamingConvention)
+        self.assertEqual(result.IssuesFound[0].ExpectedVal, "{} - {}".format(ARTIST_NAME, "qwer"))
+        self.assertEqual(result.IssuesFound[0].ActualVal, "{} - {}".format(ARTIST_NAME, ALBUM_NAME))
+        
+        expectedDirName = "{} - {}".format(ARTIST_NAME, "qwer")
+        expectedAlbumPath = albumPath.replace("{} - {}".format(ARTIST_NAME, ALBUM_NAME), expectedDirName)
+        analysis.FixIssues(coll)
+        
+        self.assertFalse(albumPath)
+        self.assertTrue(os.path.isdir(expectedAlbumPath))
+        self.assertTrue(os.path.exists(expectedAlbumPath))
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
