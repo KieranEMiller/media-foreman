@@ -119,7 +119,7 @@ class TestCollectionAnalysisAlbumDirectoryNamingConvention(TestBaseFs):
         expectedAlbumPath = albumPath.replace("{} - {}".format(ARTIST_NAME, ALBUM_NAME), expectedDirName)
         analysis.FixIssues(coll)
         
-        self.assertFalse(albumPath)
+        self.assertFalse(os.path.isdir(albumPath))
         self.assertTrue(os.path.isdir(expectedAlbumPath))
         self.assertTrue(os.path.exists(expectedAlbumPath))
         
