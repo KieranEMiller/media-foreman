@@ -122,6 +122,12 @@ class TestCollectionAnalysisAlbumDirectoryNamingConvention(TestBaseFs):
         self.assertFalse(os.path.isdir(albumPath))
         self.assertTrue(os.path.isdir(expectedAlbumPath))
         self.assertTrue(os.path.exists(expectedAlbumPath))
+
+        coll = MediaCollection(expectedAlbumPath)
+        analysis = CollectionAnalysisAlbumDirectoryNamingConvention()
+        result = analysis.RunAnalysis(coll)
+        
+        self.assertFalse(result.HasIssues)
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
