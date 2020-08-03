@@ -93,14 +93,15 @@ class TestCollectionAnalysisAlbumDirectoryNamingConvention(TestBaseFs):
     def test_fix_issues_corrects_directory_name(self):
         
         ARTIST_NAME = "ArtistTest"
-        ALBUM_NAME="Album01Test"
+        INCORRECT_ALBUM_NAME = "Album01Test"
+        CORRECT_ALBUM_NAME_ON_MEDIA = "AlbumCorrect"
         
-        albumPath = self.CreateSubDirectory(dirName = "{} - {}".format(ARTIST_NAME, ALBUM_NAME))
+        albumPath = self.CreateSubDirectory(dirName = "{} - {}".format(ARTIST_NAME, INCORRECT_ALBUM_NAME))
 
         for i in range(0, 4):
             filePath = self.CopySampleMp3ToDir(testDir=albumPath)
             mediaFile = MediaFile(filePath)
-            mediaFile.Album = "qwer"
+            mediaFile.Album = CORRECT_ALBUM_NAME_ON_MEDIA
             mediaFile.AlbumArtist = ARTIST_NAME
             mediaFile.SaveMetadata()
 
@@ -112,11 +113,11 @@ class TestCollectionAnalysisAlbumDirectoryNamingConvention(TestBaseFs):
         self.assertEqual(result.AnalysisType, AnalysisType.CollectionAlbumDirectoryNamingConvention)
         self.assertEqual(len(result.IssuesFound), 1)
         self.assertEqual(result.IssuesFound[0].IssueType, AnalysisIssuePropertyType.AlbumDirectoryNamingConvention)
-        self.assertEqual(result.IssuesFound[0].ExpectedVal, "{} - {}".format(ARTIST_NAME, "qwer"))
-        self.assertEqual(result.IssuesFound[0].ActualVal, "{} - {}".format(ARTIST_NAME, ALBUM_NAME))
+        self.assertEqual(result.IssuesFound[0].ExpectedVal, "{} - {}".format(ARTIST_NAME, CORRECT_ALBUM_NAME_ON_MEDIA))
+        self.assertEqual(result.IssuesFound[0].ActualVal, "{} - {}".format(ARTIST_NAME, INCORRECT_ALBUM_NAME))
         
-        expectedDirName = "{} - {}".format(ARTIST_NAME, "qwer")
-        expectedAlbumPath = albumPath.replace("{} - {}".format(ARTIST_NAME, ALBUM_NAME), expectedDirName)
+        expectedDirName = "{} - {}".format(ARTIST_NAME, CORRECT_ALBUM_NAME_ON_MEDIA)
+        expectedAlbumPath = albumPath.replace("{} - {}".format(ARTIST_NAME, INCORRECT_ALBUM_NAME), expectedDirName)
         analysis.FixIssues(coll)
         
         self.assertFalse(os.path.isdir(albumPath))
