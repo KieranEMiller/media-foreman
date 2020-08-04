@@ -130,6 +130,53 @@ class TestCollectionAnalysisAlbumDirectoryNamingConvention(TestBaseFs):
         
         self.assertFalse(result.HasIssues)
         
+    def test_fix_issues_corrects_directory_name_expected_picks_most_common(self):
+        
+        ARTIST_NAME = "ArtistTest"
+        INCORRECT_ALBUM_NAME = "Album01Test"
+        CORRECT_ALBUM_NAME_ON_MEDIA = "AlbumCorrect"
+        
+        albumPath = self.CreateSubDirectory(dirName = "{} - {}".format(ARTIST_NAME, INCORRECT_ALBUM_NAME))
+
+        for i in range(0, 5):
+            filePath = self.CopySampleMp3ToDir(testDir=albumPath)
+            mediaFile = MediaFile(filePath)
+            
+            '''for two of the files, make the name be something else '''
+            if(i == 0 or i == 1):
+                mediaFile.Album = "asdf"
+                mediaFile.AlbumArtist = "qwer"
+            else:
+                mediaFile.Album = CORRECT_ALBUM_NAME_ON_MEDIA
+                mediaFile.AlbumArtist = ARTIST_NAME
+
+            mediaFile.SaveMetadata()
+
+        coll = MediaCollection(albumPath)
+        analysis = CollectionAnalysisAlbumDirectoryNamingConvention()
+        result = analysis.RunAnalysis(coll)
+        
+        self.assertTrue(result.HasIssues)
+        self.assertEqual(result.AnalysisType, AnalysisType.CollectionAlbumDirectoryNamingConvention)
+        self.assertEqual(len(result.IssuesFound), 1)
+        self.assertEqual(result.IssuesFound[0].IssueType, AnalysisIssuePropertyType.AlbumDirectoryNamingConvention)
+        self.assertEqual(result.IssuesFound[0].ExpectedVal, "{} - {}".format(ARTIST_NAME, CORRECT_ALBUM_NAME_ON_MEDIA))
+        self.assertEqual(result.IssuesFound[0].ActualVal, "{} - {}".format(ARTIST_NAME, INCORRECT_ALBUM_NAME))
+        
+        expectedDirName = "{} - {}".format(ARTIST_NAME, CORRECT_ALBUM_NAME_ON_MEDIA)
+        expectedAlbumPath = albumPath.replace("{} - {}".format(ARTIST_NAME, INCORRECT_ALBUM_NAME), expectedDirName)
+        analysis.FixIssues(coll)
+        
+        self.assertFalse(os.path.isdir(albumPath))
+        self.assertTrue(os.path.isdir(expectedAlbumPath))
+        self.assertTrue(os.path.exists(expectedAlbumPath))
+
+        coll = MediaCollection(expectedAlbumPath)
+        analysis = CollectionAnalysisAlbumDirectoryNamingConvention()
+        result = analysis.RunAnalysis(coll)
+        
+        self.assertFalse(result.HasIssues)
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
