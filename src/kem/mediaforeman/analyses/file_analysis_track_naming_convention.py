@@ -53,7 +53,7 @@ class FileAnalysisTrackNamingConvention(FileAnalysisBase):
         fix = AnalysisFixSingleProperty(media, self.GetAnalysisType())
 
         correctedName = self.GetExpectedName(media)
-        correctedPath = os.path.join(media.GetPath(), correctedName + media.GetFileExtension())
+        correctedPath = os.path.join(media.GetParentDirPath(), correctedName + media.GetFileExtension())
         
         os.rename(media.BasePath, correctedPath)
 

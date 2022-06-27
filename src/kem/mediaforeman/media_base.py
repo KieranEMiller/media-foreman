@@ -13,5 +13,5 @@ class MediaBase(object):
     def GetName(self):
         pass
     
-    def GetPath(self):
+    def GetParentDirPath(self):
         return os.path.dirname(self.BasePath)

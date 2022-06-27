@@ -65,7 +65,7 @@ class CollectionAnalysisAlbumDirectoryNamingConvention(CollectionAnalysisBase):
                 return [AnalysisFixError(media, self.GetAnalysisType())]
             
             correctedName = self.GetExpectedName(likelyAlbumName, likelyAlbumArtist)
-            correctedPath = os.path.join(media.GetPath(), correctedName)
+            correctedPath = os.path.join(media.GetParentDirPath(), correctedName)
                      
             fix = AnalysisFixSingleProperty(media, self.GetAnalysisType())
 

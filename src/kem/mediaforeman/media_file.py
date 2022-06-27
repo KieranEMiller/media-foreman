@@ -41,7 +41,7 @@ class MediaFile(MediaBase):
         return os.path.basename(self.BasePath)
     
     def GetNameNoExtension(self):
-        '''have to use basename because the first part of the splitext method
+        '''have to use os.path.basename because the first part of the splitext method
         returns the full path to the file, not just the name'''
         return os.path.basename(os.path.splitext(self.BasePath)[0])
     
