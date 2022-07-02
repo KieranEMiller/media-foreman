@@ -1,5 +1,5 @@
 import unittest
-from mediaforeman_tests.test_base_fs import TestBaseFs
+from tests.test_base_fs import TestBaseFs
 from mediaforeman.media_file import MediaFile
 from mediaforeman.analyses.file_analysis_track_naming_convention import FileAnalysisTrackNamingConvention
 from mediaforeman.analyses.analysis_issue_type import AnalysisIssuePropertyType

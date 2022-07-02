@@ -1,7 +1,7 @@
 import datetime
 
-from mediaforeman.media_analyzer_result import MediaAnalyzerResult
-from mediaforeman.analyses.file_analysis_media_file_type import FileAnalysisMediaFileType
+from media_analyzer_result import MediaAnalyzerResult
+from analyses.file_analysis_media_file_type import FileAnalysisMediaFileType
 
 class MediaAnalyzer(object):
 

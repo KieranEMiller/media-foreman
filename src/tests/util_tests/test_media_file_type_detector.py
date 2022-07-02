@@ -1,5 +1,5 @@
 import unittest
-from mediaforeman_tests.test_base_fs import TestBaseFs
+from tests.test_base_fs import TestBaseFs
 from mediaforeman.util.media_file_type_detector import MediaFileTypeDetector
 
 class TestMediaFileTypeDetector(TestBaseFs):

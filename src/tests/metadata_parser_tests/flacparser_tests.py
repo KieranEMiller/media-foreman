@@ -1,7 +1,7 @@
 import unittest
 from mediaforeman.metadata_parsers.flacparser import FlacParser
-from mediaforeman_tests.test_base_fs import TestBaseFs
-from mediaforeman_tests.test_asset_constants import TestAssetConstants
+from tests.test_base_fs import TestBaseFs
+from tests.test_asset_constants import TestAssetConstants
 
 class FlacParserTests(TestBaseFs):
 

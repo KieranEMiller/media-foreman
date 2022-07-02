@@ -1,9 +1,9 @@
 import unittest
-from mediaforeman_tests.test_base_fs import TestBaseFs
+from tests.test_base_fs import TestBaseFs
 from mediaforeman.media_file import MediaFile
 from mediaforeman.analyses.file_analysis_complete_audio_metadata import FileAnalysisCompleteAudioMetadata
 from mediaforeman.analyses.analysis_issue_property_invalid import AnalysisIssuePropertyInvalid
-from mediaforeman_tests.test_asset_constants import TestAssetConstants
+from tests.test_asset_constants import TestAssetConstants
 from mediaforeman.analyses.analysis_issue_type import AnalysisIssuePropertyType
 
 class Test(TestBaseFs):

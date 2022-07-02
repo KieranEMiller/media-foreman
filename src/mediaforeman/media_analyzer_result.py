@@ -1,4 +1,4 @@
-from mediaforeman.analyses.analysis_type import AnalysisType
+from analyses.analysis_type import AnalysisType
 
 class MediaAnalyzerResult(object):
 

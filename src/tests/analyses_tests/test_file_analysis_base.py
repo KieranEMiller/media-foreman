@@ -1,8 +1,8 @@
 import unittest
 import shutil
-from mediaforeman_tests.test_base_fs import TestBaseFs
+from tests.test_base_fs import TestBaseFs
 from mediaforeman.media_collection import MediaCollection
-from mediaforeman_tests.test_asset_constants import TestAssetConstants
+from tests.test_asset_constants import TestAssetConstants
 from mediaforeman.analyses.file_analysis_media_file_type import FileAnalysisMediaFileType
 from mediaforeman.analyses.file_analysis_valid_image import FileAnalysisValidImage
 from mediaforeman.media_file import MediaFile

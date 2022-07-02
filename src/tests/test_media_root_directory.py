@@ -1,11 +1,11 @@
 import unittest
 import os
-from mediaforeman_tests.test_base_fs import TestBaseFs
+from tests.test_base_fs import TestBaseFs
 
 from mediaforeman.media_root_directory import MediaRootDirectory
 from mediaforeman.media_file import MediaFile
 from mediaforeman.media_collection import MediaCollection
-from mediaforeman_tests.test_asset_constants import TestAssetConstants
+from tests.test_asset_constants import TestAssetConstants
 from mediaforeman.media_analyzer import MediaAnalyzer
 from mediaforeman.analyses.collection_analysis_album_directory_naming_convention import CollectionAnalysisAlbumDirectoryNamingConvention
 

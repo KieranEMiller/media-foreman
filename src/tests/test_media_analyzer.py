@@ -1,5 +1,5 @@
 import unittest
-from mediaforeman_tests.test_base_fs import TestBaseFs
+from tests.test_base_fs import TestBaseFs
 from mediaforeman.media_analyzer import MediaAnalyzer
 from mediaforeman.media_file import MediaFile
 from mediaforeman.analyses.file_analysis_media_file_type import FileAnalysisMediaFileType
@@ -8,7 +8,7 @@ from mediaforeman.analyses.analysis_type import AnalysisType
 from mediaforeman.media_collection import MediaCollection
 from mediaforeman.analyses.collection_analysis_album_directory_naming_convention import CollectionAnalysisAlbumDirectoryNamingConvention
 from mediaforeman.analyses.collection_analysis_mixed_media_types_in_directory import CollectionAnalysisMixedMediaTypesInDirectory
-from mediaforeman_tests.test_asset_constants import TestAssetConstants
+from tests.test_asset_constants import TestAssetConstants
 from mediaforeman.analyses.file_analysis_track_naming_convention import FileAnalysisTrackNamingConvention
 from mediaforeman.analyses.analysis_issue_media_skipped import AnalysisIssueMediaSkipped
 

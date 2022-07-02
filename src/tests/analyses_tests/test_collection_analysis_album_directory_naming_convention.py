@@ -1,6 +1,6 @@
 import unittest
 
-from mediaforeman_tests.test_base_fs import TestBaseFs
+from tests.test_base_fs import TestBaseFs
 from mediaforeman.media_collection import MediaCollection
 from mediaforeman.analyses.analysis_type import AnalysisType
 from mediaforeman.media_file import MediaFile

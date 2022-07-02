@@ -1,7 +1,7 @@
 '''
 Created on Dec 29, 2019
 
-@author: kieranemiller
+author: kieranemiller
 '''
 import argparse
 import logging

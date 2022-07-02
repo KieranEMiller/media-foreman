@@ -1,9 +1,9 @@
 import unittest
 import uuid
 
-from mediaforeman_tests.test_base_fs import TestBaseFs
+from tests.test_base_fs import TestBaseFs
 from mediaforeman.media_file import MediaFile
-from mediaforeman_tests.test_asset_constants import TestAssetConstants
+from tests.test_asset_constants import TestAssetConstants
 import eyed3
 
 class TestMediaFile(TestBaseFs):

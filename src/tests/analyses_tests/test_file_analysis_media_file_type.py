@@ -1,7 +1,7 @@
 import unittest
 import shutil
 
-from mediaforeman_tests.test_base_fs import TestBaseFs
+from tests.test_base_fs import TestBaseFs
 from mediaforeman.media_file import MediaFile
 from mediaforeman.analyses.file_analysis_media_file_type import FileAnalysisMediaFileType
 from mediaforeman.analyses.analysis_type import AnalysisType

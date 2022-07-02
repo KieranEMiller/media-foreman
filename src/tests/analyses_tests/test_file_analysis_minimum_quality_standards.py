@@ -1,10 +1,10 @@
 import unittest
-from mediaforeman_tests.test_base_fs import TestBaseFs
+from tests.test_base_fs import TestBaseFs
 from mediaforeman.media_file import MediaFile
 from mediaforeman.analyses.file_analysis_minimum_quality_standards import FileAnalysisMinimumQualityStandards
 from mediaforeman.analyses.analysis_type import AnalysisType
 from mediaforeman.analyses.analysis_issue_threshold_not_met import AnalysisIssueThresholdNotMet
-from mediaforeman_tests.test_asset_constants import TestAssetConstants
+from tests.test_asset_constants import TestAssetConstants
 
 class TestFileAnalysisMinimumQualityStandards(TestBaseFs):
 

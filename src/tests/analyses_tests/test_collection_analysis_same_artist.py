@@ -1,5 +1,5 @@
 import unittest
-from mediaforeman_tests.test_base_fs import TestBaseFs
+from tests.test_base_fs import TestBaseFs
 from mediaforeman.analyses.collection_analysis_same_artist import CollectionAnalysisSameArtist
 from mediaforeman.media_file import MediaFile
 from mediaforeman.media_collection import MediaCollection
